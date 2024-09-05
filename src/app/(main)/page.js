@@ -5,7 +5,7 @@ const page = () => {
   return (
     <div>
       hola
-      <RouteMap gpxFileName="poblados.gpx" />
+      <RouteMap gpxFileName="arcade.gpx" />
     </div>
   );
 };

@@ -64,7 +64,7 @@ const routes = [
     image: "",
     approximateDistance: "25 km",
     description: "Una emocionante ruta por carretera que incluye los mejores túneles de la ciudad. Perfecta para patinadores con control en bajadas y búsqueda de adrenalina. Disfruta de la velocidad en un entorno único, ideal para quienes tienen autonomía total sobre sus patines.",
-    map: "",
+    map: "leyenda.gpx",
     reviews: [],
   },
   {
@@ -122,7 +122,7 @@ const routes = [
     image: "",
     approximateDistance: "12 km",
     description: "Esta ruta sigue exclusivamente el carril bici, perfecta para un patinaje relajado pero continuo. Ideal para disfrutar del entorno mientras mantienes un buen ritmo, sin preocuparte por el tráfico vehicular.",
-    map: "",
+    map: "poblados.gpx",
     reviews: [],
   },
   {
