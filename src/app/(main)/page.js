@@ -5,7 +5,7 @@ const page = () => {
   return (
     <div>
       hola
-      <RouteMap gpxData={"/routes/Ruta_Poblados_.gpx"}/>
+      <RouteMap gpxFileName="poblados.gpx" />
     </div>
   );
 };
