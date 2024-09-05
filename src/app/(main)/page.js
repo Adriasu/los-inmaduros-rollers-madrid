@@ -1,11 +1,12 @@
 import RouteMap from "@/components/RouteMap";
+import RouteMapGoogle from "@/components/RouteMapGoogle";
 import React from "react";
 
 const page = () => {
   return (
     <div>
-      hola
-      <RouteMap gpxFileName="arcade.gpx" />
+      <h2>RUTA</h2>
+      <RouteMapGoogle/>
     </div>
   );
 };

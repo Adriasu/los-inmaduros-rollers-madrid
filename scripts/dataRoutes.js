@@ -45,9 +45,9 @@ const routes = [
   {
     name: "Arcade",
     image: "",
-    approximateDistance: "24 km",
+    approximateDistance: "18 km",
     description: "Una ruta de mayor distancia diseñada para patinadores con autonomía y confianza en carretera. Toda la ruta transcurre por asfalto, lo que permite un patinaje fluido y sostenido. Recomendado para quienes buscan velocidad y adrenalina en un entorno urbano.",
-    map: "",
+    map: "https://www.google.com/maps/d/u/3/embed?mid=1jn_UxYOYkPzZAjzy4bRJSZTOrlUtG6w&ehbc=2E312F&noprof=1",
     reviews: [],
   },
   {
@@ -97,7 +97,7 @@ const routes = [
     approximateDistance: "12 km",
     description:
       "Ruta apta para niños y todo aquel que tenga ganas de divertirse. Se hace a ritmo tranquilo y se ayudará a quien lo necesite en las bajadas. Se hacen paradas para reagrupar y beber agua. Recomendamos llevar protecciones, casco y agua.",
-    map: "",
+    map: "https://www.google.com/maps/d/u/3/embed?mid=1cBsMyC0Dp-fURJvEatHCKnvI17KfiHw&ehbc=2E312F&noprof=1",
     reviews: [],
   },
   {
