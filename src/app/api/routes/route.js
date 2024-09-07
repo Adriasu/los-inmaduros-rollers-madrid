@@ -1,5 +1,5 @@
-import dbConnect from '../../../lib/mongodb';
-import Route from '../../../models/Route';
+import dbConnect from '../../../../lib/mongodb.mjs';
+import Route from '../../../../models/Route.mjs';
 
 export async function GET(request) {
   await dbConnect();
