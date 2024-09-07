@@ -6,15 +6,20 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "init-db": "node -r dotenv/config scripts/initDb.mjs"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
     "leaflet": "^1.9.4",
     "leaflet-gpx": "^2.1.2",
+    "mongodb": "^6.8.0",
+    "mongoose": "^8.6.1",
     "next": "14.2.7",
     "react": "^18",
     "react-dom": "^18",
-    "react-leaflet": "^4.2.1"
+    "react-leaflet": "^4.2.1",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "eslint": "^8",
