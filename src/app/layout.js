@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import { PrimeReactProvider } from "primereact/api";
+import RoutersContextProvider from "@/context/RoutesContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,12 +15,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <PrimeReactProvider>
-        <body className={inter.className}>
-          <Navbar />
-          {children}
-        </body>
-      </PrimeReactProvider>
+      <RoutersContextProvider>
+        <PrimeReactProvider>
+          <body className={inter.className}>
+            <Navbar />
+            {children}
+          </body>
+        </PrimeReactProvider>
+      </RoutersContextProvider>
     </html>
   );
 }
