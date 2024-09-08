@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect } from "react";
 
-const RouteMapStrava = () => {
+const RouteMapStrava = ({urlMap}) => {
   return (
     <iframe
-      src="https://www.google.com/maps/d/u/3/embed?mid=1yvRmTC9RW0hfR5fenaVmxXCe-FYWCew&ehbc=2E312F&noprof=1"
+      src={urlMap}
       width="640"
       height="480"
       style={{ border: 0 }}

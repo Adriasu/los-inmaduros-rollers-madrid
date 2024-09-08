@@ -4,8 +4,9 @@ import ContainCardsRoutes from './ContainCardsRoutes'
 
 const page = () => {
   return (
-    <div className='flex justify-center'>
-      <ContainCardsRoutes/>
+    <div className='flex flex-col justify-center'>
+      {/* <ContainCardsRoutes/> */}
+      <RouteInfo/>
     </div>
   )
 }

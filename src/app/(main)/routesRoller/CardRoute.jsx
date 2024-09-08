@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Button } from "primereact/button";
 import React from "react";
 
 const CardRoute = ({ route }) => {
@@ -9,8 +10,9 @@ const CardRoute = ({ route }) => {
       </div>
       <h2>{route.name}</h2>
       <div>
-        
+        <p>Distancia aprox: {route.approximateDistance}</p>
       </div>
+      <Button label="Ver ruta"/>
 
     </div>
   );
