@@ -1,0 +1,34 @@
+"use client";
+import React, { createContext, useEffect, useState } from "react";
+
+export const RoutesContext = createContext(null);
+
+export default function RoutersContextProvider({ children }) {
+  const [dataRoutes, setDataRoutes] = useState([]);
+
+  const fetchDataRoutes = async () => {
+    try {
+      const response = await fetch(
+        "https://los-inmaduros-rollers-madrid.vercel.app/api/routes"
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setDataRoutes(data);
+    } catch (error) {
+      console.log("Error al hacer el fetch:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchDataRoutes();
+  }, []);
+
+  return (
+    <RoutesContext.Provider value={{ dataRoutes }}>
+      {children}
+    </RoutesContext.Provider>
+  );
+}
