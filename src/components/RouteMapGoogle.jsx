@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 
-const RouteMapStrava = ({urlMap}) => {
+const RouteMapGoogle = ({urlMap}) => {
   return (
     <iframe
       src={urlMap}
@@ -14,4 +14,4 @@ const RouteMapStrava = ({urlMap}) => {
   );
 };
 
-export default RouteMapStrava;
+export default RouteMapGoogle;
