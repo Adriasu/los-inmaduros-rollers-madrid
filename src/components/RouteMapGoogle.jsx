@@ -5,13 +5,14 @@ const RouteMapGoogle = ({urlMap}) => {
   return (
     <iframe
       src={urlMap}
-      width="640"
-      height="480"
+      height="320"
       style={{ border: 0 }}
       allowFullScreen
       loading="lazy"
+      className="rounded-2xl w-full"
     ></iframe>
   );
 };
 
 export default RouteMapGoogle;
+
