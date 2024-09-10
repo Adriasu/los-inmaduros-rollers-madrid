@@ -1,5 +1,8 @@
+import { revalidatePath } from 'next/cache';
 import dbConnect from '../../../../lib/mongodb.mjs';
 import Route from '../../../../models/Route.mjs';
+
+export const revalidate = 0;
 
 // Función auxiliar para configurar los headers CORS
 function setCorsHeaders(response) {
@@ -22,48 +25,100 @@ export async function OPTIONS() {
 }
 
 export async function GET(request) {
-  await dbConnect();
-  const routes = await Route.find({}).select('-_id routeId name image approximateDistance description map reviews gallery');
-  
-  const response = new Response(JSON.stringify(routes), {
-    headers: { 'Content-Type': 'application/json' }
-  });
-  
-  return setCorsHeaders(response);
+  try {
+    await dbConnect();
+    console.log('Conectado a la base de datos, obteniendo rutas...');
+    const routes = await Route.find({}).select('-_id routeId name image approximateDistance description map reviews gallery');
+    console.log(`Se encontraron ${routes.length} rutas.`);
+    
+    const response = new Response(JSON.stringify(routes), {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    
+    return setCorsHeaders(response);
+  } catch (error) {
+    console.error('Error al obtener las rutas:', error);
+    const errorResponse = new Response(JSON.stringify({ error: 'Error al obtener las rutas' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
+    return setCorsHeaders(errorResponse);
+  }
 }
 
 export async function POST(request) {
-  await dbConnect();
-  const data = await request.json();
-  const route = await Route.create(data);
+  try {
+    await dbConnect();
+    const data = await request.json();
+    const route = await Route.create(data);
 
-  const response = new Response(JSON.stringify({ routeId: route.routeId, ...route.toObject(), _id: undefined }), {
-    headers: { 'Content-Type': 'application/json' }
-  });
-  
-  return setCorsHeaders(response);
+    revalidatePath('/api/routes');
+
+    const response = new Response(JSON.stringify({ routeId: route.routeId, ...route.toObject(), _id: undefined }), {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    
+    return setCorsHeaders(response);
+  } catch (error) {
+    console.error('Error al crear la ruta:', error);
+    const errorResponse = new Response(JSON.stringify({ error: 'Error al crear la ruta' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
+    return setCorsHeaders(errorResponse);
+  }
 }
 
 export async function PUT(request) {
-  await dbConnect();
-  const { routeId, ...updateData } = await request.json();
-  const updatedRoute = await Route.findOneAndUpdate({ routeId }, updateData, { new: true }).select('-_id routeId name image approximateDistance description map reviews gallery');
-  
-  const response = new Response(JSON.stringify(updatedRoute), {
-    headers: { 'Content-Type': 'application/json' }
-  });
-  
-  return setCorsHeaders(response);
+  try {
+    await dbConnect();
+    const { routeId, ...updateData } = await request.json();
+    const updatedRoute = await Route.findOneAndUpdate({ routeId }, updateData, { new: true }).select('-_id routeId name image approximateDistance description map reviews gallery');
+    
+    if (!updatedRoute) {
+      throw new Error('Ruta no encontrada');
+    }
+
+    revalidatePath('/api/routes');
+
+    const response = new Response(JSON.stringify(updatedRoute), {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    
+    return setCorsHeaders(response);
+  } catch (error) {
+    console.error('Error al actualizar la ruta:', error);
+    const errorResponse = new Response(JSON.stringify({ error: 'Error al actualizar la ruta' }), {
+      status: error.message === 'Ruta no encontrada' ? 404 : 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
+    return setCorsHeaders(errorResponse);
+  }
 }
 
 export async function DELETE(request) {
-  await dbConnect();
-  const { routeId } = await request.json();
-  await Route.findOneAndDelete({ routeId });
+  try {
+    await dbConnect();
+    const { routeId } = await request.json();
+    const deletedRoute = await Route.findOneAndDelete({ routeId });
 
-  const response = new Response(JSON.stringify({ message: 'Route deleted successfully' }), {
-    headers: { 'Content-Type': 'application/json' }
-  });
-  
-  return setCorsHeaders(response);
+    if (!deletedRoute) {
+      throw new Error('Ruta no encontrada');
+    }
+
+    revalidatePath('/api/routes');
+
+    const response = new Response(JSON.stringify({ message: 'Ruta eliminada con éxito' }), {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    
+    return setCorsHeaders(response);
+  } catch (error) {
+    console.error('Error al eliminar la ruta:', error);
+    const errorResponse = new Response(JSON.stringify({ error: 'Error al eliminar la ruta' }), {
+      status: error.message === 'Ruta no encontrada' ? 404 : 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
+    return setCorsHeaders(errorResponse);
+  }
 }
