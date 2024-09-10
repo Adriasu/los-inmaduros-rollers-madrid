@@ -14,7 +14,8 @@ const RouteSchema = new mongoose.Schema({
   description: { type: String, required: true },
   map: { type: String, required: true },
   reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
-  gallery: [{ type: String }]
+  gallery: [{ type: String }],
+  level: { type: String, required: true }
 }, { timestamps: true });
 
 export default mongoose.models.Route || mongoose.model('Route', RouteSchema);

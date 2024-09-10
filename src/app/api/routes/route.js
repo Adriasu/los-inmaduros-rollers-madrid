@@ -28,7 +28,7 @@ export async function GET(request) {
   try {
     await dbConnect();
     console.log('Conectado a la base de datos, obteniendo rutas...');
-    const routes = await Route.find({}).select('-_id routeId name image approximateDistance description map reviews gallery');
+    const routes = await Route.find({}).select('-_id routeId name image approximateDistance description map reviews gallery level');
     console.log(`Se encontraron ${routes.length} rutas.`);
     
     const response = new Response(JSON.stringify(routes), {
@@ -54,7 +54,11 @@ export async function POST(request) {
 
     revalidatePath('/api/routes');
 
-    const response = new Response(JSON.stringify({ routeId: route.routeId, ...route.toObject(), _id: undefined }), {
+    const response = new Response(JSON.stringify({ 
+      routeId: route.routeId, 
+      ...route.toObject(), 
+      _id: undefined 
+    }), {
       headers: { 'Content-Type': 'application/json' }
     });
     
@@ -73,7 +77,11 @@ export async function PUT(request) {
   try {
     await dbConnect();
     const { routeId, ...updateData } = await request.json();
-    const updatedRoute = await Route.findOneAndUpdate({ routeId }, updateData, { new: true }).select('-_id routeId name image approximateDistance description map reviews gallery');
+    const updatedRoute = await Route.findOneAndUpdate(
+      { routeId }, 
+      updateData, 
+      { new: true }
+    ).select('-_id routeId name image approximateDistance description map reviews gallery level');
     
     if (!updatedRoute) {
       throw new Error('Ruta no encontrada');
