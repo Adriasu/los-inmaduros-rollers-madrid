@@ -1,9 +1,15 @@
+"use client";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
 import React from "react";
 
 const CardRoute = ({ route }) => {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push(`/routesRoller/${encodeURIComponent(route.name)}`);
+  };
   return (
     <div className="flex flex-col w-[220px] h-[350px] border border-black rounded-lg p-2">
       <div className="overflow-hidden h-[200px] flex justify-center items-center border border-black rounded-lg bg-slate-300">
@@ -13,9 +19,9 @@ const CardRoute = ({ route }) => {
       <div>
         <p>Distancia aprox: {route.approximateDistance}</p>
       </div>
-      <Link href={`routesRoller/${route.name}`}>
-      <Button label="Ver ruta"/>
-      </Link>
+      
+      <Button label="Ver ruta" onClick={handleClick}/>
+     
 
     </div>
   );
