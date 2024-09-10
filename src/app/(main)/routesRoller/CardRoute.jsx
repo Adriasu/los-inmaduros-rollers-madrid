@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from "primereact/button";
 import React from "react";
 
@@ -12,7 +13,9 @@ const CardRoute = ({ route }) => {
       <div>
         <p>Distancia aprox: {route.approximateDistance}</p>
       </div>
+      <Link href={`routesRoller/${route.name}`}>
       <Button label="Ver ruta"/>
+      </Link>
 
     </div>
   );

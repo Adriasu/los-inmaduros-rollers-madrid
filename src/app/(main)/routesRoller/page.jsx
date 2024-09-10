@@ -5,7 +5,7 @@ import ContainCardsRoutes from './ContainCardsRoutes'
 const page = () => {
   return (
     <div className='flex flex-col justify-center items-center'>
-      {/* <ContainCardsRoutes/> */}
+      <ContainCardsRoutes/>
       <RouteInfo/>
     </div>
   )
