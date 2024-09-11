@@ -10,7 +10,7 @@ const Navbar = () => {
         <Menu className="text-[#58cbe8]" />
 
         <Image
-          src={"/images/logo4.png"}
+          src={"/images/Logo4.png"}
           alt="Los inmaduros roller Madrid"
           width={200}
           height={50}
