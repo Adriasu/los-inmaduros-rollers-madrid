@@ -11,6 +11,9 @@ const RouteInfo = () => {
   const { dataRoutes } = useContext(RoutesContext);
   const id = params.id;
 
+  console.log(id);
+  
+
   const route = dataRoutes.find((r) => r.name === decodeURIComponent(id));
 
   return (

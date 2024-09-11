@@ -1,12 +1,11 @@
-"use client";
-import React, { useEffect } from "react";
+import React from "react";
 
 const RouteMapGoogle = ({urlMap}) => {
   return (
     <iframe
       src={urlMap}
       height="320"
-      style={{ border: 0 }}
+      style={{ border: 10 }}
       allowFullScreen
       loading="lazy"
       className="rounded-2xl w-full"
