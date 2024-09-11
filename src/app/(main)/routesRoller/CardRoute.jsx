@@ -6,7 +6,7 @@ import { Button } from "primereact/button";
 import React from "react";
 
 const CardRoute = ({ route }) => {
-  
+
   const router = useRouter();
 
   const handleClick = () => {
