@@ -11,7 +11,7 @@ const routes = [
         map: "https://www.google.com/maps/d/u/3/embed?mid=1KPK-bbn08C-m3Mb62pWiDUomDCSl7mE&ehbc=2E312F&noprof=1",
         reviews: [],
         galery: [],
-        level: "Medio - Avanzado"
+        level: ["Medio", "Avanzado"]
       },
       {
         name: "Súper héroes",
@@ -22,7 +22,7 @@ const routes = [
         map: "https://www.google.com/maps/d/u/3/embed?mid=1YcrpGJz5BLutYewAFdGDoGC7MueexYw&ehbc=2E312F&noprof=1",
         reviews: [],
         galery: [],
-        level: "Medio - Avanzado"
+        level: ["Medio", "Avanzado"]
       },
       {
         name: "Clásica",
@@ -33,7 +33,7 @@ const routes = [
         map: "https://www.google.com/maps/d/u/3/embed?mid=1h_BwKj1VDwFl8l3sZkBzq4JIiFI_Sds&ehbc=2E312F&noprof=1",
         reviews: [],
         galery: [],
-        level: "Medio - Avanzado"
+        level: ["Medio", "Avanzado"]
       },
       {
         name: "Queen",
@@ -43,7 +43,7 @@ const routes = [
         map: "https://www.google.com/maps/d/u/3/embed?mid=1qptdLKd01l_wmlA9B4R9XjG_SbEXQBY&ehbc=2E312F&noprof=1",
         reviews: [],
         galery: [],
-        level: "Básico - Medio"
+        level: ["Básico", "Medio"]
       },
       {
         name: "El calamar",
@@ -53,7 +53,7 @@ const routes = [
         map: "https://www.google.com/maps/d/u/3/embed?mid=1vQ_lOqqvR1UjxjejpSHmbaeyoRrmQiU&ehbc=2E312F&noprof=1",
         reviews: [],
         galery: [],
-        level: "Medio"
+        level: ["Medio"]
       },
       {
         name: "Arcade",
@@ -63,7 +63,7 @@ const routes = [
         map: "https://www.google.com/maps/d/u/3/embed?mid=1jn_UxYOYkPzZAjzy4bRJSZTOrlUtG6w&ehbc=2E312F&noprof=1",
         reviews: [],
         galery: [],
-        level: "Medio - Avanzado"
+        level: ["Medio", "Avanzado"]
       },
       {
         name: "Anillo ciclista",
@@ -74,7 +74,7 @@ const routes = [
         map: "https://www.google.com/maps/d/u/3/embed?mid=1y31XfqHU-xc3t5w-gbgZH-Zzuuee8lE&ehbc=2E312F&noprof=1",
         reviews: [],
         galery: [],
-        level: "Avanzado"
+        level: ["Avanzado"]
       },
       {
         name: "La leyenda",
@@ -84,7 +84,7 @@ const routes = [
         map: "https://www.google.com/maps/d/u/3/embed?mid=1U-Fy08xRQySKsx0BIOwK99AmFgponNU&ehbc=2E312F&noprof=1",
         reviews: [],
         galery: [],
-        level: "Avanzado"
+        level: ["Avanzado"]
       },
       {
         name: "Vladi",
@@ -94,7 +94,7 @@ const routes = [
         map: "https://www.google.com/maps/d/u/3/embed?mid=1yvRmTC9RW0hfR5fenaVmxXCe-FYWCew&ehbc=2E312F&noprof=1",
         reviews: [],
         galery: [],
-        level: "Medio - Avanzado"
+        level: ["Medio", "Avanzado"]
       },
       {
         name: "4 Torres",
@@ -104,7 +104,7 @@ const routes = [
         map: "https://www.google.com/maps/d/u/3/embed?mid=1eTZzWhQz93cWZL2jYHt7MNDn68hRwxs&ehbc=2E312F&noprof=1",
         reviews: [],
         galery: [],
-        level: "Avanzado"
+        level: ["Avanzado"]
       },
       {
         name: "Dora",
@@ -114,7 +114,7 @@ const routes = [
         map: "https://www.google.com/maps/d/u/3/embed?mid=1TNnJJTb_ATRn8OQzpMCKMI4ZEkFz7ro&ehbc=2E312F&noprof=1",
         reviews: [],
         galery: [],
-        level: "Avanzado"
+        level: ["Avanzado"]
       },
       {
         name: "Caracolera",
@@ -125,7 +125,7 @@ const routes = [
         map: "https://www.google.com/maps/d/u/3/embed?mid=1cBsMyC0Dp-fURJvEatHCKnvI17KfiHw&ehbc=2E312F&noprof=1",
         reviews: [],
         galery: [],
-        level: "Básico - Medio"
+        level: ["Básico", "Medio"]
       },
       {
         name: "Caracolera central",
@@ -136,7 +136,7 @@ const routes = [
         map: "https://www.google.com/maps/d/u/3/embed?mid=1Bi8uD7pZsmez4wXMzhS4PXlOr4XJuXc&ehbc=2E312F&noprof=1",
         reviews: [],
         galery: [],
-        level: "Básico - Medio"
+        level: ["Básico", "Medio"]
       },
       {
         name: "los 40",
@@ -146,7 +146,7 @@ const routes = [
         map: "https://www.google.com/maps/d/u/3/embed?mid=1cKrGgyzWyhQv2W8Ds_H5Wmljcs_O1fE&ehbc=2E312F&noprof=1",
         reviews: [],
         galery: [],
-        level: "Medio"
+        level: ["Medio"]
       },
       {
         name: "Los poblados",
@@ -156,7 +156,7 @@ const routes = [
         map: "https://www.google.com/maps/d/u/3/embed?mid=1pN616xk2ZJZePv6VsT4YeipbyxAX-KE&ehbc=2E312F&noprof=1",
         reviews: [],
         galery: [],
-        level: "Medio"
+        level: ["Medio"]
       },
       {
         name: "La horchata",
@@ -166,7 +166,7 @@ const routes = [
         map: "https://www.google.com/maps/d/u/3/embed?mid=1MWmEtXzG07A1CVSBTSFXhikEikFmMOc&ehbc=2E312F&noprof=1",
         reviews: [],
         galery: [],
-        level: "Medio"
+        level: ["Medio"]
       },
       {
         name: "The prince",
@@ -176,7 +176,7 @@ const routes = [
         map: "https://www.google.com/maps/d/u/3/embed?mid=1_l0RTgRwkPvM-xv8xKOy0QqJOnrK4C0&ehbc=2E312F&noprof=1",
         reviews: [],
         galery: [],
-        level: "Medio - Avanzado"
+        level: ["Medio", "Avanzado"]
       },
 ];
 
