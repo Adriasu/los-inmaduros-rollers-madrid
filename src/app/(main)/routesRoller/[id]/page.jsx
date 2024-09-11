@@ -1,10 +1,11 @@
 import React from 'react'
 import RouteInfo from './RouteInfo'
 
+
 const page = () => {
   return (
     <div>
-      <RouteInfo/>
+    <RouteInfo/>
     </div>
   )
 }
