@@ -1,4 +1,5 @@
 "use client";
+import Buttons from "@/components/Buttons";
 import { MapPin } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -6,7 +7,6 @@ import { Button } from "primereact/button";
 import React from "react";
 
 const CardRoute = ({ route }) => {
-
   const router = useRouter();
 
   const handleClick = () => {
@@ -30,9 +30,11 @@ const CardRoute = ({ route }) => {
           <MapPin />
           <p>{route.approximateDistance}</p>
         </div>
-        <p>
-          <span className="font-semibold">Nivel:</span> {route.level}
-        </p>
+        <div>
+          {route.level.map((level, i) => {
+            return <Buttons key={i} text={level} level={level} />;
+          })}
+        </div>
       </div>
 
       <Button label="Ver ruta" onClick={handleClick} />
