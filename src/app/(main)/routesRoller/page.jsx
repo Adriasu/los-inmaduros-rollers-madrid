@@ -1,5 +1,4 @@
 import React from 'react'
-import RouteInfo from './RouteInfo'
 import ContainCardsRoutes from './ContainCardsRoutes'
 
 const page = () => {
