@@ -9,9 +9,17 @@ const ContainCardsRoutes = () => {
 
   return (
     <div className="">
-      {dataRoutes.map((route, index) => {
-        return <CardRoute key={index} route={route} />;
-      })}
+         <Masonry
+        items={dataRoutes}
+        config={{
+          columns: [1, 2, 3],
+          gap: [24, 12, 20],
+          media: [640, 1024, 1280],
+        }}
+        render={(item, index) => (
+          <CardRoute key={index} route={item} />
+        )}
+      />
     </div>
   );
 };
