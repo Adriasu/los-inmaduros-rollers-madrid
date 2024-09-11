@@ -9,6 +9,12 @@ const Navbar = () => {
     <div className="h-14 w-full bg-[#5ec8e6] flex items-center justify-between py-2 px-3">
       <Menu />
       <Image src={"/images/logo1.png"} alt="Los inmaduros roller Madrid" width={130} height={50} className="rounded"/>
+      <Image src={"/images/logo2.png"} alt="Los inmaduros roller Madrid" width={200} height={50} className="rounded"/>
+      <Image src={"/images/logo3.png"} alt="Los inmaduros roller Madrid" width={200} height={50} className="rounded"/>
+      <Image src={"/images/logo4.png"} alt="Los inmaduros roller Madrid" width={200} height={50} className="rounded overflow-hidden"/>
+      <Image src={"/images/logo6.png"} alt="Los inmaduros roller Madrid" width={200} height={50} className="rounded"/>
+      <Image src={"/images/logo7.png"} alt="Los inmaduros roller Madrid" width={200} height={50} className="rounded"/>
+      <Image src={"/images/logo8.png"} alt="Los inmaduros roller Madrid" width={200} height={50} className="rounded"/>
       <Button label="login" severity="info" rounded className="px-3 py-1"/>
     </div>
   );
