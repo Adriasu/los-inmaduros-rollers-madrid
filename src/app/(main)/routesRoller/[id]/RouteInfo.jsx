@@ -10,11 +10,12 @@ const RouteInfo = () => {
   const params = useParams();
   const { dataRoutes } = useContext(RoutesContext);
   const id = params.id;
-
-  console.log(id);
   
+  const route = dataRoutes.find((route) => route.routeId === id);
 
-  const route = dataRoutes.find((r) => r.name === decodeURIComponent(id));
+  if (!route) {
+    return <div>Loading...</div>;  // O algún mensaje de error
+  }
 
   return (
     <div className="hidden md:flex gap-6 max-w-[1200px] mt-5 border border-black">
