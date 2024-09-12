@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <RoutersContextProvider>
         <PrimeReactProvider>
-          <body className={inter.className}>
+          <body className={`${inter.className} bg-gradient-to-r from-slate-900 to-slate-700`}>
             <Navbar />
             {children}
           </body>
