@@ -88,7 +88,7 @@ const routes = [
       },
       {
         name: "Vladi",
-        image: "https://res.cloudinary.com/dj4j3uoia/image/upload/v1725644239/vladi_z5dsyu.webp",
+        image: "https://res.cloudinary.com/dj4j3uoia/image/upload/v1725806831/vladi2_y288jd.jpg",
         approximateDistance: "24 km",
         description: "Una ruta de mayor distancia diseñada para patinadores con autonomía y confianza en carretera. Toda la ruta transcurre por asfalto, lo que permite un patinaje fluido y sostenido. Recomendado para quienes buscan velocidad y adrenalina en un entorno urbano.",
         map: "https://www.google.com/maps/d/u/3/embed?mid=1yvRmTC9RW0hfR5fenaVmxXCe-FYWCew&ehbc=2E312F&noprof=1",
