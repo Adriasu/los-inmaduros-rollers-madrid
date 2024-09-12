@@ -13,7 +13,7 @@ const CardRoute = ({ route }) => {
     router.push(`/routesRoller/${encodeURIComponent(route.name)}`);
   };
   return (
-    <div className="flex flex-col border border-black rounded-lg p-2 gap-2">
+    <div className="flex flex-col border border-slate-600 rounded-lg p-2 gap-2 bg-[#464954] shadow-[-2px_4px_43px_5px_#029EE963] hover:scale-105 hover:border-white hover:border-[2px]">
       <Image
         src={route.image}
         alt={route.name}
@@ -22,15 +22,15 @@ const CardRoute = ({ route }) => {
         className="rounded-lg w-full"
       />
 
-      <h2 className="text-[#76A8B5] text-xl sm:text-2xl font-bold">
+      <h2 className="text-[#58cbe8] text-xl sm:text-2xl font-bold">
         {route.name}
       </h2>
       <div className="flex flex-col gap-2">
-        <div className="flex gap-2">
+        <div className="flex gap-2 text-white">
           <MapPin />
-          <p>{route.approximateDistance}</p>
+          <p>Aprox {route.approximateDistance}</p>
         </div>
-        <div>
+        <div className="flex gap-1 sm:gap-2">
           {route.level.map((level, i) => {
             return <Buttons key={i} text={level} level={level} />;
           })}

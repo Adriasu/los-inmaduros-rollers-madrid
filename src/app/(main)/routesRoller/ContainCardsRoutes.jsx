@@ -16,7 +16,7 @@ const ContainCardsRoutes = () => {
             items={dataRoutes}
             config={{
               columns: [2, 2, 3],
-              gap: [24, 12, 25],
+              gap: [10, 12, 25],
               media: [640, 1024, 1280],
             }}
             render={(item, index) => <CardRoute key={index} route={item} />}

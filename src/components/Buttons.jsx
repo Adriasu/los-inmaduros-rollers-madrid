@@ -14,7 +14,7 @@ const Buttons = ({level, text}) => {
     }
   };
 
-  return <button className={`${buttonStyle()}`}>{text}</button>;
+  return <button className={`${buttonStyle()} cursor-auto`}>{text}</button>;
 };
 
 export default Buttons;
