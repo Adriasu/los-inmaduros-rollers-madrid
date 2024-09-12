@@ -13,7 +13,7 @@ const CardRoute = ({ route }) => {
     router.push(`/routesRoller/${encodeURIComponent(route.name)}`);
   };
   return (
-    <div className="flex flex-col border border-slate-600 rounded-lg p-2 gap-2 bg-[#464954] shadow-[-2px_4px_43px_5px_#029EE963] hover:scale-105 hover:border-white hover:border-[2px]">
+    <div className="flex flex-col border border-slate-600 rounded-lg p-2 gap-2 bg-[#464954] shadow-[-2px_4px_43px_5px_#029EE963] hover:scale-[1.02] hover:border-white hover:border-[2px]">
       <Image
         src={route.image}
         alt={route.name}
