@@ -9,10 +9,10 @@ const ContainCardsRoutes = () => {
   const { dataRoutes } = useContext(RoutesContext);
 
   return (
-    <div className="flex justify-center items-center w-full sm:w-2/3 sm:mx-auto">
+    <div className="flex justify-center items-center w-full sm:w-2/3 sm:mx-auto pt-5">
       <div className="flex flex-col w-full gap-3 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-5 text-white">
-          <div className="flex w-full items-center h-10 rounded-[12px] py-2 px-4 bg-[#454752] focus-within:bg-[#5d606e]">
+          <div className="flex max-w-[300px] items-center h-10 rounded-[12px] py-2 px-4 bg-[#454752] focus-within:bg-[#5d606e]">
             <Search />
             <input
               type="text"

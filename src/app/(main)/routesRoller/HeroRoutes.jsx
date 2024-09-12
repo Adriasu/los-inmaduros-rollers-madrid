@@ -3,7 +3,7 @@ import React from "react";
 const HeroRoutes = () => {
   return (
     <section>
-      <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
+      <div className="mx-auto max-w-screen-xl px-3 py-4 sm:px-6 lg:px-8 rounded-2xl bg-gradient-to-r from-slate-800 to-slate-600 shadow-[-2px_4px_43px_5px_#029EE963]">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-16">
           <div className="relative h-64 overflow-hidden rounded-lg sm:h-80 lg:order-last lg:h-full">
             <img
@@ -15,7 +15,7 @@ const HeroRoutes = () => {
 
           <div className="lg:py-24">
             <h3> ¡Descubre nuestro recorrido!</h3>
-            <h2 className="text-3xl font-bold sm:text-4xl">
+            <h2 className="text-3xl font-bold sm:text-4xl bg-gradient-to-r from-cyan-900 to-cyan-600 bg-clip-text text-transparent">
               Cada ruta, una nueva historia sobre ruedas
             </h2>
 
