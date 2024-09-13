@@ -2,6 +2,7 @@ import React from 'react'
 import RouteInfo from './RouteInfo'
 import Reviews from './Reviews'
 import RouteInfoMobile from './RouteInfoMobile'
+import ReviewsMobile from './ReviewsMobile'
 
 
 const page = () => {
@@ -10,6 +11,7 @@ const page = () => {
     <RouteInfo/>
     <RouteInfoMobile/>
     <Reviews/>
+    <ReviewsMobile/>
     </div>
   )
 }
