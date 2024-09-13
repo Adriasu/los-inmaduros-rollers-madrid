@@ -42,7 +42,7 @@ const MenuNav = () => {
           </div>
         )}
       >
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-5 rounded-2xl border-[1px] border-[#58cbe8] p-3">
           <div className="bg-slate-600 size-20 rounded-full"></div>
           <div>
             <h1 className="font-bold">Hola,</h1>
@@ -53,7 +53,7 @@ const MenuNav = () => {
         <Button label="login" className="px-8 py-2" />
         </div> */}
 
-        <ul className="mt-10 flex flex-col gap-5">
+        <ul className="mt-10 flex flex-col gap-5 rounded-2xl border-[1px] border-[#58cbe8] p-3">
           <Link href={"/"}>
             <li className={`${styleMenu}`}>
               <House />
@@ -79,7 +79,7 @@ const MenuNav = () => {
           </li>
         </ul>
 
-        <div className="mt-[200px] w-full flex items-center justify-end gap-2">
+        <div className="mt-[180px] w-full flex items-center justify-end gap-2">
           <Button
             label="Cerrar sesión"
             icon="pi pi-sign-out"
