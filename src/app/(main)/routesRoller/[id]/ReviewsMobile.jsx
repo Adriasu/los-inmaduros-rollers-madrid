@@ -16,9 +16,9 @@ const ReviewsMobile = () => {
   };
   return (
     <div className="m-auto flex gap-6 max-w-[1200px] text-white justify-center mt-5 md:hidden">
-      <div className="flex flex-col gap-10 rounded-2xl bg-gradient-to-r from-slate-800 to-slate-600 shadow-[-2px_4px_43px_5px_#029EE963] mx-auto max-w-screen-xl px-6 py-4">
+      <div className="flex flex-col gap-5 rounded-2xl bg-gradient-to-r from-slate-800 to-slate-600 shadow-[-2px_4px_43px_5px_#029EE963] mx-auto max-w-screen-xl px-6 py-4">
         <div className="w-full">
-          <div className="my-4">
+          <div className="my-3">
             <h3>Califica la ruta:</h3>
             <Rating
               value={rating}
@@ -27,7 +27,7 @@ const ReviewsMobile = () => {
             />
           </div>
 
-          <div className="my-4">
+          <div className="my-3">
             <h3>Deja una reseña:</h3>
             <InputTextarea
               rows={5}
@@ -40,16 +40,29 @@ const ReviewsMobile = () => {
 
           <Button label="Enviar reseña" onClick={handleSubmit} />
         </div>
-        <div className="flex flex-col gap-2 w-full rounded-2xl border-[1px] border-[#58cbe8] p-6">
-          <p className="font-bold text-xl">Adriana Suárez</p>
-          <Rating value={5} disabled cancel={false} />
-          <p>
-            No es apta para niños pequeños, la subida mejor por la zona de las
-            cascadas. La bajada se hace larga por la carretera y sin sombras.
-            Las vistas durante la primera mitad del recorrido son increíbles.
-            Merece mucho la pena el esfuerzo. Cuando acabas puedes refrescarte
-            en el rio.
-          </p>
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-2 w-full rounded-2xl border-[1px] border-[#58cbe8] p-6">
+            <p className="font-bold text-xl">Adriana Suárez</p>
+            <Rating value={5} disabled cancel={false} />
+            <p>
+              No es apta para niños pequeños, la subida mejor por la zona de las
+              cascadas. La bajada se hace larga por la carretera y sin sombras.
+              Las vistas durante la primera mitad del recorrido son increíbles.
+              Merece mucho la pena el esfuerzo. Cuando acabas puedes refrescarte
+              en el rio.
+            </p>
+          </div>
+          <div className="flex flex-col gap-2 w-full rounded-2xl border-[1px] border-[#58cbe8] p-6">
+            <p className="font-bold text-xl">Adriana Suárez</p>
+            <Rating value={5} disabled cancel={false} />
+            <p>
+              No es apta para niños pequeños, la subida mejor por la zona de las
+              cascadas. La bajada se hace larga por la carretera y sin sombras.
+              Las vistas durante la primera mitad del recorrido son increíbles.
+              Merece mucho la pena el esfuerzo. Cuando acabas puedes refrescarte
+              en el rio.
+            </p>
+          </div>
         </div>
       </div>
     </div>
