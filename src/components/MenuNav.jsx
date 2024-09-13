@@ -5,7 +5,7 @@ import { Button } from "primereact/button";
 import {
   FolderHeart,
   HeartHandshake,
-  LogOut,
+  House,
   Menu,
   Route,
   SquarePen,
@@ -15,6 +15,8 @@ import Link from "next/link";
 
 const MenuNav = () => {
   const [visible, setVisible] = useState(false);
+
+  const styleMenu = "flex gap-2 hover:text-black hover:underline cursor-pointer"
 
   return (
     <div>
@@ -51,26 +53,32 @@ const MenuNav = () => {
         </div> */}
 
         <ul className="mt-10 flex flex-col gap-5">
+          <Link href={"/"}>
+            <li className={`${styleMenu}`}>
+              <House/>
+              Inicio
+            </li>
+          </Link>
           <Link href={"/routesRoller"}>
-            <li className="flex gap-2">
+            <li className={`${styleMenu}`}>
               <Route />
               Rutas
             </li>
           </Link>
-          <li className="flex gap-2">
+          <li className={`${styleMenu}`}>
             <FolderHeart />
             Tus favoritos
           </li>
-          <li className="flex gap-2">
+          <li className={`${styleMenu}`}>
             <SquarePen /> Convocar ruta
           </li>
-          <li className="flex gap-2">
+          <li className={`${styleMenu}`}>
             <HeartHandshake />
             Propón tu ruta
           </li>
         </ul>
 
-        <div className="mt-[250px] w-full flex items-center justify-end gap-2">
+        <div className="mt-[200px] w-full flex items-center justify-end gap-2">
           <Button
             label="Cerrar sesión"
             icon="pi pi-sign-out"
