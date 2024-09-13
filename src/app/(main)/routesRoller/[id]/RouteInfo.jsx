@@ -17,7 +17,7 @@ const RouteInfo = () => {
 
   if (!route || isLoading) {
     return (
-      <div className="hiddem sm:w-full h-[500px] mx-auto max-w-screen-xl px-3 py-4 sm:px-6 lg:px-8 rounded-2xl flex justify-center items-center">
+      <div className="hidden sm:w-full h-[500px] mx-auto max-w-screen-xl px-3 py-4 rounded-2xl sm:flex justify-center items-center">
         <div class="spinner"></div>
       </div>
     );
