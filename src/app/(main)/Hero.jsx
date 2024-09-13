@@ -1,5 +1,6 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React from "react";
+
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -13,99 +14,47 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import Image from "next/image";
 
 const Hero = () => {
+  const imagesHeroLanding = [
+    "/images/anillo.jpg",
+    "/images/arcade.webp",
+    "/images/calamar.jpg",
+    "/images/caracolera.jpeg",
+    "/images/clasica.jpeg",
+  ];
+
   return (
-    <>
-      <Swiper
-        spaceBetween={30}
-        centeredSlides={true}
-        autoplay={{
-          delay: 2500,
-          disableOnInteraction: false,
-        }}
-        pagination={{
-          clickable: true,
-        }}
-        navigation={true}
-        modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper"
-      >
-        {/* {imageCarrusel.map((image) => {
-          <SwiperSlide>
-            <Image
-              src="/images/4torres.jpeg"
-              alt="4torres"
-              width={300}
-              height={300}
-              className="object-cover w-[400px] h-[400px]"
-            />
-          </SwiperSlide>;
-        })} */}
-        <SwiperSlide>
-          <Image
-            src="/images/anillo.jpg"
-            alt="anillo"
-            width={300}
-            height={300}
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src="/images/arcade.webp"
-            alt="arcade"
-            width={300}
-            height={300}
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src="/images/calamar.jpg"
-            alt="calamar"
-            width={300}
-            height={300}
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src="/images/caracolera.jpeg"
-            alt="caracolera"
-            width={300}
-            height={300}
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src="/images/clasica.jpeg"
-            alt="4torres"
-            width={300}
-            height={300}
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src="/images/dora.jpg"
-            alt="4torres"
-            width={300}
-            height={300}
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src="/images/heroes.webp"
-            alt="4torres"
-            width={300}
-            height={300}
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src="/images/leyenda.jpg"
-            alt="4torres"
-            width={300}
-            height={300}
-          />
-        </SwiperSlide>
-      </Swiper>
-    </>
+    <div className="">
+      <div className="">
+        <Swiper
+          spaceBetween={30}
+          centeredSlides={true}
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: false,
+          }}
+          pagination={{
+            clickable: true,
+          }}
+          navigation={true}
+          modules={[Autoplay, Pagination, Navigation]}
+          className="mySwiper"
+        >
+          {imagesHeroLanding.map((image, i) => {
+            return (
+              <SwiperSlide key={i}>
+                <Image
+                  src={image}
+                  alt="4torres"
+                  width={300}
+                  height={300}
+                  className="object-contain w-full h-[500px]"
+                />
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
+      </div>
+    </div>
   );
 };
 

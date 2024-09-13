@@ -2,7 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
-import 'primeicons/primeicons.css';
+import "primeicons/primeicons.css";
 import { PrimeReactProvider } from "primereact/api";
 import RoutersContextProvider from "@/context/RoutesContext";
 
@@ -18,7 +18,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <RoutersContextProvider>
         <PrimeReactProvider>
-          <body className={`${inter.className} bg-gradient-to-r from-slate-900 to-slate-700`}>
+          <body
+            className={`${inter.className} bg-gradient-to-r from-slate-900 to-slate-700`}
+          >
             <Navbar />
             {children}
           </body>
