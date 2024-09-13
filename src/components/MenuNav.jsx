@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Sidebar } from "primereact/sidebar";
 import { Button } from "primereact/button";
 import { Menu } from "lucide-react";
+import Image from "next/image";
 
 const MenuNav = () => {
   const [visible, setVisible] = useState(false);
@@ -19,6 +20,11 @@ const MenuNav = () => {
         onHide={() => setVisible(false)}
         position="left"
       >
+
+        <div>
+            <Image src={""} alt="Los inmaduros roller Madrid" height={60} width={200}/>
+        </div>
+
         <h3>Menú</h3>
         <ul>
           <li>Inicio</li>
