@@ -8,10 +8,11 @@ import React from "react";
 
 const CardRoute = ({ route }) => {
   const router = useRouter();
-  
+
   const handleClick = () => {
     router.push(`/routesRoller/${route.routeId}`);
   };
+
   return (
     <div className="flex flex-col border border-slate-600 rounded-lg p-2 gap-2 bg-[#464954] shadow-[-2px_4px_43px_5px_#029EE963] hover:scale-[1.02] hover:border-white hover:border-[2px]">
       <Image

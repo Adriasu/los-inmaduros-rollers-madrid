@@ -5,16 +5,21 @@ import { RoutesContext } from "@/context/RoutesContext";
 import Image from "next/image";
 import { Bookmark, Send, Star } from "lucide-react";
 import RouteMapGoogle from "@/components/RouteMapGoogle";
+import Buttons from "@/components/Buttons";
 
 const RouteInfo = () => {
   const params = useParams();
-  const { dataRoutes } = useContext(RoutesContext);
+  const { dataRoutes, isLoading } = useContext(RoutesContext);
   const id = params.id;
 
   const route = dataRoutes.find((route) => route.routeId === id);
 
-  if (!route) {
-    return <div>Loading...</div>;
+  if (!route || isLoading) {
+    return (
+      <div className="w-full h-[500px] mx-auto max-w-screen-xl px-3 py-4 sm:px-6 lg:px-8 rounded-2xl flex justify-center items-center">
+      <div class="spinner"></div>
+    </div>
+    );
   }
 
   return (
@@ -46,7 +51,12 @@ const RouteInfo = () => {
             <Star />
             <div>
               <p>{route.approximateDistance}</p>
-              <p>{route.level}</p>
+
+              <div className="flex gap-2">
+                {route.level.map((level, i) => {
+                  return <Buttons key={i} text={level} level={level} />;
+                })}
+              </div>
             </div>
           </div>
         </div>

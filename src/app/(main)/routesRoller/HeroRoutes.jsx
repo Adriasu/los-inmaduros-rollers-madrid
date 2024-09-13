@@ -1,6 +1,34 @@
-import React from "react";
+"use client";
+import React, { useContext } from "react";
+import { RoutesContext } from "@/context/RoutesContext";
+import Image from "next/image";
 
 const HeroRoutes = () => {
+  const { isLoading } = useContext(RoutesContext);
+
+  if (isLoading) {
+    return (
+      //   <div class=" w-full mx-auto max-w-screen-xl px-3 py-4 sm:px-6 lg:px-8 rounded-2xl bg-gray-600 animate-pulse">
+      //   <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-16">
+      //     <div class="relative h-64 overflow-hidden rounded-lg sm:h-80 lg:order-last lg:h-full">
+      //       <div class="absolute inset-0 h-full w-full bg-gray-400"></div>
+      //     </div>
+
+      //     <div class="lg:py-24">
+      //       <div class="h-4 bg-gray-400 rounded w-1/2 mb-2"></div>
+      //       <div class="h-6 bg-gray-400 rounded w-3/4 mb-4"></div>
+      //       <div class="h-4 bg-gray-400 rounded w-full mt-4"></div>
+      //       <div class="h-4 bg-gray-400 rounded w-2/3 mt-2"></div>
+      //       <div class="h-4 bg-gray-400 rounded w-1/2 mt-2"></div>
+      //     </div>
+      //   </div>
+      // </div>
+      <div className="w-full h-[500px] mx-auto max-w-screen-xl px-3 py-4 sm:px-6 lg:px-8 rounded-2xl flex justify-center items-center">
+        <div class="spinner"></div>
+      </div>
+    );
+  }
+
   return (
     <section className="px-4 mt-3">
       <div className="mx-auto max-w-screen-xl px-3 py-4 sm:px-6 lg:px-8 rounded-2xl bg-gradient-to-r from-slate-800 to-slate-600 shadow-[-2px_4px_43px_5px_#029EE963]">
@@ -14,7 +42,10 @@ const HeroRoutes = () => {
           </div>
 
           <div className="lg:py-24">
-            <h3 className="text-xl font-semibold sm:text-2xl text-white"> ¡Descubre nuestro recorrido!</h3>
+            <h3 className="text-xl font-semibold sm:text-2xl text-white">
+              {" "}
+              ¡Descubre nuestro recorrido!
+            </h3>
             <h2 className="text-3xl font-bold sm:text-4xl bg-gradient-to-r from-cyan-600 to-cyan-200 bg-clip-text text-transparent">
               Cada ruta, una nueva historia sobre ruedas
             </h2>

@@ -5,6 +5,7 @@ export const RoutesContext = createContext(null);
 
 export default function RoutersContextProvider({ children }) {
   const [dataRoutes, setDataRoutes] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchDataRoutes = async () => {
     try {
@@ -17,6 +18,7 @@ export default function RoutersContextProvider({ children }) {
 
       const data = await response.json();
       setDataRoutes(data);
+      setIsLoading(false)
     } catch (error) {
       console.log("Error al hacer el fetch:", error.message);
     }
@@ -29,7 +31,7 @@ export default function RoutersContextProvider({ children }) {
 console.log(dataRoutes);
 
   return (
-    <RoutesContext.Provider value={{ dataRoutes }}>
+    <RoutesContext.Provider value={{ dataRoutes, isLoading }}>
       {children}
     </RoutesContext.Provider>
   );
