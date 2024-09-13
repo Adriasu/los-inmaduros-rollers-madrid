@@ -2,8 +2,16 @@
 import React, { useState } from "react";
 import { Sidebar } from "primereact/sidebar";
 import { Button } from "primereact/button";
-import { Menu } from "lucide-react";
+import {
+  FolderHeart,
+  HeartHandshake,
+  LogOut,
+  Menu,
+  Route,
+  SquarePen,
+} from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 const MenuNav = () => {
   const [visible, setVisible] = useState(false);
@@ -34,19 +42,46 @@ const MenuNav = () => {
         <div className="flex items-center gap-5">
           <div className="bg-slate-600 size-20 rounded-full"></div>
           <div>
-            <h1>Hola,</h1>
+            <h1 className="font-bold">Hola,</h1>
             <h1>Adriana Suárez</h1>
           </div>
         </div>
+        {/* <div className="w-full flex justify-center items-center">
+        <Button label="login" className="px-8 py-2" />
+        </div> */}
 
-        <ul>
-          <li>Rutas</li>
-          <li></li>
-          <li>Contacto</li>
+        <ul className="mt-10 flex flex-col gap-5">
+          <Link href={"/routesRoller"}>
+            <li className="flex gap-2">
+              <Route />
+              Rutas
+            </li>
+          </Link>
+          <li className="flex gap-2">
+            <FolderHeart />
+            Tus favoritos
+          </li>
+          <li className="flex gap-2">
+            <SquarePen /> Convocar ruta
+          </li>
+          <li className="flex gap-2">
+            <HeartHandshake />
+            Propón tu ruta
+          </li>
         </ul>
+
+        <div className="mt-[250px] w-full flex items-center justify-end gap-2">
+          <Button
+            label="Cerrar sesión"
+            icon="pi pi-sign-out"
+            iconPos="right"
+            className="px-3 py-2"
+          />
+        </div>
       </Sidebar>
     </div>
   );
 };
 
 export default MenuNav;
+
