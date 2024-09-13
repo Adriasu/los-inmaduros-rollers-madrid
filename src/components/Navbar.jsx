@@ -16,7 +16,7 @@ const Navbar = () => {
           height={50}
         />
 
-        <Button label="login" severity="info" rounded className="px-3 py-1" />
+        <Button label="login" className="px-3 py-1" />
       </div>
     </div>
   );

@@ -19,9 +19,11 @@ const HeroRoutes = () => {
       <div className="mx-auto max-w-screen-xl px-3 py-4 sm:px-6 lg:px-8 rounded-2xl bg-gradient-to-r from-slate-800 to-slate-600 shadow-[-2px_4px_43px_5px_#029EE963]">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-16">
           <div className="relative h-64 overflow-hidden rounded-lg sm:h-80 lg:order-last lg:h-full">
-            <img
-              alt=""
-              src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+            <Image
+              src={"/images/heroRoutes.jpeg"}
+              alt="Los inmaduros roller Madrid"
+              width={560}
+              height={416}
               className="absolute inset-0 h-full w-full object-cover"
             />
           </div>
@@ -49,3 +51,5 @@ const HeroRoutes = () => {
 };
 
 export default HeroRoutes;
+
+
