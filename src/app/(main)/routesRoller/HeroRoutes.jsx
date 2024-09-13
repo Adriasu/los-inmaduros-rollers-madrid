@@ -8,21 +8,6 @@ const HeroRoutes = () => {
 
   if (isLoading) {
     return (
-      //   <div class=" w-full mx-auto max-w-screen-xl px-3 py-4 sm:px-6 lg:px-8 rounded-2xl bg-gray-600 animate-pulse">
-      //   <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-16">
-      //     <div class="relative h-64 overflow-hidden rounded-lg sm:h-80 lg:order-last lg:h-full">
-      //       <div class="absolute inset-0 h-full w-full bg-gray-400"></div>
-      //     </div>
-
-      //     <div class="lg:py-24">
-      //       <div class="h-4 bg-gray-400 rounded w-1/2 mb-2"></div>
-      //       <div class="h-6 bg-gray-400 rounded w-3/4 mb-4"></div>
-      //       <div class="h-4 bg-gray-400 rounded w-full mt-4"></div>
-      //       <div class="h-4 bg-gray-400 rounded w-2/3 mt-2"></div>
-      //       <div class="h-4 bg-gray-400 rounded w-1/2 mt-2"></div>
-      //     </div>
-      //   </div>
-      // </div>
       <div className="w-full h-[500px] mx-auto max-w-screen-xl px-3 py-4 sm:px-6 lg:px-8 rounded-2xl flex justify-center items-center">
         <div class="spinner"></div>
       </div>
