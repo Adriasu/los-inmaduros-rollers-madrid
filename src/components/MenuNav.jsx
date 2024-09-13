@@ -16,7 +16,8 @@ import Link from "next/link";
 const MenuNav = () => {
   const [visible, setVisible] = useState(false);
 
-  const styleMenu = "flex gap-2 hover:text-black hover:underline cursor-pointer"
+  const styleMenu =
+    "flex gap-2 hover:text-black hover:underline cursor-pointer";
 
   return (
     <div>
@@ -33,10 +34,10 @@ const MenuNav = () => {
         header={() => (
           <div>
             <Image
-              src={"/images/logo4.png"}
+              src={"/images/Logo4.png"}
               alt="Los inmaduros roller Madrid"
-              height={60}
               width={200}
+              height={50}
             />
           </div>
         )}
@@ -55,7 +56,7 @@ const MenuNav = () => {
         <ul className="mt-10 flex flex-col gap-5">
           <Link href={"/"}>
             <li className={`${styleMenu}`}>
-              <House/>
+              <House />
               Inicio
             </li>
           </Link>
@@ -92,4 +93,3 @@ const MenuNav = () => {
 };
 
 export default MenuNav;
-

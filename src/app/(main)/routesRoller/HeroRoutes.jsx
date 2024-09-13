@@ -18,7 +18,7 @@ const HeroRoutes = () => {
     <section className="px-4 mt-3">
       <div className="mx-auto max-w-screen-xl px-3 py-4 sm:px-6 lg:px-8 rounded-2xl bg-gradient-to-r from-slate-800 to-slate-600 shadow-[-2px_4px_43px_5px_#029EE963]">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-16">
-          <div className="relative h-64 overflow-hidden rounded-lg sm:h-80 lg:order-last lg:h-full">
+          <div className="relative h-64 overflow-hidden rounded-lg sm:h-[500px] lg:order-last lg:h-full">
             <Image
               src={"/images/heroRoutes.jpeg"}
               alt="Los inmaduros roller Madrid"
