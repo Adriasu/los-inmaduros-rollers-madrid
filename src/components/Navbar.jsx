@@ -2,12 +2,14 @@ import { Menu } from "lucide-react";
 import React from "react";
 import { Button } from "primereact/button";
 import Image from "next/image";
+import MenuNav from "./MenuNav";
+import SideBarMenu from "./SideBarMenu";
 
 const Navbar = () => {
   return (
     <div className="w-full flex justify-center sticky top-0 z-50 px-5">
       <div className="my-3 h-14 w-[1200px] flex items-center justify-between py-2 px-3 shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-[4.2px] border rounded-2xl border-solid border-[rgba(71,85,105,0.19)] bg-[#475569e3]">
-        <Menu className="text-[#58cbe8]" />
+        <MenuNav />
 
         <Image
           src={"/images/Logo4.png"}
@@ -23,7 +25,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
-
-
