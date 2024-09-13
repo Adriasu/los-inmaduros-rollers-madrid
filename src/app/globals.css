@@ -61,3 +61,10 @@
      transform: rotate(1turn);
   }
 }
+
+
+.p-sidebar-close-icon {
+  color: #58cbe8; 
+  font-size: 1.5rem; 
+ }
+

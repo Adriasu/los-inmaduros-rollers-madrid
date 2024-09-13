@@ -10,7 +10,7 @@ const MenuNav = () => {
 
   return (
     <div>
-        <Menu
+      <Menu
         onClick={() => setVisible(true)}
         className="p-button-rounded p-button-text text-[#58cbe8] hover:bg-[#464954] size-8 flex justify-center items-center rounded-sm cursor-pointer hover:scale-[1.15]"
       />
@@ -19,17 +19,29 @@ const MenuNav = () => {
         visible={visible}
         onHide={() => setVisible(false)}
         position="left"
+        className="bg-gradient-to-t from-slate-300 to-slate-500 custom-sidebar"
+        header={() => (
+          <div>
+            <Image
+              src={"/images/logo4.png"}
+              alt="Los inmaduros roller Madrid"
+              height={60}
+              width={200}
+            />
+          </div>
+        )}
       >
-
-        <div>
-            <Image src={""} alt="Los inmaduros roller Madrid" height={60} width={200}/>
+        <div className="flex items-center gap-5">
+          <div className="bg-slate-600 size-20 rounded-full"></div>
+          <div>
+            <h1>Hola,</h1>
+            <h1>Adriana Suárez</h1>
+          </div>
         </div>
 
-        <h3>Menú</h3>
         <ul>
-          <li>Inicio</li>
           <li>Rutas</li>
-          <li>Nosotros</li>
+          <li></li>
           <li>Contacto</li>
         </ul>
       </Sidebar>
