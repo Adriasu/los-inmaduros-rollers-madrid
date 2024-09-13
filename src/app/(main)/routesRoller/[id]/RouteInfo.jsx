@@ -16,14 +16,14 @@ const RouteInfo = () => {
 
   if (!route || isLoading) {
     return (
-      <div className="w-full h-[500px] mx-auto max-w-screen-xl px-3 py-4 sm:px-6 lg:px-8 rounded-2xl flex justify-center items-center">
+      <div className="hiddem sm:w-full h-[500px] mx-auto max-w-screen-xl px-3 py-4 sm:px-6 lg:px-8 rounded-2xl flex justify-center items-center">
         <div class="spinner"></div>
       </div>
     );
   }
 
   return (
-    <div className="mx-auto hidden md:flex gap-6 max-w-[1200px] text-white mt-5">
+    <div className="m-auto hidden md:flex gap-6 max-w-[1200px] text-white justify-center">
       <div>
         <Image
           src={route.image}

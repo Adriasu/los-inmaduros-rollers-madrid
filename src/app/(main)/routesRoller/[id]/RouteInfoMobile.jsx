@@ -16,14 +16,14 @@ const RouteInfoMobile = () => {
   
     if (!route || isLoading) {
       return (
-        <div className="w-full h-[500px] mx-auto max-w-screen-xl px-3 py-4 sm:px-6 lg:px-8 rounded-2xl flex justify-center items-center">
+        <div className="w-full h-[500px] mx-auto max-w-screen-xl px-3 py-4 rounded-2xl flex justify-center items-center sm:hidden">
           <div class="spinner"></div>
         </div>
       );
     }
   
     return (
-      <div className="mx-auto flex flex-col gap-6 max-w-[1200px] text-white mt-5 md:hidden">
+      <div className="mx-auto flex flex-col gap-3 max-w-[1200px] text-white px-5 md:hidden">
         <div>
           <Image
             src={route.image}
@@ -33,7 +33,7 @@ const RouteInfoMobile = () => {
             className="rounded-2xl"
           />
         </div>
-        <div className="flex flex-col gap-10 w-2/5">
+        <div className="flex flex-col gap-3 m-auto w-full">
           <div className="flex flex-col gap-2">
             <div className="flex w-full justify-end gap-3">
               <div className="bg-[#464954] size-8 flex justify-center items-center rounded-md cursor-pointer hover:scale-[1.15] border-[1px] border-[#58cbe8]">
