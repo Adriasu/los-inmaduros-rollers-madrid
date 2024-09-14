@@ -5,6 +5,7 @@ import "primereact/resources/themes/lara-light-cyan/theme.css";
 import "primeicons/primeicons.css";
 import { PrimeReactProvider } from "primereact/api";
 import RoutersContextProvider from "@/context/RoutesContext";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({ children }) {
           >
             <Navbar />
             {children}
+            <Footer />
           </body>
         </PrimeReactProvider>
       </RoutersContextProvider>

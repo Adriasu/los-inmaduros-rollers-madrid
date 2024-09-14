@@ -54,13 +54,13 @@ const MenuNav = () => {
         </div> */}
 
         <ul className="mt-10 flex flex-col gap-5 rounded-2xl border-[1px] border-[#58cbe8] p-3">
-          <Link href={"/"}>
+          <Link href={"/"} onClick={() => setVisible(false)}>
             <li className={`${styleMenu}`}>
               <House />
               Inicio
             </li>
           </Link>
-          <Link href={"/routesRoller"}>
+          <Link href={"/routesRoller"} onClick={() => setVisible(false)}>
             <li className={`${styleMenu}`}>
               <Route />
               Rutas
