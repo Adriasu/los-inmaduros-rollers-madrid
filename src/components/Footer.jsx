@@ -29,6 +29,13 @@ const Footer = () => {
               <i className="pi pi-instagram" style={{ fontSize: "1.5rem" }}></i>
             </Link>
             <Link
+              target="_blank"
+              href={"https://chat.whatsapp.com/DZBoC7M8jtc0YMLpOGIwlo"}
+              className="hover:scale-[1.05]"
+            >
+              <i className="pi pi-whatsapp" style={{ fontSize: "1.5rem" }}></i>
+            </Link>
+            <Link
               className="hover:scale-[1.05]"
               href={"mailto:losinmadurosrollermadrid@gmail.com"}
               title="Enviar correo"
