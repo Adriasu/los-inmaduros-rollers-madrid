@@ -21,7 +21,7 @@ const Hero = () => {
   ];
 
   return (
-    <div className="px-5">
+    <div className="hidden md:flex px-5">
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
