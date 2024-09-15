@@ -25,6 +25,7 @@ export default function RootLayout({ children }) {
               className={`${inter.className} bg-gradient-to-r from-slate-900 to-slate-700`}
             >
               <Navbar />
+
               {children}
               <Footer />
             </body>

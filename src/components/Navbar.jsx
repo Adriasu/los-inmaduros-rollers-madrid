@@ -4,6 +4,7 @@ import { Button } from "primereact/button";
 import Image from "next/image";
 import MenuNav from "./MenuNav";
 import { useRouter } from "next/navigation";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 const Navbar = () => {
   const router = useRouter();
@@ -24,6 +25,15 @@ const Navbar = () => {
           onClick={handleClick}
           className="cursor-pointer"
         />
+
+        <div>
+          <SignedOut>
+            <SignInButton />
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+        </div>
 
         <Button label="login" className="px-3 py-1" />
       </div>
