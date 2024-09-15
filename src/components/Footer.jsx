@@ -3,21 +3,28 @@ import Image from "next/image";
 import React from "react";
 import "primeicons/primeicons.css";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Footer = () => {
+  const router = useRouter();
+  const handleClick = () => {
+    router.push("/");
+  };
   return (
     <footer className="flex w-full flex-col items-center bg-slate-950 mt-5 text-white">
       <div className="flex w-full max-w-4xl flex-col justify-between gap-y-10 px-10 py-16 sm:flex-row sm:px-3">
-        <Link href={"/"}>
+       
           <div>
             <Image
               src={"/images/logo4.png"}
               alt="Los inmaduros roller Madrid"
               width={200}
               height={40}
+              onClick={handleClick}
+              className="cursor-pointer"
             />
           </div>
-        </Link>
+        
         <div className="flex flex-col gap-3 border-t-[1px] border-[#58cbe8] sm:border-l-[1px] sm:border-[#58cbe8] p-3">
           <p>Sieguenos en</p>
           <div className="flex gap-5">
