@@ -6,6 +6,7 @@ import "primeicons/primeicons.css";
 import { PrimeReactProvider } from "primereact/api";
 import RoutersContextProvider from "@/context/RoutesContext";
 import Footer from "@/components/Footer";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,18 +17,20 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <RoutersContextProvider>
-        <PrimeReactProvider>
-          <body
-            className={`${inter.className} bg-gradient-to-r from-slate-900 to-slate-700`}
-          >
-            <Navbar />
-            {children}
-            <Footer />
-          </body>
-        </PrimeReactProvider>
-      </RoutersContextProvider>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <RoutersContextProvider>
+          <PrimeReactProvider>
+            <body
+              className={`${inter.className} bg-gradient-to-r from-slate-900 to-slate-700`}
+            >
+              <Navbar />
+              {children}
+              <Footer />
+            </body>
+          </PrimeReactProvider>
+        </RoutersContextProvider>
+      </html>
+    </ClerkProvider>
   );
 }
