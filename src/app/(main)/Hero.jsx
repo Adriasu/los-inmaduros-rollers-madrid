@@ -13,7 +13,7 @@ import Image from "next/image";
 
 const Hero = () => {
   const imagesHeroLanding = [
-    "/images/carrusel3.png",
+    "/images/carrusel3.jpg",
     "/images/carrusel2.png",
     "/images/carrusel4.png",
     "/images/carrusel1.png",
@@ -21,7 +21,7 @@ const Hero = () => {
   ];
 
   return (
-    <div className="hidden md:flex px-5">
+    <div className="px-5">
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
