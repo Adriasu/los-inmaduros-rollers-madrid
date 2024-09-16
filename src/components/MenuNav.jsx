@@ -12,9 +12,16 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useUser } from "@clerk/nextjs";
 
 const MenuNav = () => {
   const [visible, setVisible] = useState(false);
+  const { isLoaded, isSignedIn, user } = useUser();
+
+  // if (!isLoaded || !isSignedIn) {
+  //   return null;
+  // }
+  // console.log(isLoaded, isSignedIn);
 
   const styleMenu =
     "flex gap-2 hover:text-black hover:underline cursor-pointer";
@@ -38,20 +45,32 @@ const MenuNav = () => {
               alt="Los inmaduros roller Madrid"
               width={200}
               height={50}
+              className="w-auto h-auto"
             />
           </div>
         )}
       >
-        <div className="flex items-center gap-5 rounded-2xl border-[1px] border-[#58cbe8] p-3">
-          <div className="bg-slate-600 size-20 rounded-full"></div>
-          <div>
-            <h1 className="font-bold">Hola,</h1>
-            <h1>Adriana Suárez</h1>
+        {!isLoaded || !isSignedIn ? (
+          <div className="w-full flex justify-center items-center">
+            <Button label="login" className="px-8 py-2" />
           </div>
-        </div>
-        {/* <div className="w-full flex justify-center items-center">
-        <Button label="login" className="px-8 py-2" />
-        </div> */}
+        ) : (
+          <div className="flex items-center gap-5 rounded-2xl border-[1px] border-[#58cbe8] p-3">
+            <div>
+              <Image
+                src={user.imageUrl}
+                alt={user.lastName}
+                width={80}
+                height={80}
+                className="rounded-full"
+              />
+            </div>
+            <div>
+              <h1 className="font-bold">Hola,</h1>
+              <h1>{user.fullName}</h1>
+            </div>
+          </div>
+        )}
 
         <ul className="mt-10 flex flex-col gap-5 rounded-2xl border-[1px] border-[#58cbe8] p-3">
           <Link href={"/"} onClick={() => setVisible(false)}>

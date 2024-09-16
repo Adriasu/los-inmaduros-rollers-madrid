@@ -28,7 +28,6 @@ export default function RoutersContextProvider({ children }) {
     fetchDataRoutes();
   }, []);
 
-console.log(dataRoutes);
 
   return (
     <RoutesContext.Provider value={{ dataRoutes, isLoading }}>

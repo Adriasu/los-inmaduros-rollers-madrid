@@ -1,17 +1,15 @@
 "use client";
 import React from "react";
-
 import { Swiper, SwiperSlide } from "swiper/react";
-
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import "swiper/css/autoplay"
-
+import "swiper/css/autoplay";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import Image from "next/image";
 
 const Hero = () => {
+  
   const imagesHeroLanding = [
     "/images/carrusel3.jpg",
     "/images/carrusel2.png",
@@ -22,7 +20,7 @@ const Hero = () => {
 
   return (
     <div className="hidden md:flex px-5">
-      <Swiper
+        <Swiper
         spaceBetween={30}
         centeredSlides={true}
         autoplay={{
@@ -56,4 +54,3 @@ const Hero = () => {
 };
 
 export default Hero;
-

@@ -20,7 +20,7 @@ const Footer = () => {
             width={200}
             height={40}
             onClick={handleClick}
-            className="cursor-pointer"
+            className="cursor-pointer w-auto h-auto"
           />
         </div>
 
