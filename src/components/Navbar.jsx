@@ -28,14 +28,14 @@ const Navbar = () => {
 
         <div>
           <SignedOut>
-            <SignInButton />
+            <SignInButton>
+              <Button label="login" className="px-3 py-1" />
+            </SignInButton>
           </SignedOut>
           <SignedIn>
             <UserButton />
           </SignedIn>
         </div>
-
-        <Button label="login" className="px-3 py-1" />
       </div>
     </div>
   );
