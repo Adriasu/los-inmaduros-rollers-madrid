@@ -23,6 +23,7 @@ const Hero = () => {
         <Swiper
         spaceBetween={30}
         centeredSlides={true}
+        loop={true}
         autoplay={{
           delay: 8000,
           disableOnInteraction: false,
@@ -32,7 +33,7 @@ const Hero = () => {
         }}
         navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper rounded-2xl bg-gradient-to-r from-slate-800 to-slate-600 shadow-[-2px_4px_43px_5px_#029EE963] max-w-[1200px] md:h-auto mx-5 flex justify-center items-center"
+        className="mySwiper rounded-2xl bg-gradient-to-r from-slate-800 to-slate-600 shadow-[0px_0px_50px_0px_#EB5D3CCF] max-w-[880px] md:h-auto mx-5 flex justify-center items-center"
       >
         {imagesHeroLanding.map((image, i) => {
           return (

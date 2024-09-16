@@ -26,8 +26,9 @@ const HeroMobile = () => {
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
+        loop={true}
         autoplay={{
-          delay: 8000,
+          delay: 4000,
           disableOnInteraction: false,
         }}
         pagination={{
