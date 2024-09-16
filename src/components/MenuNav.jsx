@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useUser } from "@clerk/nextjs";
+import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
 
 const MenuNav = () => {
   const [visible, setVisible] = useState(false);
@@ -45,14 +45,15 @@ const MenuNav = () => {
               alt="Los inmaduros roller Madrid"
               width={200}
               height={50}
-              className="w-auto h-auto"
             />
           </div>
         )}
       >
         {!isLoaded || !isSignedIn ? (
-          <div className="w-full flex justify-center items-center">
-            <Button label="login" className="px-8 py-2" />
+          <div className="w-full flex justify-center items-center p-3">
+            <SignInButton>
+              <Button label="login" className="px-8 py-2" onClick={() => setVisible(false)} />
+            </SignInButton>
           </div>
         ) : (
           <div className="flex items-center gap-5 rounded-2xl border-[1px] border-[#58cbe8] p-3">
@@ -99,12 +100,14 @@ const MenuNav = () => {
         </ul>
 
         <div className="mt-[180px] w-full flex items-center justify-end gap-2">
-          <Button
-            label="Cerrar sesión"
-            icon="pi pi-sign-out"
-            iconPos="right"
-            className="px-3 py-2"
-          />
+          <SignOutButton>
+            <Button
+              label="Cerrar sesión"
+              icon="pi pi-sign-out"
+              iconPos="right"
+              className="px-3 py-2"
+            />
+          </SignOutButton>
         </div>
       </Sidebar>
     </div>
