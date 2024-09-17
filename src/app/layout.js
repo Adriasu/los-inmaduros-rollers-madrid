@@ -5,6 +5,7 @@ import "primereact/resources/themes/lara-light-cyan/theme.css";
 import "primeicons/primeicons.css";
 import { PrimeReactProvider } from "primereact/api";
 import RoutersContextProvider from "@/context/RoutesContext";
+import FormCallRouteContextProvider from "@/context/FormCallRouteContext";
 import Footer from "@/components/Footer";
 import { ClerkProvider } from "@clerk/nextjs";
 
@@ -20,16 +21,18 @@ export default function RootLayout({ children }) {
     <ClerkProvider>
       <html lang="en">
         <RoutersContextProvider>
-          <PrimeReactProvider>
-            <body
-              className={`${inter.className} bg-gradient-to-r from-slate-900 to-slate-700`}
-            >
-              <Navbar />
+          <FormCallRouteContextProvider>
+            <PrimeReactProvider>
+              <body
+                className={`${inter.className} bg-gradient-to-r from-slate-900 to-slate-700`}
+              >
+                <Navbar />
 
-              {children}
-              <Footer />
-            </body>
-          </PrimeReactProvider>
+                {children}
+                <Footer />
+              </body>
+            </PrimeReactProvider>
+          </FormCallRouteContextProvider>
         </RoutersContextProvider>
       </html>
     </ClerkProvider>
