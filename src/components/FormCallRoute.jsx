@@ -8,7 +8,8 @@ import { MultiSelect } from "primereact/multiselect";
 import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import { Calendar } from "primereact/calendar";
-import { Checkbox } from "primereact/checkbox";
+import { InputTextarea } from "primereact/inputtextarea";
+
 
 const FormCallRoute = () => {
   const { dataRoutes } = useContext(RoutesContext);
@@ -17,7 +18,11 @@ const FormCallRoute = () => {
   const [selectedRoute, setSelectedRoute] = useState(null);
   const [selectedMeetingPoint, setSelectedMeetingPoint] = useState(null);
   const [time, setTime] = useState(null);
+  const [timeOther, setTimeOther] = useState(null);
   const [selectedOtherRoute, setSelectedOtherRoute] = useState(null);
+  const [selectedMeetingOtherPoint, setSelectedMeetingOtherPoint] =
+    useState(null);
+    const [comments, setComments] = useState('');
 
   const optionTemplate = (option) => {
     return (
@@ -40,31 +45,30 @@ const FormCallRoute = () => {
         <form className="flex flex-col gap-5">
           <div>
             <label htmlFor="nameRoute">Ruta</label>
-            <div className="card flex justify-content-center">
-              <Dropdown
-                {...register("nameRoute")}
-                options={[{ name: "Nueva" }, ...dataRoutes]}
-                optionLabel="name"
-                placeholder="Selecciona ruta"
-                className="w-full md:w-14rem"
-                value={selectedRoute}
-                onChange={(e) => setSelectedRoute(e.value)}
-              />
-            </div>
-
+            <Dropdown
+              {...register("nameRoute")}
+              options={[{ name: "Nueva" }, ...dataRoutes]}
+              optionLabel="name"
+              placeholder="Selecciona ruta"
+              className="w-full md:w-14rem"
+              value={selectedRoute}
+              onChange={(e) => setSelectedRoute(e.value)}
+            />
             {watchShowWriteNewRoute === "Nueva" && (
-              <InputText placeholder="Nombre de ruta" />
+              <InputText
+                {...register("newNameRoute")}
+                placeholder="Nombre de ruta"
+              />
             )}
           </div>
 
           <div className="card flex justify-content-center">
             <label htmlFor="dateRoute">Fecha</label>
-            <Calendar dateFormat="dd/mm/yy" />
+            <Calendar {...register("dateRoute")} dateFormat="dd/mm/yy" />
           </div>
 
           <div>
             <label htmlFor="meetingPoint">Punto de encuentro</label>
-
             <Dropdown
               {...register("meetingPoint")}
               options={[...meetingPoints, { name: "Otro" }]}
@@ -75,17 +79,20 @@ const FormCallRoute = () => {
               onChange={(e) => setSelectedMeetingPoint(e.value)}
             />
             {watchShowMeetingPoint === "Otro" && (
-              <InputText placeholder="Inicio de ruta" />
+              <InputText
+                {...register("meetingPointOther")}
+                placeholder="Inicio de ruta"
+              />
             )}
-          </div>
-
-          <div>
-            <label htmlFor="startTime">Hora</label>
-            <Calendar
-              value={time}
-              onChange={(e) => setTime(e.value)}
-              timeOnly
-            />
+            <div>
+              <label htmlFor="startTime">Hora</label>
+              <Calendar
+                {...register("timeMeetingPoint")}
+                value={time}
+                onChange={(e) => setTime(e.value)}
+                timeOnly
+              />
+            </div>
           </div>
 
           <div>
@@ -93,44 +100,44 @@ const FormCallRoute = () => {
               ¿Existe punto de encuentro secundario?
             </label>
             <Dropdown
-            {...register("otherPoint")}
-            options={[{name: "Si"}, {name: "No"}]}
-            optionLabel="name"
-            className="w-full md:w-14rem"
-            value={selectedOtherRoute}
-            onChange={(e) => setSelectedOtherRoute(e.value)}
+              {...register("otherPoint")}
+              options={[{ name: "Si" }, { name: "No" }]}
+              optionLabel="name"
+              className="w-full md:w-14rem"
+              value={selectedOtherRoute}
+              onChange={(e) => setSelectedOtherRoute(e.value)}
             />
+            {watchShowOtherPoint === "Si" && (
+              <div>
+                <div>
+                  <label htmlFor="meetingOtherPoint">Punto de encuentro</label>
+                  <Dropdown
+                    {...register("meetingOtherPoint")}
+                    options={[...meetingPoints, { name: "Otro" }]}
+                    optionLabel="name"
+                    placeholder="Selecciona punto"
+                    className="w-full md:w-14rem"
+                    value={selectedMeetingOtherPoint}
+                    onChange={(e) => setSelectedMeetingOtherPoint(e.value)}
+                  />
+                  {watchShowMeetingOtherPoint === "Otro" && (
+                       <InputText
+                       {...register("meetingOtherPointOther")}
+                       placeholder="Inicio de ruta"
+                     />
+                  )}
+                </div>
+                <div>
+                  <label htmlFor="startTime">Hora</label>
+                  <Calendar
+                    value={timeOther}
+                    onChange={(e) => setTimeOther(e.value)}
+                    timeOnly
+                  />
+                </div>
+              </div>
+            )}
           </div>
-
-          {watchShowOtherPoint === "Si" && (
-            <div>
-              <div>
-                <label htmlFor="meetingOtherPoint">Punto de encuentro</label>
-                <select
-                  {...register("meetingOtherPoint")}
-                  id="meetingOtherPoint"
-                >
-                  {meetingPoints.map((point, index) => {
-                    return (
-                      <option key={index} value={point.name}>
-                        {" "}
-                        {point.name}
-                      </option>
-                    );
-                  })}
-                  <option value="otro">Otro</option>
-                </select>
-                {watchShowMeetingOtherPoint === "otro" && (
-                  <input type="text" placeholder="Lugar" />
-                )}
-              </div>
-
-              <div>
-                <label htmlFor="startTime">Hora</label>
-                <input type="time" />
-              </div>
-            </div>
-          )}
 
           <div>
             <label htmlFor="pace">Ritmo</label>
@@ -145,6 +152,14 @@ const FormCallRoute = () => {
               display="chip"
             />
           </div>
+
+          <div>
+            <label htmlFor="comments">Comentarios / Descripción</label>
+            <InputTextarea value={comments} onChange={(e) => setComments(e.target.value)} rows={5} cols={30} placeholder="Deja tu comentario de la ruta o especificaciones"/>
+          </div>
+
+
+
         </form>
       </div>
     </div>
