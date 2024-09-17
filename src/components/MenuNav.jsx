@@ -90,7 +90,7 @@ const MenuNav = () => {
               Rutas
             </li>
           </Link>
-          <Link href={"/favoriteRoutes"}>
+          <Link href={"/favoriteRoutes"} onClick={() => setVisible(false)}>
             <li className={`${styleMenu}`}>
               <FolderHeart />
               Tus favoritos
