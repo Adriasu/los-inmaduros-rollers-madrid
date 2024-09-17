@@ -2,57 +2,22 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { RoutesContext } from "@/context/RoutesContext";
+import { FormCallRouteContext } from "@/context/FormCallRouteContext";
 import Image from "next/image";
 import { MultiSelect } from "primereact/multiselect";
+import { Dropdown } from "primereact/dropdown";
+import { InputText } from "primereact/inputtext";
+import { Calendar } from "primereact/calendar";
+import { Checkbox } from "primereact/checkbox";
 
 const FormCallRoute = () => {
-  const { dataRoutes, isLoading } = useContext(RoutesContext);
-  const meetingPoints = [
-    {
-      name: "Explanada",
-      location: "https://maps.app.goo.gl/gCJfpLSoy3D454Y19",
-    },
-    {
-      name: "Puerta de Alcalá",
-      location: "https://maps.app.goo.gl/3kjrtMz9BtQ39BJYA",
-    },
-    {
-      name: "Plaza de Cibeles",
-      location: "https://maps.app.goo.gl/LuE7bF56QJgBtLbRA",
-    },
-  ];
-  const paceRoute = [
-    {
-      level: "Roca",
-      img: "/images/roca.png",
-    },
-    {
-      level: "Caracol",
-      img: "/images/caracol.png",
-    },
-    {
-      level: "Gusano",
-      img: "/images/gusano.png",
-    },
-    {
-      level: "Mariposa",
-      img: "/images/mariposa.png",
-    },
-    {
-      level: "Experimentado",
-      img: "/images/experimentado.png",
-    },
-    {
-      level: "Locura total",
-      img: "/images/locura.png",
-    },
-    {
-      level: "Miaucornia",
-      img: "/images/unicornio.png",
-    },
-  ];
-
+  const { dataRoutes } = useContext(RoutesContext);
+  const { meetingPoints, paceRoute } = useContext(FormCallRouteContext);
   const [selectedPace, setSelectedPace] = useState([]);
+  const [selectedRoute, setSelectedRoute] = useState(null);
+  const [selectedMeetingPoint, setSelectedMeetingPoint] = useState(null);
+  const [time, setTime] = useState(null);
+  const [selectedOtherRoute, setSelectedOtherRoute] = useState(null);
 
   const optionTemplate = (option) => {
     return (
@@ -64,128 +29,124 @@ const FormCallRoute = () => {
   };
 
   const { register, handleSubmit, watch } = useForm();
-
   const watchShowWriteNewRoute = watch("nameRoute");
   const watchShowMeetingPoint = watch("meetingPoint");
   const watchShowMeetingOtherPoint = watch("meetingOtherPoint");
-  const watchShowOtherPoint = watch("otherPoint", true);
+  const watchShowOtherPoint = watch("otherPoint");
 
   return (
-    <div>
-      <form>
-        <div>
-          <label htmlFor="nameRoute">Ruta</label>
-          <select {...register("nameRoute")} id="nameRoute">
-            <option value="" hidden>
-              Selecciona ruta
-            </option>
-            {dataRoutes.map((route, index) => {
-              return (
-                <option key={index} value={route.name}>
-                  {route.name}
-                </option>
-              );
-            })}
-            <option value="nueva">Nueva</option>
-          </select>
-          {watchShowWriteNewRoute === "nueva" && (
-            <input type="text" placeholder="Nombre de ruta" />
-          )}
-        </div>
-
-        <div>
-          <label htmlFor="date">Fecha</label>
-          <input type="date" />
-        </div>
-
-        <div>
-          <label htmlFor="meetingPoint">Punto de encuentro</label>
-          <select {...register("meetingPoint")} id="meetingPoint">
-            {meetingPoints.map((point, index) => {
-              return (
-                <option key={index} value={point.name}>
-                  {" "}
-                  {point.name}
-                </option>
-              );
-            })}
-            <option value="otro">Otro</option>
-          </select>
-          {watchShowMeetingPoint === "otro" && (
-            <input type="text" placeholder="Lugar" />
-          )}
-        </div>
-
-        <div>
-          <label htmlFor="startTime">Hora</label>
-          <input type="time" />
-        </div>
-
-        <div>
-          <label htmlFor="anotherMeetingPoint">
-            ¿Existe punto de encuentro secundario?
-          </label>
-          <input type="checkbox" {...register("otherPoint")} />
-        </div>
-
-        {watchShowOtherPoint && (
+    <div className="bg-white flex justify-center p-10">
+      <div>
+        <form className="flex flex-col gap-5">
           <div>
-            <div>
-              <label htmlFor="meetingOtherPoint">Punto de encuentro</label>
-              <select {...register("meetingOtherPoint")} id="meetingOtherPoint">
-                {meetingPoints.map((point, index) => {
-                  return (
-                    <option key={index} value={point.name}>
-                      {" "}
-                      {point.name}
-                    </option>
-                  );
-                })}
-                <option value="otro">Otro</option>
-              </select>
-              {watchShowMeetingOtherPoint === "otro" && (
-                <input type="text" placeholder="Lugar" />
-              )}
+            <label htmlFor="nameRoute">Ruta</label>
+            <div className="card flex justify-content-center">
+              <Dropdown
+                {...register("nameRoute")}
+                options={[{ name: "Nueva" }, ...dataRoutes]}
+                optionLabel="name"
+                placeholder="Selecciona ruta"
+                className="w-full md:w-14rem"
+                value={selectedRoute}
+                onChange={(e) => setSelectedRoute(e.value)}
+              />
             </div>
 
-            <div>
-              <label htmlFor="startTime">Hora</label>
-              <input type="time" />
-            </div>
+            {watchShowWriteNewRoute === "Nueva" && (
+              <InputText placeholder="Nombre de ruta" />
+            )}
           </div>
-        )}
 
-        <div>
-          <label htmlFor="pace">Ritmo</label>
-          {/* <select name="" id="">
-            {paceRoute.map((level, index) => {
-              return (
-                <option key={index} value={level.level}>
-                  <div>
-                    <Image
-                      src={level.img}
-                      alt={level.level}
-                      width={40}
-                      height={40}
-                    />
-                    <p>{level.level}</p>
-                  </div>
-                </option>
-              );
-            })}
-          </select> */}
+          <div className="card flex justify-content-center">
+            <label htmlFor="dateRoute">Fecha</label>
+            <Calendar dateFormat="dd/mm/yy" />
+          </div>
 
-          <MultiSelect
-            value={selectedPace}
-            options={paceRoute}
-            onChange={(e) => setSelectedPace(e.value)}
-            optionLabel="level"
-            itemTemplate={optionTemplate}
-            placeholder="Selecciona el ritmo"
-            display="chip" // Muestra las selecciones como chips
-          />
-        </div>
-      </form>
+          <div>
+            <label htmlFor="meetingPoint">Punto de encuentro</label>
+
+            <Dropdown
+              {...register("meetingPoint")}
+              options={[...meetingPoints, { name: "Otro" }]}
+              optionLabel="name"
+              placeholder="Selecciona punto"
+              className="w-full md:w-14rem"
+              value={selectedMeetingPoint}
+              onChange={(e) => setSelectedMeetingPoint(e.value)}
+            />
+            {watchShowMeetingPoint === "Otro" && (
+              <InputText placeholder="Inicio de ruta" />
+            )}
+          </div>
+
+          <div>
+            <label htmlFor="startTime">Hora</label>
+            <Calendar
+              value={time}
+              onChange={(e) => setTime(e.value)}
+              timeOnly
+            />
+          </div>
+
+          <div>
+            <label htmlFor="anotherMeetingPoint">
+              ¿Existe punto de encuentro secundario?
+            </label>
+            <Dropdown
+            {...register("otherPoint")}
+            options={[{name: "Si"}, {name: "No"}]}
+            optionLabel="name"
+            className="w-full md:w-14rem"
+            value={selectedOtherRoute}
+            onChange={(e) => setSelectedOtherRoute(e.value)}
+            />
+          </div>
+
+          {watchShowOtherPoint === "Si" && (
+            <div>
+              <div>
+                <label htmlFor="meetingOtherPoint">Punto de encuentro</label>
+                <select
+                  {...register("meetingOtherPoint")}
+                  id="meetingOtherPoint"
+                >
+                  {meetingPoints.map((point, index) => {
+                    return (
+                      <option key={index} value={point.name}>
+                        {" "}
+                        {point.name}
+                      </option>
+                    );
+                  })}
+                  <option value="otro">Otro</option>
+                </select>
+                {watchShowMeetingOtherPoint === "otro" && (
+                  <input type="text" placeholder="Lugar" />
+                )}
+              </div>
+
+              <div>
+                <label htmlFor="startTime">Hora</label>
+                <input type="time" />
+              </div>
+            </div>
+          )}
+
+          <div>
+            <label htmlFor="pace">Ritmo</label>
+            <MultiSelect
+              {...register("paceRoute")}
+              value={selectedPace}
+              options={paceRoute}
+              onChange={(e) => setSelectedPace(e.value)}
+              optionLabel="level"
+              itemTemplate={optionTemplate}
+              placeholder="Selecciona el ritmo"
+              display="chip"
+            />
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
