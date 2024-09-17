@@ -52,7 +52,11 @@ const MenuNav = () => {
         {!isLoaded || !isSignedIn ? (
           <div className="w-full flex justify-center items-center p-3">
             <SignInButton>
-              <Button label="login" className="px-8 py-2" onClick={() => setVisible(false)} />
+              <Button
+                label="login"
+                className="px-8 py-2"
+                onClick={() => setVisible(false)}
+              />
             </SignInButton>
           </div>
         ) : (
@@ -86,10 +90,12 @@ const MenuNav = () => {
               Rutas
             </li>
           </Link>
-          <li className={`${styleMenu}`}>
-            <FolderHeart />
-            Tus favoritos
-          </li>
+          <Link href={"/favoriteRoutes"} onClick={() => setVisible(false)}>
+            <li className={`${styleMenu}`}>
+              <FolderHeart />
+              Tus favoritos
+            </li>
+          </Link>
           <li className={`${styleMenu}`}>
             <SquarePen /> Convocar ruta
           </li>

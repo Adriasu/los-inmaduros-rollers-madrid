@@ -8,6 +8,7 @@ import RouteMapGoogle from "@/components/RouteMapGoogle";
 import Buttons from "@/components/Buttons";
 import Link from "next/link";
 
+
 const RouteInfo = () => {
   const params = useParams();
   const { dataRoutes, isLoading } = useContext(RoutesContext);
@@ -27,7 +28,7 @@ const RouteInfo = () => {
     <div className="m-auto hidden md:flex gap-6 max-w-[1200px] text-white justify-center mt-3">
       <div className="flex flex-col gap-5 relative">
         <Link href={"/routesRoller"} className="absolute top-3 left-3">
-        <ArrowLeft className="bg-[#464954] size-8 flex justify-center items-center rounded-full cursor-pointer hover:scale-[1.15] border-[1px] border-[#58cbe8]"/>
+          <ArrowLeft className="bg-[#464954] size-8 flex justify-center items-center rounded-full cursor-pointer hover:scale-[1.15] border-[1px] border-[#58cbe8]" />
         </Link>
         <Image
           src={route.image}
@@ -36,18 +37,17 @@ const RouteInfo = () => {
           height={400}
           className="rounded-2xl"
         />
-          <div className="flex w-full justify-end gap-3">
-            <div className="bg-[#464954] size-8 flex justify-center items-center rounded-md cursor-pointer hover:scale-[1.15] border-[1px] border-[#58cbe8]">
-              <Bookmark />
-            </div>
-            <div className="bg-[#464954] size-8 flex justify-center items-center rounded-md cursor-pointer hover:scale-[1.15] border-[1px] border-[#58cbe8]">
-              <Send />
-            </div>
+        <div className="flex w-full justify-end gap-3">
+          <div className="bg-[#464954] size-8 flex justify-center items-center rounded-md cursor-pointer hover:scale-[1.15] border-[1px] border-[#58cbe8]">
+            <Bookmark />
           </div>
+          <div className="bg-[#464954] size-8 flex justify-center items-center rounded-md cursor-pointer hover:scale-[1.15] border-[1px] border-[#58cbe8]">
+            <Send />
+          </div>
+        </div>
       </div>
       <div className="flex flex-col gap-10 w-2/5">
         <div className="flex flex-col gap-2">
-
           <div className="flex flex-col gap-2 justify-between rounded-2xl border-[1px] border-[#58cbe8] p-6">
             <h2 className="text-3xl font-bold sm:text-4xl bg-gradient-to-r from-cyan-600 to-cyan-200 bg-clip-text text-transparent">
               {route.name}
