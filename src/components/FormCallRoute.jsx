@@ -9,7 +9,7 @@ import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import { Calendar } from "primereact/calendar";
 import { InputTextarea } from "primereact/inputtextarea";
-
+import { Dialog } from "primereact/dialog";
 
 const FormCallRoute = () => {
   const { dataRoutes } = useContext(RoutesContext);
@@ -22,7 +22,8 @@ const FormCallRoute = () => {
   const [selectedOtherRoute, setSelectedOtherRoute] = useState(null);
   const [selectedMeetingOtherPoint, setSelectedMeetingOtherPoint] =
     useState(null);
-    const [comments, setComments] = useState('');
+  const [comments, setComments] = useState("");
+  const [visible, setVisible] = useState(false);
 
   const optionTemplate = (option) => {
     return (
@@ -121,10 +122,10 @@ const FormCallRoute = () => {
                     onChange={(e) => setSelectedMeetingOtherPoint(e.value)}
                   />
                   {watchShowMeetingOtherPoint === "Otro" && (
-                       <InputText
-                       {...register("meetingOtherPointOther")}
-                       placeholder="Inicio de ruta"
-                     />
+                    <InputText
+                      {...register("meetingOtherPointOther")}
+                      placeholder="Inicio de ruta"
+                    />
                   )}
                 </div>
                 <div>
@@ -141,6 +142,49 @@ const FormCallRoute = () => {
 
           <div>
             <label htmlFor="pace">Ritmo</label>
+            <i
+              className="pi pi-question-circle cursor-pointer"
+              onClick={() => setVisible(true)}
+            ></i>
+            <Dialog
+              header="🛑 UN SANO CONSEJO: LEER BIEN EL NIVEL ANTES DE PRESENTARSE A LA RUTA"
+              visible={visible}
+              style={{ width: "50vw" }}
+              onHide={() => {
+                if (!visible) return;
+                setVisible(false);
+              }}
+            >
+              <p className="m-0">
+                🪨<span className="font-bold">Nivel Roca.</span> Aún no te ves
+                seguro sobre los patines y evitas las cuestas a toda costa. No
+                sabes frenar. <br />
+                🐌 <span className="font-bold">Nivel Caracol.</span> Eres
+                autónomo en rectas y cuesta arriba, pero necesitas ayuda todavía
+                para frenar, aunque lo intentes solo. <br />
+                🐛 <span className="font-bold">Nivel Gusano.</span> Eres
+                autónomo 100% y te gusta ir a las caracoleras, pero te gusta
+                salir por la calle, ritmo disfrutón. <br />
+                🦋{" "}
+                <span className="font-bold">
+                  Nivel Mariposa (Avanzado o Pro).
+                </span>{" "}
+                Te gusta la calle, bajar cuestas infinitas sin frenar, pasar por
+                túneles, ritmo avanzado. <br />
+                🚀 <span className="font-bold">Nivel Experimentado. </span>{" "}
+                rutas X, Galáctica, 7 picos... <br />
+                ☠️ <span className="font-bold">Nivel Locura total.</span> Te
+                pasas los semáforos, esquivas coches, descensos a toda hostia y
+                alcohol en las venas. <br />
+                🐈 🦄 <span className="font-bold">Nivel Miaucornia.</span>{" "}
+                Siempre cerveza en mano, nadie te gana a patinar pedo. Coges la
+                ruta a mitad de camino para evitar las cuestas. Llegas tarde y
+                persigues la ruta. Te quejas del cansancio y pides un descanso
+                para ir al chino. Bomba de humo. <br /> <br />
+                Para pasar de uno a otro hay que ir probando poco a poco <br />
+                🪨🔜🐌🔜🐛🔜🦋🔜🚀🔜☠️🔜🐈🦄
+              </p>
+            </Dialog>
             <MultiSelect
               {...register("paceRoute")}
               value={selectedPace}
@@ -155,11 +199,14 @@ const FormCallRoute = () => {
 
           <div>
             <label htmlFor="comments">Comentarios / Descripción</label>
-            <InputTextarea value={comments} onChange={(e) => setComments(e.target.value)} rows={5} cols={30} placeholder="Deja tu comentario de la ruta o especificaciones"/>
+            <InputTextarea
+              value={comments}
+              onChange={(e) => setComments(e.target.value)}
+              rows={5}
+              cols={30}
+              placeholder="Deja tu comentario de la ruta o especificaciones"
+            />
           </div>
-
-
-
         </form>
       </div>
     </div>
@@ -167,3 +214,5 @@ const FormCallRoute = () => {
 };
 
 export default FormCallRoute;
+
+//pi-question-circle
