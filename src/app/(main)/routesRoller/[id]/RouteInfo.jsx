@@ -7,7 +7,7 @@ import { ArrowLeft, Bookmark, Send, Star } from "lucide-react";
 import RouteMapGoogle from "@/components/RouteMapGoogle";
 import Buttons from "@/components/Buttons";
 import Link from "next/link";
-import FavoriteButton from "@/components/FavoriteButton";
+
 
 const RouteInfo = () => {
   const params = useParams();
