@@ -2,6 +2,8 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { RoutesContext } from "@/context/RoutesContext";
+import Image from "next/image";
+import { MultiSelect } from "primereact/multiselect";
 
 const FormCallRoute = () => {
   const { dataRoutes, isLoading } = useContext(RoutesContext);
@@ -19,6 +21,47 @@ const FormCallRoute = () => {
       location: "https://maps.app.goo.gl/LuE7bF56QJgBtLbRA",
     },
   ];
+  const paceRoute = [
+    {
+      level: "Roca",
+      img: "/images/roca.png",
+    },
+    {
+      level: "Caracol",
+      img: "/images/caracol.png",
+    },
+    {
+      level: "Gusano",
+      img: "/images/gusano.png",
+    },
+    {
+      level: "Mariposa",
+      img: "/images/mariposa.png",
+    },
+    {
+      level: "Experimentado",
+      img: "/images/experimentado.png",
+    },
+    {
+      level: "Locura total",
+      img: "/images/locura.png",
+    },
+    {
+      level: "Miaucornia",
+      img: "/images/unicornio.png",
+    },
+  ];
+
+  const [selectedPace, setSelectedPace] = useState([]);
+
+  const optionTemplate = (option) => {
+    return (
+      <div className="flex items-center">
+        <Image src={option.img} alt={option.level} width={30} height={30} />
+        <span className="ml-[10px]">{option.level}</span>
+      </div>
+    );
+  };
 
   const { register, handleSubmit, watch } = useForm();
 
@@ -26,6 +69,7 @@ const FormCallRoute = () => {
   const watchShowMeetingPoint = watch("meetingPoint");
   const watchShowMeetingOtherPoint = watch("meetingOtherPoint");
   const watchShowOtherPoint = watch("otherPoint", true);
+
   return (
     <div>
       <form>
@@ -110,6 +154,37 @@ const FormCallRoute = () => {
             </div>
           </div>
         )}
+
+        <div>
+          <label htmlFor="pace">Ritmo</label>
+          {/* <select name="" id="">
+            {paceRoute.map((level, index) => {
+              return (
+                <option key={index} value={level.level}>
+                  <div>
+                    <Image
+                      src={level.img}
+                      alt={level.level}
+                      width={40}
+                      height={40}
+                    />
+                    <p>{level.level}</p>
+                  </div>
+                </option>
+              );
+            })}
+          </select> */}
+
+          <MultiSelect
+            value={selectedPace}
+            options={paceRoute}
+            onChange={(e) => setSelectedPace(e.value)}
+            optionLabel="level"
+            itemTemplate={optionTemplate}
+            placeholder="Selecciona el ritmo"
+            display="chip" // Muestra las selecciones como chips
+          />
+        </div>
       </form>
     </div>
   );
