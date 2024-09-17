@@ -10,6 +10,7 @@ import { InputText } from "primereact/inputtext";
 import { Calendar } from "primereact/calendar";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Dialog } from "primereact/dialog";
+import { Button } from "primereact/button";
 
 const FormCallRoute = () => {
   const { dataRoutes } = useContext(RoutesContext);
@@ -42,30 +43,88 @@ const FormCallRoute = () => {
 
   return (
     <div className="bg-white flex justify-center p-10">
-      <div>
+      <div className="w-[40vw] border border-black p-5 rounded-2xl">
         <form className="flex flex-col gap-5">
-          <div>
-            <label htmlFor="nameRoute">Ruta</label>
-            <Dropdown
-              {...register("nameRoute")}
-              options={[{ name: "Nueva" }, ...dataRoutes]}
-              optionLabel="name"
-              placeholder="Selecciona ruta"
-              className="w-full md:w-14rem"
-              value={selectedRoute}
-              onChange={(e) => setSelectedRoute(e.value)}
-            />
-            {watchShowWriteNewRoute === "Nueva" && (
-              <InputText
-                {...register("newNameRoute")}
-                placeholder="Nombre de ruta"
+          <div className="grid grid-cols-2 gap-5">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="nameRoute">Ruta</label>
+              <Dropdown
+                {...register("nameRoute")}
+                options={[{ name: "Nueva" }, ...dataRoutes]}
+                optionLabel="name"
+                placeholder="Selecciona ruta"
+                className="w-full md:w-14rem"
+                value={selectedRoute}
+                onChange={(e) => setSelectedRoute(e.value)}
               />
-            )}
-          </div>
+              {watchShowWriteNewRoute === "Nueva" && (
+                <InputText
+                  {...register("newNameRoute")}
+                  placeholder="Nombre de ruta"
+                />
+              )}
+            </div>
 
-          <div className="card flex justify-content-center">
-            <label htmlFor="dateRoute">Fecha</label>
-            <Calendar {...register("dateRoute")} dateFormat="dd/mm/yy" />
+            <div className="flex flex-col gap-2">
+              <label htmlFor="dateRoute">Fecha</label>
+              <Calendar {...register("dateRoute")} dateFormat="dd/mm/yy" />
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <label htmlFor="pace">Ritmo</label>
+            <i
+              className="pi pi-question-circle cursor-pointer"
+              onClick={() => setVisible(true)}
+            ></i>
+            <Dialog
+              header="🛑 UN SANO CONSEJO: LEER BIEN EL NIVEL ANTES DE PRESENTARSE A LA RUTA"
+              visible={visible}
+              style={{ width: "50vw" }}
+              onHide={() => {
+                if (!visible) return;
+                setVisible(false);
+              }}
+            >
+              <p className="m-0">
+                🪨<span className="font-bold">Nivel Roca.</span> Aún no te ves
+                seguro sobre los patines y evitas las cuestas a toda costa. No
+                sabes frenar. <br />
+                🐌 <span className="font-bold">Nivel Caracol.</span> Eres
+                autónomo en rectas y cuesta arriba, pero necesitas ayuda todavía
+                para frenar, aunque lo intentes solo. <br />
+                🐛 <span className="font-bold">Nivel Gusano.</span> Eres
+                autónomo 100% y te gusta ir a las caracoleras, pero te gusta
+                salir por la calle, ritmo disfrutón. <br />
+                🦋{" "}
+                <span className="font-bold">
+                  Nivel Mariposa (Avanzado o Pro).
+                </span>{" "}
+                Te gusta la calle, bajar cuestas infinitas sin frenar, pasar por
+                túneles, ritmo avanzado. <br />
+                🚀 <span className="font-bold">Nivel Experimentado. </span>{" "}
+                rutas X, Galáctica, 7 picos... <br />
+                ☠️ <span className="font-bold">Nivel Locura total.</span> Te
+                pasas los semáforos, esquivas coches, descensos a toda hostia y
+                alcohol en las venas. <br />
+                🐈 🦄 <span className="font-bold">Nivel Miaucornia.</span>{" "}
+                Siempre cerveza en mano, nadie te gana a patinar pedo. Coges la
+                ruta a mitad de camino para evitar las cuestas. Llegas tarde y
+                persigues la ruta. Te quejas del cansancio y pides un descanso
+                para ir al chino. Bomba de humo. <br /> <br />
+                Para pasar de uno a otro hay que ir probando poco a poco. <br />
+                🪨🔜🐌🔜🐛🔜🦋🔜🚀🔜☠️🔜🐈🦄
+              </p>
+            </Dialog>
+            <MultiSelect
+              {...register("paceRoute")}
+              value={selectedPace}
+              options={paceRoute}
+              onChange={(e) => setSelectedPace(e.value)}
+              optionLabel="level"
+              itemTemplate={optionTemplate}
+              placeholder="Selecciona el ritmo"
+              display="chip"
+            />
           </div>
 
           <div>
@@ -141,63 +200,6 @@ const FormCallRoute = () => {
           </div>
 
           <div>
-            <label htmlFor="pace">Ritmo</label>
-            <i
-              className="pi pi-question-circle cursor-pointer"
-              onClick={() => setVisible(true)}
-            ></i>
-            <Dialog
-              header="🛑 UN SANO CONSEJO: LEER BIEN EL NIVEL ANTES DE PRESENTARSE A LA RUTA"
-              visible={visible}
-              style={{ width: "50vw" }}
-              onHide={() => {
-                if (!visible) return;
-                setVisible(false);
-              }}
-            >
-              <p className="m-0">
-                🪨<span className="font-bold">Nivel Roca.</span> Aún no te ves
-                seguro sobre los patines y evitas las cuestas a toda costa. No
-                sabes frenar. <br />
-                🐌 <span className="font-bold">Nivel Caracol.</span> Eres
-                autónomo en rectas y cuesta arriba, pero necesitas ayuda todavía
-                para frenar, aunque lo intentes solo. <br />
-                🐛 <span className="font-bold">Nivel Gusano.</span> Eres
-                autónomo 100% y te gusta ir a las caracoleras, pero te gusta
-                salir por la calle, ritmo disfrutón. <br />
-                🦋{" "}
-                <span className="font-bold">
-                  Nivel Mariposa (Avanzado o Pro).
-                </span>{" "}
-                Te gusta la calle, bajar cuestas infinitas sin frenar, pasar por
-                túneles, ritmo avanzado. <br />
-                🚀 <span className="font-bold">Nivel Experimentado. </span>{" "}
-                rutas X, Galáctica, 7 picos... <br />
-                ☠️ <span className="font-bold">Nivel Locura total.</span> Te
-                pasas los semáforos, esquivas coches, descensos a toda hostia y
-                alcohol en las venas. <br />
-                🐈 🦄 <span className="font-bold">Nivel Miaucornia.</span>{" "}
-                Siempre cerveza en mano, nadie te gana a patinar pedo. Coges la
-                ruta a mitad de camino para evitar las cuestas. Llegas tarde y
-                persigues la ruta. Te quejas del cansancio y pides un descanso
-                para ir al chino. Bomba de humo. <br /> <br />
-                Para pasar de uno a otro hay que ir probando poco a poco <br />
-                🪨🔜🐌🔜🐛🔜🦋🔜🚀🔜☠️🔜🐈🦄
-              </p>
-            </Dialog>
-            <MultiSelect
-              {...register("paceRoute")}
-              value={selectedPace}
-              options={paceRoute}
-              onChange={(e) => setSelectedPace(e.value)}
-              optionLabel="level"
-              itemTemplate={optionTemplate}
-              placeholder="Selecciona el ritmo"
-              display="chip"
-            />
-          </div>
-
-          <div>
             <label htmlFor="comments">Comentarios / Descripción</label>
             <InputTextarea
               value={comments}
@@ -207,6 +209,8 @@ const FormCallRoute = () => {
               placeholder="Deja tu comentario de la ruta o especificaciones"
             />
           </div>
+
+          <Button label="Convocar" />
         </form>
       </div>
     </div>
