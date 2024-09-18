@@ -9,7 +9,7 @@ const HeroRoutes = () => {
   if (isLoading) {
     return (
       <div className="w-full h-[500px] mx-auto max-w-screen-xl px-3 py-4 sm:px-6 lg:px-8 rounded-2xl flex justify-center items-center">
-        <div class="spinner"></div>
+        <div className="spinner"></div>
       </div>
     );
   }
