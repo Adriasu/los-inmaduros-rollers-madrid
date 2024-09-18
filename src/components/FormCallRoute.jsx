@@ -42,10 +42,10 @@ const FormCallRoute = () => {
   const watchShowOtherPoint = watch("otherPoint");
 
   return (
-    <div className="bg-white flex justify-center p-10">
-      <div className="w-[40vw] border border-black p-5 rounded-2xl">
+    <div className="bg-white flex justify-center p-3 sm:p-10">
+      <div className="w-full lg:w-[60vw] xl:w-[40vw] border border-black p-5 rounded-2xl">
         <form className="flex flex-col gap-5">
-          <div className="grid grid-cols-2 gap-5">
+          <div className="flex flex-col sm:grid sm:grid-cols-2 gap-5">
             <div className="flex flex-col gap-2">
               <label htmlFor="nameRoute">Ruta</label>
               <Dropdown
@@ -70,16 +70,18 @@ const FormCallRoute = () => {
               <Calendar {...register("dateRoute")} dateFormat="dd/mm/yy" />
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <label htmlFor="pace">Ritmo</label>
-            <i
-              className="pi pi-question-circle cursor-pointer"
-              onClick={() => setVisible(true)}
-            ></i>
+          <div className="flex flex-col sm:items-center gap-2 sm:flex-row">
+            <div className="flex items-center gap-2">
+              <label htmlFor="pace">Ritmo</label>
+              <i
+                className="pi pi-question-circle cursor-pointer"
+                onClick={() => setVisible(true)}
+              ></i>
+            </div>
             <Dialog
-              header="🛑 UN SANO CONSEJO: LEER BIEN EL NIVEL ANTES DE PRESENTARSE A LA RUTA"
+              header="Ritmo de las rutas."
               visible={visible}
-              style={{ width: "50vw" }}
+              className="w-full md:w-[60vw]"
               onHide={() => {
                 if (!visible) return;
                 setVisible(false);
@@ -127,24 +129,28 @@ const FormCallRoute = () => {
             />
           </div>
 
-          <div>
-            <label htmlFor="meetingPoint">Punto de encuentro</label>
-            <Dropdown
-              {...register("meetingPoint")}
-              options={[...meetingPoints, { name: "Otro" }]}
-              optionLabel="name"
-              placeholder="Selecciona punto"
-              className="w-full md:w-14rem"
-              value={selectedMeetingPoint}
-              onChange={(e) => setSelectedMeetingPoint(e.value)}
-            />
-            {watchShowMeetingPoint === "Otro" && (
-              <InputText
-                {...register("meetingPointOther")}
-                placeholder="Inicio de ruta"
+          <div className="flex flex-col sm:grid sm:grid-cols-2 gap-5">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="meetingPoint" className="">
+                Punto de encuentro
+              </label>
+              <Dropdown
+                {...register("meetingPoint")}
+                options={[...meetingPoints, { name: "Otro" }]}
+                optionLabel="name"
+                placeholder="Selecciona punto"
+                className="w-full md:w-14rem"
+                value={selectedMeetingPoint}
+                onChange={(e) => setSelectedMeetingPoint(e.value)}
               />
-            )}
-            <div>
+              {watchShowMeetingPoint === "Otro" && (
+                <InputText
+                  {...register("meetingPointOther")}
+                  placeholder="Inicio de ruta"
+                />
+              )}
+            </div>
+            <div className="flex flex-col gap-2">
               <label htmlFor="startTime">Hora</label>
               <Calendar
                 {...register("timeMeetingPoint")}
@@ -155,7 +161,7 @@ const FormCallRoute = () => {
             </div>
           </div>
 
-          <div>
+          <div className="flex items-center gap-2">
             <label htmlFor="anotherMeetingPoint">
               ¿Existe punto de encuentro secundario?
             </label>
@@ -163,50 +169,50 @@ const FormCallRoute = () => {
               {...register("otherPoint")}
               options={[{ name: "Si" }, { name: "No" }]}
               optionLabel="name"
-              className="w-full md:w-14rem"
+              className=" md:w-14rem"
               value={selectedOtherRoute}
               onChange={(e) => setSelectedOtherRoute(e.value)}
             />
-            {watchShowOtherPoint === "Si" && (
-              <div>
-                <div>
-                  <label htmlFor="meetingOtherPoint">Punto de encuentro</label>
-                  <Dropdown
-                    {...register("meetingOtherPoint")}
-                    options={[...meetingPoints, { name: "Otro" }]}
-                    optionLabel="name"
-                    placeholder="Selecciona punto"
-                    className="w-full md:w-14rem"
-                    value={selectedMeetingOtherPoint}
-                    onChange={(e) => setSelectedMeetingOtherPoint(e.value)}
-                  />
-                  {watchShowMeetingOtherPoint === "Otro" && (
-                    <InputText
-                      {...register("meetingOtherPointOther")}
-                      placeholder="Inicio de ruta"
-                    />
-                  )}
-                </div>
-                <div>
-                  <label htmlFor="startTime">Hora</label>
-                  <Calendar
-                    value={timeOther}
-                    onChange={(e) => setTimeOther(e.value)}
-                    timeOnly
-                  />
-                </div>
-              </div>
-            )}
           </div>
+          {watchShowOtherPoint === "Si" && (
+            <div className="flex flex-col sm:grid sm:grid-cols-2 gap-5">
+              <div className="flex flex-col gap-2">
+                <label htmlFor="meetingOtherPoint">Punto de encuentro</label>
+                <Dropdown
+                  {...register("meetingOtherPoint")}
+                  options={[...meetingPoints, { name: "Otro" }]}
+                  optionLabel="name"
+                  placeholder="Selecciona punto"
+                  className="w-full md:w-14rem"
+                  value={selectedMeetingOtherPoint}
+                  onChange={(e) => setSelectedMeetingOtherPoint(e.value)}
+                />
+                {watchShowMeetingOtherPoint === "Otro" && (
+                  <InputText
+                    {...register("meetingOtherPointOther")}
+                    placeholder="Inicio de ruta"
+                  />
+                )}
+              </div>
+              <div className="flex flex-col gap-2">
+                <label htmlFor="startTime">Hora</label>
+                <Calendar
+                  value={timeOther}
+                  onChange={(e) => setTimeOther(e.value)}
+                  timeOnly
+                />
+              </div>
+            </div>
+          )}
 
-          <div>
+          <div className="flex flex-col gap-2">
             <label htmlFor="comments">Comentarios / Descripción</label>
             <InputTextarea
               value={comments}
               onChange={(e) => setComments(e.target.value)}
               rows={5}
               cols={30}
-              placeholder="Deja tu comentario de la ruta o especificaciones"
+              placeholder="Deja tu comentario o especificaciones de la ruta."
             />
           </div>
 
