@@ -1,6 +1,6 @@
-"use client";
-import React, { useContext, useState } from "react";
-import { useForm } from "react-hook-form";
+"use client"
+import React, { useContext } from "react";
+import { useForm, Controller } from "react-hook-form";
 import { RoutesContext } from "@/context/RoutesContext";
 import { FormCallRouteContext } from "@/context/FormCallRouteContext";
 import Image from "next/image";
@@ -15,16 +15,33 @@ import { Button } from "primereact/button";
 const FormCallRoute = () => {
   const { dataRoutes } = useContext(RoutesContext);
   const { meetingPoints, paceRoute } = useContext(FormCallRouteContext);
-  const [selectedPace, setSelectedPace] = useState([]);
-  const [selectedRoute, setSelectedRoute] = useState(null);
-  const [selectedMeetingPoint, setSelectedMeetingPoint] = useState(null);
-  const [time, setTime] = useState(null);
-  const [timeOther, setTimeOther] = useState(null);
-  const [selectedOtherRoute, setSelectedOtherRoute] = useState(null);
-  const [selectedMeetingOtherPoint, setSelectedMeetingOtherPoint] =
-    useState(null);
-  const [comments, setComments] = useState("");
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = React.useState(false);
+
+  const { control, handleSubmit, watch } = useForm({
+    defaultValues: {
+      nameRoute: null,
+      newNameRoute: "",
+      dateRoute: null,
+      paceRoute: [],
+      meetingPoint: null,
+      meetingPointOther: "",
+      timeMeetingPoint: null,
+      otherPoint: null,
+      meetingOtherPoint: null,
+      meetingOtherPointOther: "",
+      timeMeetingOtherPoint: null,
+      comments: "",
+    },
+  });
+
+  const watchShowWriteNewRoute = watch("nameRoute");
+  const watchShowMeetingPoint = watch("meetingPoint");
+  const watchShowMeetingOtherPoint = watch("meetingOtherPoint");
+  const watchShowOtherPoint = watch("otherPoint");
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
 
   const optionTemplate = (option) => {
     return (
@@ -35,55 +52,64 @@ const FormCallRoute = () => {
     );
   };
 
-  const { register, handleSubmit, watch } = useForm();
-  const watchShowWriteNewRoute = watch("nameRoute");
-  const watchShowMeetingPoint = watch("meetingPoint");
-  const watchShowMeetingOtherPoint = watch("meetingOtherPoint");
-  const watchShowOtherPoint = watch("otherPoint");
-
   return (
-    <div className="bg-white flex justify-center p-10">
-      <div className="w-[40vw] border border-black p-5 rounded-2xl">
-        <form className="flex flex-col gap-5">
-          <div className="grid grid-cols-2 gap-5">
+    <div className="bg-white flex justify-center p-3 sm:p-10">
+      <div className="w-full lg:w-[60vw] xl:w-[40vw] border border-black p-5 rounded-2xl">
+        <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
+          <h1 className="font-bold text-lg">Convocar ruta</h1>
+
+          <div className="flex flex-col sm:grid sm:grid-cols-2 gap-5">
             <div className="flex flex-col gap-2">
               <label htmlFor="nameRoute">Ruta</label>
-              <Dropdown
-                {...register("nameRoute")}
-                options={[{ name: "Nueva" }, ...dataRoutes]}
-                optionLabel="name"
-                placeholder="Selecciona ruta"
-                className="w-full md:w-14rem"
-                value={selectedRoute}
-                onChange={(e) => setSelectedRoute(e.value)}
+              <Controller
+                name="nameRoute"
+                control={control}
+                render={({ field }) => (
+                  <Dropdown
+                    {...field}
+                    options={[{ name: "Nueva" }, ...dataRoutes]}
+                    optionLabel="name"
+                    placeholder="Selecciona ruta"
+                    className="w-full md:w-14rem"
+                  />
+                )}
               />
-              {watchShowWriteNewRoute === "Nueva" && (
-                <InputText
-                  {...register("newNameRoute")}
-                  placeholder="Nombre de ruta"
+              {watchShowWriteNewRoute.name === "Nueva" && (
+                <Controller
+                  name="newNameRoute"
+                  control={control}
+                  render={({ field }) => (
+                    <InputText {...field} placeholder="Nombre de ruta" />
+                  )}
                 />
               )}
             </div>
 
             <div className="flex flex-col gap-2">
               <label htmlFor="dateRoute">Fecha</label>
-              <Calendar {...register("dateRoute")} dateFormat="dd/mm/yy" />
+              <Controller
+                name="dateRoute"
+                control={control}
+                render={({ field }) => (
+                  <Calendar {...field} dateFormat="dd/mm/yy" />
+                )}
+              />
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <label htmlFor="pace">Ritmo</label>
-            <i
-              className="pi pi-question-circle cursor-pointer"
-              onClick={() => setVisible(true)}
-            ></i>
+
+          <div className="flex flex-col sm:items-center gap-2 sm:flex-row">
+            <div className="flex items-center gap-2">
+              <label htmlFor="pace">Ritmo</label>
+              <i
+                className="pi pi-question-circle cursor-pointer"
+                onClick={() => setVisible(true)}
+              ></i>
+            </div>
             <Dialog
-              header="🛑 UN SANO CONSEJO: LEER BIEN EL NIVEL ANTES DE PRESENTARSE A LA RUTA"
+              header="Ritmo de las rutas."
               visible={visible}
-              style={{ width: "50vw" }}
-              onHide={() => {
-                if (!visible) return;
-                setVisible(false);
-              }}
+              className="w-full md:w-[60vw]"
+              onHide={() => setVisible(false)}
             >
               <p className="m-0">
                 🪨<span className="font-bold">Nivel Roca.</span> Aún no te ves
@@ -115,102 +141,146 @@ const FormCallRoute = () => {
                 🪨🔜🐌🔜🐛🔜🦋🔜🚀🔜☠️🔜🐈🦄
               </p>
             </Dialog>
-            <MultiSelect
-              {...register("paceRoute")}
-              value={selectedPace}
-              options={paceRoute}
-              onChange={(e) => setSelectedPace(e.value)}
-              optionLabel="level"
-              itemTemplate={optionTemplate}
-              placeholder="Selecciona el ritmo"
-              display="chip"
+            <Controller
+              name="paceRoute"
+              control={control}
+              render={({ field }) => (
+                <MultiSelect
+                  {...field}
+                  options={paceRoute}
+                  optionLabel="level"
+                  itemTemplate={optionTemplate}
+                  placeholder="Selecciona el ritmo"
+                  display="chip"
+                  className="w-full md:w-14rem"
+                />
+              )}
             />
           </div>
 
-          <div>
-            <label htmlFor="meetingPoint">Punto de encuentro</label>
-            <Dropdown
-              {...register("meetingPoint")}
-              options={[...meetingPoints, { name: "Otro" }]}
-              optionLabel="name"
-              placeholder="Selecciona punto"
-              className="w-full md:w-14rem"
-              value={selectedMeetingPoint}
-              onChange={(e) => setSelectedMeetingPoint(e.value)}
-            />
-            {watchShowMeetingPoint === "Otro" && (
-              <InputText
-                {...register("meetingPointOther")}
-                placeholder="Inicio de ruta"
-              />
-            )}
-            <div>
-              <label htmlFor="startTime">Hora</label>
-              <Calendar
-                {...register("timeMeetingPoint")}
-                value={time}
-                onChange={(e) => setTime(e.value)}
-                timeOnly
-              />
-            </div>
-          </div>
-
-          <div>
-            <label htmlFor="anotherMeetingPoint">
-              ¿Existe punto de encuentro secundario?
-            </label>
-            <Dropdown
-              {...register("otherPoint")}
-              options={[{ name: "Si" }, { name: "No" }]}
-              optionLabel="name"
-              className="w-full md:w-14rem"
-              value={selectedOtherRoute}
-              onChange={(e) => setSelectedOtherRoute(e.value)}
-            />
-            {watchShowOtherPoint === "Si" && (
-              <div>
-                <div>
-                  <label htmlFor="meetingOtherPoint">Punto de encuentro</label>
+          <div className="flex flex-col sm:grid sm:grid-cols-2 gap-5">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="meetingPoint">Punto de encuentro</label>
+              <Controller
+                name="meetingPoint"
+                control={control}
+                render={({ field }) => (
                   <Dropdown
-                    {...register("meetingOtherPoint")}
+                    {...field}
                     options={[...meetingPoints, { name: "Otro" }]}
                     optionLabel="name"
                     placeholder="Selecciona punto"
                     className="w-full md:w-14rem"
-                    value={selectedMeetingOtherPoint}
-                    onChange={(e) => setSelectedMeetingOtherPoint(e.value)}
                   />
-                  {watchShowMeetingOtherPoint === "Otro" && (
-                    <InputText
-                      {...register("meetingOtherPointOther")}
-                      placeholder="Inicio de ruta"
-                    />
+                )}
+              />
+              {watchShowMeetingPoint.name === "Otro" && (
+                <Controller
+                  name="meetingPointOther"
+                  control={control}
+                  render={({ field }) => (
+                    <InputText {...field} placeholder="Inicio de ruta" />
                   )}
-                </div>
-                <div>
-                  <label htmlFor="startTime">Hora</label>
+                />
+              )}
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="timeMeetingPoint">Hora</label>
+              <Controller
+                name="timeMeetingPoint"
+                control={control}
+                render={({ field }) => (
                   <Calendar
-                    value={timeOther}
-                    onChange={(e) => setTimeOther(e.value)}
+                    {...field}
                     timeOnly
+                    onChange={(e) => field.onChange(e.value)}
+                    value={field.value}
                   />
-                </div>
-              </div>
-            )}
+                )}
+              />
+            </div>
           </div>
 
-          <div>
-            <label htmlFor="comments">Comentarios / Descripción</label>
-            <InputTextarea
-              value={comments}
-              onChange={(e) => setComments(e.target.value)}
-              rows={5}
-              cols={30}
-              placeholder="Deja tu comentario de la ruta o especificaciones"
+          <div className="flex items-center gap-2">
+            <label htmlFor="otherPoint">
+              ¿Existe punto de encuentro secundario?
+            </label>
+            <Controller
+              name="otherPoint"
+              control={control}
+              render={({ field }) => (
+                <Dropdown
+                  {...field}
+                  options={[{ name: "Si" }, { name: "No" }]}
+                  optionLabel="name"
+                  className="md:w-14rem"
+                />
+              )}
             />
           </div>
 
-          <Button label="Convocar" />
+          {watchShowOtherPoint.name === "Si" && (
+            <div className="flex flex-col sm:grid sm:grid-cols-2 gap-5">
+              <div className="flex flex-col gap-2">
+                <label htmlFor="meetingOtherPoint">Punto de encuentro</label>
+                <Controller
+                  name="meetingOtherPoint"
+                  control={control}
+                  render={({ field }) => (
+                    <Dropdown
+                      {...field}
+                      options={[...meetingPoints, { name: "Otro" }]}
+                      optionLabel="name"
+                      placeholder="Selecciona punto"
+                      className="w-full md:w-14rem"
+                    />
+                  )}
+                />
+                {watchShowMeetingOtherPoint.name === "Otro" && (
+                  <Controller
+                    name="meetingOtherPointOther"
+                    control={control}
+                    render={({ field }) => (
+                      <InputText {...field} placeholder="Inicio de ruta" />
+                    )}
+                  />
+                )}
+              </div>
+              <div className="flex flex-col gap-2">
+                <label htmlFor="timeMeetingOtherPoint">Hora</label>
+                <Controller
+                  name="timeMeetingOtherPoint"
+                  control={control}
+                  render={({ field }) => (
+                    <Calendar
+                      {...field}
+                      timeOnly
+                      onChange={(e) => field.onChange(e.value)}
+                      value={field.value}
+                    />
+                  )}
+                />
+              </div>
+            </div>
+          )}
+
+          <div className="flex flex-col gap-2">
+            <label htmlFor="comments">Comentarios / Descripción</label>
+            <Controller
+              name="comments"
+              control={control}
+              render={({ field }) => (
+                <InputTextarea
+                  {...field}
+                  rows={5}
+                  cols={30}
+                  placeholder="Deja tu comentario o especificaciones de la ruta."
+                />
+              )}
+            />
+          </div>
+
+          <Button type="submit" label="Convocar" />
         </form>
       </div>
     </div>
@@ -219,4 +289,3 @@ const FormCallRoute = () => {
 
 export default FormCallRoute;
 
-//pi-question-circle
