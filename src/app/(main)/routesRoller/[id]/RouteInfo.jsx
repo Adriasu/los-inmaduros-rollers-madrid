@@ -14,7 +14,7 @@ const RouteInfo = () => {
   const { dataRoutes, isLoading } = useContext(RoutesContext);
   const id = params.id;
 
-  const route = dataRoutes.find((route) => route.routeId === id);
+  const route = dataRoutes.find((route) => route.id === id);
 
   if (!route || isLoading) {
     return (

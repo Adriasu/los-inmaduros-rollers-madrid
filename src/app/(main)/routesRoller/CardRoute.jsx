@@ -10,7 +10,7 @@ const CardRoute = ({ route }) => {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(`/routesRoller/${route.routeId}`);
+    router.push(`/routesRoller/${route.id}`);
   };
 
   return (

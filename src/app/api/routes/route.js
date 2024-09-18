@@ -53,8 +53,6 @@ export async function DELETE(request) {
 
 
 
-
-
 // import { revalidatePath } from 'next/cache';
 // import dbConnect from '../../../../lib/mongodb.mjs';
 // import Route from '../../../../models/Route.mjs';
