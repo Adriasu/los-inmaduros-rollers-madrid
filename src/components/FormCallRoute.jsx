@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useContext } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { RoutesContext } from "@/context/RoutesContext";
@@ -13,7 +13,7 @@ import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 
 const FormCallRoute = () => {
-  const { dataRoutes } = useContext(RoutesContext);
+  const { dataRoutes, isLoading } = useContext(RoutesContext);
   const { meetingPoints, paceRoute } = useContext(FormCallRouteContext);
   const [visible, setVisible] = React.useState(false);
 
@@ -52,6 +52,10 @@ const FormCallRoute = () => {
     );
   };
 
+  if (isLoading) {
+    return <div>loading...</div>;
+  }
+
   return (
     <div className="bg-white flex justify-center p-3 sm:p-10">
       <div className="w-full lg:w-[60vw] xl:w-[40vw] border border-black p-5 rounded-2xl">
@@ -74,7 +78,7 @@ const FormCallRoute = () => {
                   />
                 )}
               />
-              {watchShowWriteNewRoute.name === "Nueva" && (
+              {watchShowWriteNewRoute && watchShowWriteNewRoute.name === "Nueva" && (
                 <Controller
                   name="newNameRoute"
                   control={control}
@@ -174,7 +178,7 @@ const FormCallRoute = () => {
                   />
                 )}
               />
-              {watchShowMeetingPoint.name === "Otro" && (
+              {watchShowMeetingPoint && watchShowMeetingPoint.name === "Otro" && (
                 <Controller
                   name="meetingPointOther"
                   control={control}
@@ -219,7 +223,7 @@ const FormCallRoute = () => {
             />
           </div>
 
-          {watchShowOtherPoint.name === "Si" && (
+          {watchShowOtherPoint && watchShowOtherPoint.name === "Si" && (
             <div className="flex flex-col sm:grid sm:grid-cols-2 gap-5">
               <div className="flex flex-col gap-2">
                 <label htmlFor="meetingOtherPoint">Punto de encuentro</label>
@@ -236,7 +240,7 @@ const FormCallRoute = () => {
                     />
                   )}
                 />
-                {watchShowMeetingOtherPoint.name === "Otro" && (
+                {watchShowMeetingOtherPoint && watchShowMeetingOtherPoint.name === "Otro" && (
                   <Controller
                     name="meetingOtherPointOther"
                     control={control}
@@ -288,4 +292,3 @@ const FormCallRoute = () => {
 };
 
 export default FormCallRoute;
-

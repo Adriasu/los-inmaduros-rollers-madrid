@@ -12,6 +12,7 @@
   "dependencies": {
     "@clerk/nextjs": "^5.5.2",
     "dotenv": "^16.4.5",
+    "firebase": "^10.13.1",
     "leaflet": "^1.9.4",
     "leaflet-gpx": "^2.1.2",
     "lucide": "^0.439.0",
