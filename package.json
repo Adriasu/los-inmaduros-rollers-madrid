@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "init-db": "node -r dotenv/config scripts/initDb.mjs"
+    "init-db": "node -r dotenv/config scripts/initDb.mjs",
+    "upload-routes": "node scripts/uploadRoutes.mjs"
   },
   "dependencies": {
     "@clerk/nextjs": "^5.5.2",
