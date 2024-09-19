@@ -42,6 +42,9 @@ export default function AuthContextProvider({ children }) {
     saveUserToFirestore();
   }, [isLoaded, isSignedIn, user]);
 
+  console.log(user);
+  
+
   return (
     <AuthContext.Provider value={{ isSignedIn, user, isLoaded, isSaving }}>
       {children}
