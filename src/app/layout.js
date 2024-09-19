@@ -8,6 +8,7 @@ import RoutersContextProvider from "@/context/RoutesContext";
 import FormCallRouteContextProvider from "@/context/FormCallRouteContext";
 import Footer from "@/components/Footer";
 import { ClerkProvider } from "@clerk/nextjs";
+import AuthContextProvider from "@/context/AuthContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,20 +21,22 @@ export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
       <html lang="en">
-        <RoutersContextProvider>
-          <FormCallRouteContextProvider>
-            <PrimeReactProvider>
-              <body
-                className={`${inter.className} bg-gradient-to-r from-slate-900 to-slate-700`}
-              >
-                <Navbar />
+        <AuthContextProvider>
+          <RoutersContextProvider>
+            <FormCallRouteContextProvider>
+              <PrimeReactProvider>
+                <body
+                  className={`${inter.className} bg-gradient-to-r from-slate-900 to-slate-700`}
+                >
+                  <Navbar />
 
-                {children}
-                <Footer />
-              </body>
-            </PrimeReactProvider>
-          </FormCallRouteContextProvider>
-        </RoutersContextProvider>
+                  {children}
+                  <Footer />
+                </body>
+              </PrimeReactProvider>
+            </FormCallRouteContextProvider>
+          </RoutersContextProvider>
+        </AuthContextProvider>
       </html>
     </ClerkProvider>
   );

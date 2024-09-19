@@ -1,13 +1,14 @@
-import { createContext, useContext, useEffect, useState } from "react";
+"use client";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { doc, setDoc, getDoc } from "firebase/firestore";
-import { db } from "../firebase"; // Importa correctamente tu configuración de Firebase
+import { db } from "../../lib/fireBase.mjs";
 
-const AuthContext = createContext();
+const AuthContext = createContext(null);
 
 export const useAuth = () => useContext(AuthContext);
 
-export const AuthProvider = ({ children }) => {
+export default function AuthContextProvider({ children }) {
   const { isSignedIn, user, isLoaded } = useUser();
   const [isSaving, setIsSaving] = useState(false);
 
@@ -28,7 +29,9 @@ export const AuthProvider = ({ children }) => {
             });
             console.log("Usuario guardado en Firestore");
           } else {
-            console.log("Usuario ya existe en Firestore, no se guarda nuevamente.");
+            console.log(
+              "Usuario ya existe en Firestore, no se guarda nuevamente."
+            );
           }
         } catch (error) {
           console.error("Error al guardar el usuario en Firestore:", error);
@@ -44,4 +47,4 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
-};
+}
