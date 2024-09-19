@@ -5,9 +5,13 @@ import Image from "next/image";
 import MenuNav from "./MenuNav";
 import { useRouter } from "next/navigation";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const router = useRouter();
+  const pathName = usePathname();
+
+  const navHidden = pathName === "/sign-in" && pathName === "/sign-up"
 
   const handleClick = () => {
     router.push("/");

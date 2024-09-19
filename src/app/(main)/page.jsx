@@ -1,4 +1,4 @@
-import React, { use } from "react";
+import React from "react";
 import Hero from "./Hero";
 import HeroMobile from "./HeroMobile";
 import RoutesCalled from "./RoutesCalled";

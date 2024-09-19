@@ -28,7 +28,7 @@ export default function RoutersContextProvider({ children }) {
     fetchDataRoutes();
   }, []);
 
-  console.log(dataRoutes);
+  // console.log(dataRoutes);
   
 
 
