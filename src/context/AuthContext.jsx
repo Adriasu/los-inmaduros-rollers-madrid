@@ -11,6 +11,7 @@ export const useAuth = () => useContext(AuthContext);
 export default function AuthContextProvider({ children }) {
   const { isSignedIn, user, isLoaded } = useUser();
   const [isSaving, setIsSaving] = useState(false);
+ 
 
   useEffect(() => {
     const saveUserToFirestore = async () => {
@@ -43,6 +44,9 @@ export default function AuthContextProvider({ children }) {
   }, [isLoaded, isSignedIn, user]);
 
   console.log(user);
+
+ 
+  
   
 
   return (
