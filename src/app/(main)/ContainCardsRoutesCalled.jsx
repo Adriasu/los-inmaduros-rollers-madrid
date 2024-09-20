@@ -26,7 +26,7 @@ const ContainCardsRoutesCalled = () => {
   }
   return (
     <div className="flex justify-center items-center w-full sm:w-2/3 sm:mx-auto pt-5">
-      <div className="w-full">
+      <div className="w-full flex flex-wrap gap-3">
         {events.length > 0 ? (
           events.map((routeCall, index) => (
             <CardCalledRoute

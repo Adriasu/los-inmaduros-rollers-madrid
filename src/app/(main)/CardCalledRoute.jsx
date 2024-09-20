@@ -1,4 +1,4 @@
-import { CalendarDays, Clock, Map, MapPin } from "lucide-react";
+import { CalendarDays, Clock, Drum, Map, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -50,26 +50,28 @@ const CardCalledRoute = ({ event }) => {
   const formattedName = capitalizarPrimeraLetra(event.newNameRoute);
 
   return (
-    <div>
-      {event.nameRoute.name === "Nueva" ? (
-        <Image
-          src={
-            "https://res.cloudinary.com/dj4j3uoia/image/upload/v1726855799/otraRuta_az0ggq.jpg"
-          }
-          alt={event.nameRoute.name}
-          width={100}
-          height={100}
-          className="w-[300px] "
-        />
-      ) : (
-        <Image
-          src={event.nameRoute.image}
-          alt={event.nameRoute.name}
-          width={100}
-          height={100}
-          className="w-[300px] "
-        />
-      )}
+    <div className="border border-black">
+      <div>
+        {event.nameRoute.name === "Nueva" ? (
+          <Image
+            src={
+              "https://res.cloudinary.com/dj4j3uoia/image/upload/v1726855799/otraRuta_az0ggq.jpg"
+            }
+            alt={event.nameRoute.name}
+            width={100}
+            height={100}
+            className="w-[300px] "
+          />
+        ) : (
+          <Image
+            src={event.nameRoute.image}
+            alt={event.nameRoute.name}
+            width={100}
+            height={100}
+            className="w-[300px] "
+          />
+        )}
+      </div>
 
       <div>
         {event.nameRoute.name === "Nueva" ? (
@@ -126,6 +128,30 @@ const CardCalledRoute = ({ event }) => {
             </div>
           </div>
         )}
+
+        <div className="flex gap-2">
+          <Drum />
+          <div className="flex flex-col">
+            {event.paceRoute.map((pace, i) => {
+              return (
+                <div className="flex gap-2" key={i}>
+                  <Image
+                    src={pace.img}
+                    alt={pace.level}
+                    width={30}
+                    height={30}
+                  />
+                  <p>{pace.level}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div>
+          <h1>Comentarios</h1>
+          <p>{event.comments}</p>
+        </div>
       </div>
     </div>
   );
