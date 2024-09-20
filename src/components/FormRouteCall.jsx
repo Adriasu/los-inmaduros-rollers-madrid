@@ -87,8 +87,7 @@ const FormRouteCall = () => {
       });
 
       reset();
-      setOpen(false)
-
+      setOpen(false);
 
       console.log("Evento creado con ID:", postId);
     } catch (error) {
