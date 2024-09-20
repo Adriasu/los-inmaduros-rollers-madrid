@@ -15,13 +15,14 @@ import { useUser } from "@clerk/nextjs";
 import { setDocument } from "../../lib/fireBase.mjs";
 import { Toast } from "primereact/toast";
 
-const FormCallRoute = () => {
+const FormCallRoute = ({isOpen}) => {
   const { dataRoutes, isLoading } = useContext(RoutesContext);
   const { meetingPoints, paceRoute } = useContext(FormCallRouteContext);
   const [visible, setVisible] = React.useState(false);
   const { isSignedIn, user, isLoaded } = useUser();
   const [userData, setUserData] = useState(null);
   const toast = useRef(null);
+ 
 
   useEffect(() => {
     if (isLoaded && isSignedIn && user) {
@@ -33,7 +34,7 @@ const FormCallRoute = () => {
     }
   }, [isLoaded, isSignedIn, user]);
 
-  const { control, handleSubmit, watch } = useForm({
+  const { control, handleSubmit, watch, reset } = useForm({
     defaultValues: {
       nameRoute: null,
       newNameRoute: "",
@@ -87,12 +88,15 @@ const FormCallRoute = () => {
 
       await setDocument("routesCalled", postDataEvent, postId);
 
-      toast.current.show({ 
-        severity: 'success', 
-        summary: 'Ruta creada', 
+      toast.current.show({
+        severity: "success",
+        summary: "Ruta creada",
         detail: `La ruta ha sido creada correctamente.`,
-        life: 3000 
+        life: 3000,
       });
+
+      reset();
+      isOpen(false)
 
       console.log("Evento creado con ID:", postId);
     } catch (error) {
@@ -109,17 +113,11 @@ const FormCallRoute = () => {
     );
   };
 
-  if (isLoading) {
-    return <div>loading...</div>;
-  }
-
   return (
     <div className="bg-white flex justify-center p-3 sm:p-10">
       <Toast ref={toast} />
       <div className="w-full lg:w-[60vw] xl:w-[40vw] border border-black p-5 rounded-2xl">
         <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
-          <h1 className="font-bold text-lg">Convocar ruta</h1>
-
           <div className="flex flex-col sm:grid sm:grid-cols-2 gap-5">
             <div className="flex flex-col gap-2">
               <label htmlFor="nameRoute">Ruta</label>
