@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { RoutesContext } from "@/context/RoutesContext";
 import { FormCallRouteContext } from "@/context/FormCallRouteContext";
@@ -13,6 +13,7 @@ import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { useUser } from "@clerk/nextjs";
 import { setDocument } from "../../lib/fireBase.mjs";
+import { Toast } from "primereact/toast";
 
 const FormCallRoute = () => {
   const { dataRoutes, isLoading } = useContext(RoutesContext);
@@ -20,6 +21,7 @@ const FormCallRoute = () => {
   const [visible, setVisible] = React.useState(false);
   const { isSignedIn, user, isLoaded } = useUser();
   const [userData, setUserData] = useState(null);
+  const toast = useRef(null);
 
   useEffect(() => {
     if (isLoaded && isSignedIn && user) {
@@ -53,6 +55,15 @@ const FormCallRoute = () => {
   const watchShowMeetingOtherPoint = watch("meetingOtherPoint");
   const watchShowOtherPoint = watch("otherPoint");
 
+  const showSuccess = () => {
+    toast.current.show({
+      severity: "success",
+      summary: "Success",
+      detail: "Convocatoria creada correctamente",
+      life: 3000,
+    });
+  };
+
   const onSubmit = async (data) => {
     try {
       const postDataEvent = {
@@ -72,11 +83,16 @@ const FormCallRoute = () => {
         idUser: userData.id,
       };
 
-      console.log(postDataEvent);
-
       const postId = Date.now().toString();
 
       await setDocument("routesCalled", postDataEvent, postId);
+
+      toast.current.show({ 
+        severity: 'success', 
+        summary: 'Ruta creada', 
+        detail: `La ruta ha sido creada correctamente.`,
+        life: 3000 
+      });
 
       console.log("Evento creado con ID:", postId);
     } catch (error) {
@@ -99,6 +115,7 @@ const FormCallRoute = () => {
 
   return (
     <div className="bg-white flex justify-center p-3 sm:p-10">
+      <Toast ref={toast} />
       <div className="w-full lg:w-[60vw] xl:w-[40vw] border border-black p-5 rounded-2xl">
         <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
           <h1 className="font-bold text-lg">Convocar ruta</h1>
