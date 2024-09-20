@@ -58,16 +58,16 @@ const CardCalledRoute = ({ event }) => {
               "https://res.cloudinary.com/dj4j3uoia/image/upload/v1726855799/otraRuta_az0ggq.jpg"
             }
             alt={event.nameRoute.name}
-            width={100}
-            height={100}
+            width={1000}
+            height={1000}
             className="w-[300px] "
           />
         ) : (
           <Image
             src={event.nameRoute.image}
             alt={event.nameRoute.name}
-            width={100}
-            height={100}
+            width={1000}
+            height={1000}
             className="w-[300px] "
           />
         )}
