@@ -10,7 +10,6 @@ const page = async () => {
       <Hero />
       <HeroMobile />
       <RoutesCalled/>
-      <FormCallRoute/>
     </div>
   );
 };
