@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { RoutesContext } from "@/context/RoutesContext";
 import { FormCallRouteContext } from "@/context/FormCallRouteContext";
@@ -11,14 +11,25 @@ import { Calendar } from "primereact/calendar";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
+import { useUser } from "@clerk/nextjs";
+import { setDocument } from "../../lib/fireBase.mjs";
 
 const FormCallRoute = () => {
   const { dataRoutes, isLoading } = useContext(RoutesContext);
   const { meetingPoints, paceRoute } = useContext(FormCallRouteContext);
   const [visible, setVisible] = React.useState(false);
+  const { isSignedIn, user, isLoaded } = useUser();
+  const [userData, setUserData] = useState(null);
 
-  
-  
+  useEffect(() => {
+    if (isLoaded && isSignedIn && user) {
+      const data = {
+        id: user.id,
+        fullName: user.fullName,
+      };
+      setUserData(data);
+    }
+  }, [isLoaded, isSignedIn, user]);
 
   const { control, handleSubmit, watch } = useForm({
     defaultValues: {
@@ -42,8 +53,35 @@ const FormCallRoute = () => {
   const watchShowMeetingOtherPoint = watch("meetingOtherPoint");
   const watchShowOtherPoint = watch("otherPoint");
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      const postDataEvent = {
+        nameRoute: data.nameRoute,
+        newNameRoute: data.newNameRoute,
+        dateRoute: data.dateRoute,
+        paceRoute: data.paceRoute,
+        meetingPoint: data.meetingPoint,
+        meetingPointOther: data.meetingPointOther,
+        timeMeetingPoint: data.timeMeetingPoint,
+        otherPoint: data.otherPoint,
+        meetingOtherPoint: data.meetingOtherPoint,
+        meetingOtherPointOther: data.meetingOtherPointOther,
+        timeMeetingOtherPoint: data.timeMeetingOtherPoint,
+        comments: data.comments,
+        fullName: userData.fullName,
+        idUser: userData.id,
+      };
+
+      console.log(postDataEvent);
+
+      const postId = Date.now().toString();
+
+      await setDocument("routesCalled", postDataEvent, postId);
+
+      console.log("Evento creado con ID:", postId);
+    } catch (error) {
+      console.error("Error al crear el evento:", error);
+    }
   };
 
   const optionTemplate = (option) => {
@@ -81,15 +119,16 @@ const FormCallRoute = () => {
                   />
                 )}
               />
-              {watchShowWriteNewRoute && watchShowWriteNewRoute.name === "Nueva" && (
-                <Controller
-                  name="newNameRoute"
-                  control={control}
-                  render={({ field }) => (
-                    <InputText {...field} placeholder="Nombre de ruta" />
-                  )}
-                />
-              )}
+              {watchShowWriteNewRoute &&
+                watchShowWriteNewRoute.name === "Nueva" && (
+                  <Controller
+                    name="newNameRoute"
+                    control={control}
+                    render={({ field }) => (
+                      <InputText {...field} placeholder="Nombre de ruta" />
+                    )}
+                  />
+                )}
             </div>
 
             <div className="flex flex-col gap-2">
@@ -181,15 +220,16 @@ const FormCallRoute = () => {
                   />
                 )}
               />
-              {watchShowMeetingPoint && watchShowMeetingPoint.name === "Otro" && (
-                <Controller
-                  name="meetingPointOther"
-                  control={control}
-                  render={({ field }) => (
-                    <InputText {...field} placeholder="Inicio de ruta" />
-                  )}
-                />
-              )}
+              {watchShowMeetingPoint &&
+                watchShowMeetingPoint.name === "Otro" && (
+                  <Controller
+                    name="meetingPointOther"
+                    control={control}
+                    render={({ field }) => (
+                      <InputText {...field} placeholder="Inicio de ruta" />
+                    )}
+                  />
+                )}
             </div>
             <div className="flex flex-col gap-2">
               <label htmlFor="timeMeetingPoint">Hora</label>
@@ -243,15 +283,16 @@ const FormCallRoute = () => {
                     />
                   )}
                 />
-                {watchShowMeetingOtherPoint && watchShowMeetingOtherPoint.name === "Otro" && (
-                  <Controller
-                    name="meetingOtherPointOther"
-                    control={control}
-                    render={({ field }) => (
-                      <InputText {...field} placeholder="Inicio de ruta" />
-                    )}
-                  />
-                )}
+                {watchShowMeetingOtherPoint &&
+                  watchShowMeetingOtherPoint.name === "Otro" && (
+                    <Controller
+                      name="meetingOtherPointOther"
+                      control={control}
+                      render={({ field }) => (
+                        <InputText {...field} placeholder="Inicio de ruta" />
+                      )}
+                    />
+                  )}
               </div>
               <div className="flex flex-col gap-2">
                 <label htmlFor="timeMeetingOtherPoint">Hora</label>
