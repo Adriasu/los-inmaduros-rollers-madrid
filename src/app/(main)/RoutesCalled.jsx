@@ -2,6 +2,7 @@
 import FormRouteCall from "@/components/FormRouteCall";
 import React from "react";
 import ContainCardsRoutesCalled from "./ContainCardsRoutesCalled";
+import CardCalledRoute from "./CardCalledRoute";
 
 const RoutesCalled = () => {
   return (
@@ -14,6 +15,7 @@ const RoutesCalled = () => {
       </div>
       <div>
         <ContainCardsRoutesCalled />
+        <CardCalledRoute/>
       </div>
     </div>
   );

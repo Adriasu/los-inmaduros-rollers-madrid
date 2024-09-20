@@ -14,6 +14,7 @@ import { Button } from "primereact/button";
 import { useUser } from "@clerk/nextjs";
 import { setDocument } from "../../lib/fireBase.mjs";
 import { Toast } from "primereact/toast";
+import { useRouter } from 'next/navigation'
 
 const FormCallRoute = ({isOpen}) => {
   const { dataRoutes, isLoading } = useContext(RoutesContext);
@@ -97,6 +98,7 @@ const FormCallRoute = ({isOpen}) => {
 
       reset();
       isOpen(false)
+      router.push("/")
 
       console.log("Evento creado con ID:", postId);
     } catch (error) {
