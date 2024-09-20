@@ -118,7 +118,7 @@ const FormRouteCall = () => {
         visible={open}
         style={{ width: "50vw" }}
         onHide={() => {
-          if (!visible) return;
+          if (!open) return;
           setOpen(false);
         }}
       >
