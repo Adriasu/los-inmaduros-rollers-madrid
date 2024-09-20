@@ -140,6 +140,7 @@ const FormRouteCall = () => {
                         optionLabel="name"
                         placeholder="Selecciona ruta"
                         className="w-full md:w-14rem"
+                        required
                       />
                     )}
                   />
@@ -161,7 +162,7 @@ const FormRouteCall = () => {
                     name="dateRoute"
                     control={control}
                     render={({ field }) => (
-                      <Calendar {...field} dateFormat="dd/mm/yy" />
+                      <Calendar {...field} dateFormat="dd/mm/yy" required/>
                     )}
                   />
                 </div>
@@ -228,6 +229,7 @@ const FormRouteCall = () => {
                       placeholder="Selecciona el ritmo"
                       display="chip"
                       className="w-full md:w-14rem"
+                      required
                     />
                   )}
                 />
@@ -246,6 +248,7 @@ const FormRouteCall = () => {
                         optionLabel="name"
                         placeholder="Selecciona punto"
                         className="w-full md:w-14rem"
+                        required
                       />
                     )}
                   />
@@ -290,6 +293,7 @@ const FormRouteCall = () => {
                       options={[{ name: "Si" }, { name: "No" }]}
                       optionLabel="name"
                       className="md:w-14rem"
+                      required
                     />
                   )}
                 />

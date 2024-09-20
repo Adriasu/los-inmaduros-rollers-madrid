@@ -1,25 +1,38 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { getCollection } from "../../../lib/fireBase.mjs";
+import { db, getCollection } from "../../../lib/fireBase.mjs";
 import CardCalledRoute from "./CardCalledRoute";
+import { collection, onSnapshot } from "firebase/firestore";
 
 const ContainCardsRoutesCalled = () => {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const getRoutes = async () => {
-    try {
-      const res = await getCollection("routesCalled");
-      setEvents(res);
-      setIsLoading(false);
-    } catch (error) {}
-  };
-
   useEffect(() => {
-    getRoutes();
+    const routesRef = collection(db, "routesCalled");
+
+    const unsubscribe = onSnapshot(routesRef, (snapshot) => {
+      const eventsArray = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setEvents(eventsArray);
+      setIsLoading(false);
+    });
+    return () => unsubscribe();
   }, []);
 
-  console.log(events);
+  //   const getRoutes = async () => {
+  //     try {
+  //       const res = await getCollection("routesCalled");
+  //       setEvents(res);
+  //       setIsLoading(false);
+  //     } catch (error) {}
+  //   };
+
+  //   useEffect(() => {
+  //     getRoutes();
+  //   }, []);
 
   if (isLoading) {
     return <div>Loading...</div>;

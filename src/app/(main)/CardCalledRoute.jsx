@@ -73,12 +73,13 @@ const CardCalledRoute = ({ event }) => {
         )}
       </div>
 
-      <div>
+      <div className="flex gap-2">
         {event.nameRoute.name === "Nueva" ? (
           <h1>{formattedName}</h1>
         ) : (
           <h1>{event.nameRoute.name}</h1>
         )}
+        <p>by {event.fullName}</p>
       </div>
 
       <div>
