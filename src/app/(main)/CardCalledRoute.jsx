@@ -42,6 +42,11 @@ const CardCalledRoute = ({ event }) => {
       ? convertTimestampToTime(event.timeMeetingPoint.seconds)
       : "Hora no disponible";
 
+  const formattedTimeSecondPoint =
+    event.timeMeetingOtherPoint && event.timeMeetingOtherPoint.seconds
+      ? convertTimestampToTime(event.timeMeetingOtherPoint.seconds)
+      : "Hora no disponible";
+
   const formattedName = capitalizarPrimeraLetra(event.newNameRoute);
 
   return (
@@ -98,6 +103,29 @@ const CardCalledRoute = ({ event }) => {
           <Clock />
           <p>{formattedTimeFirstPoint}</p>
         </div>
+
+        {event.otherPoint.name === "Si" && (
+          <div>
+            <div className="flex gap-2">
+              <MapPin />
+              {event.meetingOtherPoint.name === "Otro" ? (
+                <p>{event.meetingOtherPointOther}</p>
+              ) : (
+                <p>{event.meetingOtherPoint.name}</p>
+              )}
+              {event.meetingOtherPoint.name !== "Otro" && (
+                <Link target="_blank" href={event.meetingOtherPoint.location}>
+                  <Map />
+                </Link>
+              )}
+            </div>
+
+            <div className="flex gap-2">
+              <Clock />
+              <p>{formattedTimeSecondPoint}</p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
