@@ -12,14 +12,12 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { useUser } from "@clerk/nextjs";
-import { setDoc } from "firebase/firestore";
 import { setDocument } from "../../lib/fireBase.mjs";
 
 const FormCallRoute = () => {
   const { dataRoutes, isLoading } = useContext(RoutesContext);
   const { meetingPoints, paceRoute } = useContext(FormCallRouteContext);
   const [visible, setVisible] = React.useState(false);
-  const [eventData, setEventData] = useState([]);
   const { isSignedIn, user, isLoaded } = useUser();
   const [userData, setUserData] = useState(null);
 
@@ -57,25 +55,24 @@ const FormCallRoute = () => {
 
   const onSubmit = async (data) => {
     try {
-      
-      setEventData(data);
-
       const postDataEvent = {
-        nameRoute: eventData.nameRoute,
-        newNameRoute: eventData.newNameRoute,
-        dateRoute: eventData.dateRoute,
-        paceRoute: eventData.paceRoute,
-        meetingPoint: eventData.meetingPoint,
-        meetingPointOther: eventData.meetingPointOther,
-        timeMeetingPoint: eventData.timeMeetingPoint,
-        otherPoint: eventData.otherPoint,
-        meetingOtherPoint: eventData.meetingOtherPoint,
-        meetingOtherPointOther: eventData.meetingOtherPointOther,
-        timeMeetingOtherPoint: eventData.timeMeetingOtherPoint,
-        comments: eventData.comments,
+        nameRoute: data.nameRoute,
+        newNameRoute: data.newNameRoute,
+        dateRoute: data.dateRoute,
+        paceRoute: data.paceRoute,
+        meetingPoint: data.meetingPoint,
+        meetingPointOther: data.meetingPointOther,
+        timeMeetingPoint: data.timeMeetingPoint,
+        otherPoint: data.otherPoint,
+        meetingOtherPoint: data.meetingOtherPoint,
+        meetingOtherPointOther: data.meetingOtherPointOther,
+        timeMeetingOtherPoint: data.timeMeetingOtherPoint,
+        comments: data.comments,
         fullName: userData.fullName,
         idUser: userData.id,
       };
+
+      console.log(postDataEvent);
 
       const postId = Date.now().toString();
 
@@ -339,4 +336,3 @@ const FormCallRoute = () => {
 };
 
 export default FormCallRoute;
-
