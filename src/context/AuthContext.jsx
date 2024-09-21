@@ -1,5 +1,11 @@
 "use client";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  use,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useUser } from "@clerk/nextjs";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { db } from "../../lib/fireBase.mjs";
@@ -25,6 +31,8 @@ export default function AuthContextProvider({ children }) {
               id: user.id,
               email: user.primaryEmailAddress?.emailAddress || "Sin correo",
               name: user.fullName || "Usuario de Ejemplo",
+              firstName: user.firstName,
+              image: user.imageUrl,
               createdAt: new Date(),
             });
             console.log("Usuario guardado en Firestore");
