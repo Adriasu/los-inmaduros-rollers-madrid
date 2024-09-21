@@ -6,7 +6,7 @@ import RoutesCalled from "./RoutesCalled";
 
 const page = async () => {
   return (
-    <div className='flex flex-col justify-center items-center'>
+    <div>
       <Hero />
       <HeroMobile />
       <RoutesCalled/>

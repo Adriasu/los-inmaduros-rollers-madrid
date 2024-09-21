@@ -8,20 +8,20 @@ const CardCalledRoute = ({ event }) => {
   console.log(event);
 
   const convertTimestampToDate = (seconds) => {
-    const date = new Date(seconds * 1000); // Convertir a milisegundos
-    const day = date.getDate().toString().padStart(2, "0"); // Asegurar 2 dígitos
-    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Mes
-    const year = date.getFullYear(); // Año
+    const date = new Date(seconds * 1000);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear();
 
-    return `${day}/${month}/${year}`; // Formato día/mes/año
+    return `${day}/${month}/${year}`;
   };
 
   const convertTimestampToTime = (seconds) => {
-    const date = new Date(seconds * 1000); // Convertir a milisegundos
+    const date = new Date(seconds * 1000);
     let hours = date.getHours();
     const minutes = date.getMinutes().toString().padStart(2, "0");
     const ampm = hours >= 12 ? "PM" : "AM";
-    hours = hours % 12 || 12; // Convertir a formato 12 horas (0 debería ser 12)
+    hours = hours % 12 || 12;
 
     return `${hours}:${minutes} ${ampm}`;
   };

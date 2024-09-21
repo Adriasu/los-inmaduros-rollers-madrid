@@ -17,29 +17,7 @@ const ContainCardsRoutesCalled = () => {
         id: doc.id,
         ...doc.data(),
       }));
-
-      const nowInSeconds = Math.floor(new Date().getTime() / 1000);
-
-      const sortedEvents = eventsArray.sort((a, b) => {
-        const dateA = a.dateRoute.seconds;
-        const timeMeetingPointA = a.timeMeetingPoint.seconds;
-        const dateB = b.dateRoute.seconds;
-        const timeMeetingPointB = b.timeMeetingPoint.seconds;
-
-        const endTimeA = timeMeetingPointA + 2 * 60 * 60;
-        const endTimeB = timeMeetingPointB + 2 * 60 * 60;
-
-        if (endTimeA < nowInSeconds && endTimeB < nowInSeconds) {
-          return dateA - dateB;
-        }
-
-        if (endTimeA < nowInSeconds) return 1;
-        if (endTimeB < nowInSeconds) return -1;
-
-        return dateA - dateB;
-      });
-
-      setEvents(sortedEvents);
+      setEvents(eventsArray);
       setIsLoading(false);
     });
     return () => unsubscribe();
@@ -55,7 +33,7 @@ const ContainCardsRoutesCalled = () => {
           <Masonry
             items={events}
             config={{
-              columns: [2, 2, 3],
+              columns: [1, 2, 3],
               gap: [10, 12, 25],
               media: [640, 1024, 1280],
             }}

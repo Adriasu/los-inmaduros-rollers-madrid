@@ -29,12 +29,11 @@ const FormRouteCall = () => {
       const data = {
         id: user.id,
         firstName: user.firstName,
-        imageUser: user.imageUrl
+        imageUser: user.imageUrl,
       };
       setUserData(data);
     }
   }, [isLoaded, isSignedIn, user]);
-
 
   const { control, handleSubmit, watch, reset } = useForm({
     defaultValues: {
@@ -75,7 +74,7 @@ const FormRouteCall = () => {
         comments: data.comments,
         firstName: userData.firstName,
         idUser: userData.id,
-        imageUser: userData.imageUser
+        imageUser: userData.imageUser,
       };
 
       const postId = Date.now().toString();
@@ -160,12 +159,18 @@ const FormRouteCall = () => {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="dateRoute">Fecha</label>
+                  <label htmlFor="dateRoute">Fecha y hora de inicio</label>
                   <Controller
                     name="dateRoute"
                     control={control}
                     render={({ field }) => (
-                      <Calendar {...field} dateFormat="dd/mm/yy" required/>
+                      <Calendar
+                        {...field}
+                        dateFormat="dd/mm/yy"
+                        required
+                        showTime
+                        hourFormat="24"
+                      />
                     )}
                   />
                 </div>
@@ -238,8 +243,8 @@ const FormRouteCall = () => {
                 />
               </div>
 
-              <div className="flex flex-col sm:grid sm:grid-cols-2 gap-5">
-                <div className="flex flex-col gap-2">
+              <div className="flex flex-col sm:grid sm:grid-cols-2 gap-5 w-full">
+                <div>
                   <label htmlFor="meetingPoint">Punto de encuentro</label>
                   <Controller
                     name="meetingPoint"
@@ -255,32 +260,24 @@ const FormRouteCall = () => {
                       />
                     )}
                   />
-                  {watchShowMeetingPoint &&
-                    watchShowMeetingPoint.name === "Otro" && (
+                </div>
+                {watchShowMeetingPoint &&
+                  watchShowMeetingPoint.name === "Otro" && (
+                    <div>
+                      <label htmlFor="">Nuevo punto</label>
                       <Controller
                         name="meetingPointOther"
                         control={control}
                         render={({ field }) => (
-                          <InputText {...field} placeholder="Inicio de ruta" />
+                          <InputText
+                            {...field}
+                            placeholder="Inicio de ruta"
+                            className="w-full"
+                          />
                         )}
                       />
-                    )}
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="timeMeetingPoint">Hora</label>
-                  <Controller
-                    name="timeMeetingPoint"
-                    control={control}
-                    render={({ field }) => (
-                      <Calendar
-                        {...field}
-                        timeOnly
-                        onChange={(e) => field.onChange(e.value)}
-                        value={field.value}
-                      />
-                    )}
-                  />
-                </div>
+                    </div>
+                  )}
               </div>
 
               <div className="flex items-center gap-2">
