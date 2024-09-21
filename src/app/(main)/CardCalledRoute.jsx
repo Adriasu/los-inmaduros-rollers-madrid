@@ -49,8 +49,49 @@ const CardCalledRoute = ({ event }) => {
 
   const formattedName = capitalizarPrimeraLetra(event.newNameRoute);
 
+  const handleShareWhatsApp = () => {
+    const paceLevels = event.paceRoute.map((pace) => pace.level).join(", ");
+    const message = `¡Rut4!
+
+      * Ruta: ${
+        event.nameRoute.name === "Nueva"
+          ? event.newNameRoute
+          : event.nameRoute.name
+      }
+      * Ritmo:  ${paceLevels}
+      * Fecha: ${formattedDate}
+      * Punto de encuentro: ${
+        event.meetingPoint.name === "Otro"
+          ? event.meetingPointOther
+          : event.meetingPoint.name
+      }
+      * Hora: ${formattedTimeFirstPoint}
+      ${
+        event.otherPoint.name === "Si"
+          ? `* Segundo punto de encuentro: ${
+              event.meetingOtherPoint.name === "Otro"
+                ? event.event.meetingOtherPointOther
+                : event.meetingOtherPoint.name
+            }
+      * Hora: ${formattedTimeSecondPoint}`
+          : ""
+      } 
+      * Comentarios: ${event.comments}
+
+      Puedes ver más detalles en: https://los-inmaduros-rollers-madrid.vercel.app/`; // Reemplaza con el enlace real
+
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, "_blank");
+  };
+
   return (
-    <div className="border border-black">
+    <div className="border border-black bg-gradient-to-r from-orange-300 to-cyan-600 shadow-[0px_0px_40px_2px_#f6ad55] rounded-2xl p-2">
+      <button
+        onClick={handleShareWhatsApp}
+        className="bg-green-500 text-white px-4 py-2 rounded-md mt-2"
+      >
+        Compartir por WhatsApp
+      </button>
       <div>
         {event.nameRoute.name === "Nueva" ? (
           <Image
@@ -60,7 +101,7 @@ const CardCalledRoute = ({ event }) => {
             alt={event.nameRoute.name}
             width={1000}
             height={1000}
-            className="w-[300px] "
+            className="w-[300px] rounded-2xl"
           />
         ) : (
           <Image
@@ -68,7 +109,7 @@ const CardCalledRoute = ({ event }) => {
             alt={event.nameRoute.name}
             width={1000}
             height={1000}
-            className="w-[300px] "
+            className="w-[300px] rounded-2xl"
           />
         )}
       </div>
@@ -79,7 +120,14 @@ const CardCalledRoute = ({ event }) => {
         ) : (
           <h1>{event.nameRoute.name}</h1>
         )}
-        <p>by {event.fullName}</p>
+        <p>by {event.firstName}</p>
+        <Image
+          src={event.imageUser}
+          alt={event.firstName}
+          width={50}
+          height={50}
+          className="rounded-full"
+        />
       </div>
 
       <div>

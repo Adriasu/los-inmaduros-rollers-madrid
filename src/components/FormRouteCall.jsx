@@ -28,11 +28,13 @@ const FormRouteCall = () => {
     if (isLoaded && isSignedIn && user) {
       const data = {
         id: user.id,
-        fullName: user.fullName,
+        firstName: user.firstName,
+        imageUser: user.imageUrl
       };
       setUserData(data);
     }
   }, [isLoaded, isSignedIn, user]);
+
 
   const { control, handleSubmit, watch, reset } = useForm({
     defaultValues: {
@@ -71,8 +73,9 @@ const FormRouteCall = () => {
         meetingOtherPointOther: data.meetingOtherPointOther,
         timeMeetingOtherPoint: data.timeMeetingOtherPoint,
         comments: data.comments,
-        fullName: userData.fullName,
+        firstName: userData.firstName,
         idUser: userData.id,
+        imageUser: userData.imageUser
       };
 
       const postId = Date.now().toString();

@@ -22,18 +22,6 @@ const ContainCardsRoutesCalled = () => {
     return () => unsubscribe();
   }, []);
 
-  //   const getRoutes = async () => {
-  //     try {
-  //       const res = await getCollection("routesCalled");
-  //       setEvents(res);
-  //       setIsLoading(false);
-  //     } catch (error) {}
-  //   };
-
-  //   useEffect(() => {
-  //     getRoutes();
-  //   }, []);
-
   if (isLoading) {
     return <div>Loading...</div>;
   }

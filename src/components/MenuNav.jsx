@@ -18,11 +18,6 @@ const MenuNav = () => {
   const [visible, setVisible] = useState(false);
   const { isLoaded, isSignedIn, user } = useUser();
 
-  // if (!isLoaded || !isSignedIn) {
-  //   return null;
-  // }
-  // console.log(isLoaded, isSignedIn);
-
   const styleMenu =
     "flex gap-2 hover:text-black hover:underline cursor-pointer";
 
