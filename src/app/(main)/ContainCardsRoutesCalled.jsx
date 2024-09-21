@@ -17,7 +17,31 @@ const ContainCardsRoutesCalled = () => {
         id: doc.id,
         ...doc.data(),
       }));
-      setEvents(eventsArray);
+
+      const nowInSeconds = Math.floor(new Date().getTime() / 1000);
+
+      // Ordenar eventos usando el campo dateRoute.seconds (ya incluye fecha y hora)
+      const sortedEvents = eventsArray.sort((a, b) => {
+        const eventAStart = a.dateRoute.seconds;
+        const eventBStart = b.dateRoute.seconds;
+
+        const eventAEnd = eventAStart + 2 * 60 * 60;
+        const eventBEnd = eventBStart + 2 * 60 * 60;
+
+        // Si ambos eventos ya han pasado, ordenarlos por fecha de inicio
+        if (eventAEnd < nowInSeconds && eventBEnd < nowInSeconds) {
+          return eventAStart - eventBStart;
+        }
+
+        // Si uno ha pasado y el otro no, prioriza el futuro
+        if (eventAEnd < nowInSeconds) return 1;
+        if (eventBEnd < nowInSeconds) return -1;
+
+        // Si ninguno ha pasado, ordenarlos por fecha de inicio
+        return eventAStart - eventBStart;
+      });
+
+      setEvents(sortedEvents);
       setIsLoading(false);
     });
     return () => unsubscribe();

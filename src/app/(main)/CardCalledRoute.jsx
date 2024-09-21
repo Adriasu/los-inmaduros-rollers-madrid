@@ -39,8 +39,8 @@ const CardCalledRoute = ({ event }) => {
       : "Fecha no disponible";
 
   const formattedTimeFirstPoint =
-    event.timeMeetingPoint && event.timeMeetingPoint.seconds
-      ? convertTimestampToTime(event.timeMeetingPoint.seconds)
+    event.dateRoute && event.dateRoute.seconds
+      ? convertTimestampToTime(event.dateRoute.seconds)
       : "Hora no disponible";
 
   const formattedTimeSecondPoint =
