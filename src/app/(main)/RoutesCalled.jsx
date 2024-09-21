@@ -3,6 +3,7 @@ import FormRouteCall from "@/components/FormRouteCall";
 import React from "react";
 import ContainCardsRoutesCalled from "./ContainCardsRoutesCalled";
 import CardCalledRoute from "./CardCalledRoute";
+import FormRouteCallMobile from "@/components/FormRouteCallMobile";
 
 const RoutesCalled = () => {
   return (
@@ -13,6 +14,7 @@ const RoutesCalled = () => {
             Próximas rutas
           </h1>
           <FormRouteCall />
+          <FormRouteCallMobile/>
         </div>
         <div className="w-full">
           <ContainCardsRoutesCalled />

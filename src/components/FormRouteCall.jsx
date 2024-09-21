@@ -107,7 +107,7 @@ const FormRouteCall = () => {
   };
 
   return (
-    <div className="card flex justify-content-center">
+    <div className="hidden md:flex card justify-content-center">
       <Toast ref={toast} />
       <Button
         label="Convoca tu ruta"

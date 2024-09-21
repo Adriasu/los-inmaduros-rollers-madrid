@@ -14,6 +14,7 @@ import { Button } from "primereact/button";
 import { useUser } from "@clerk/nextjs";
 import { setDocument } from "../../lib/fireBase.mjs";
 import { Toast } from "primereact/toast";
+import { Sidebar } from "primereact/sidebar";
 
 const FormRouteCallMobile = () => {
   const [open, setOpen] = useState(false);
@@ -106,240 +107,263 @@ const FormRouteCallMobile = () => {
     );
   };
   return (
-    <div className="bg-white flex justify-center p-3 sm:p-10">
-        <Toast ref={toast} />
-      <div className="w-full lg:w-[60vw] xl:w-[40vw] border border-black p-5 rounded-2xl">
-       <h1 className="mb-5 text-xl font-bold">Convocar ruta</h1>
-        <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex flex-col sm:grid sm:grid-cols-2 gap-5">
-            <div className="flex flex-col gap-2">
-              <label htmlFor="nameRoute">Ruta</label>
-              <Controller
-                name="nameRoute"
-                control={control}
-                render={({ field }) => (
-                  <Dropdown
-                    {...field}
-                    options={[{ name: "Nueva" }, ...dataRoutes]}
-                    optionLabel="name"
-                    placeholder="Selecciona ruta"
-                    className="w-full md:w-14rem"
-                    required
-                  />
-                )}
-              />
-              {watchShowWriteNewRoute &&
-                watchShowWriteNewRoute.name === "Nueva" && (
+    <div className="card flex justify-content-center md:hidden">
+      <Sidebar visible={open} onHide={() => setOpen(false)} fullScreen>
+        <div className="bg-white flex justify-center p-3 sm:p-10">
+          <Toast ref={toast} />
+          <div className="w-full lg:w-[60vw] xl:w-[40vw] border border-black p-5 rounded-2xl">
+            <h1 className="mb-5 text-xl font-bold">Convocar ruta</h1>
+            <form
+              className="flex flex-col gap-5"
+              onSubmit={handleSubmit(onSubmit)}
+            >
+              <div className="flex flex-col sm:grid sm:grid-cols-2 gap-5">
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="nameRoute">Ruta</label>
                   <Controller
-                    name="newNameRoute"
+                    name="nameRoute"
                     control={control}
                     render={({ field }) => (
-                      <InputText {...field} placeholder="Nombre de ruta" />
+                      <Dropdown
+                        {...field}
+                        options={[{ name: "Nueva" }, ...dataRoutes]}
+                        optionLabel="name"
+                        placeholder="Selecciona ruta"
+                        className="w-full md:w-14rem"
+                        required
+                      />
                     )}
                   />
-                )}
-            </div>
+                  {watchShowWriteNewRoute &&
+                    watchShowWriteNewRoute.name === "Nueva" && (
+                      <Controller
+                        name="newNameRoute"
+                        control={control}
+                        render={({ field }) => (
+                          <InputText {...field} placeholder="Nombre de ruta" />
+                        )}
+                      />
+                    )}
+                </div>
 
-            <div className="flex flex-col gap-2">
-              <label htmlFor="dateRoute">Fecha y hora de inicio</label>
-              <Controller
-                name="dateRoute"
-                control={control}
-                render={({ field }) => (
-                  <Calendar
-                    {...field}
-                    dateFormat="dd/mm/yy"
-                    required
-                    showTime
-                    hourFormat="24"
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="dateRoute">Fecha y hora de inicio</label>
+                  <Controller
+                    name="dateRoute"
+                    control={control}
+                    render={({ field }) => (
+                      <Calendar
+                        {...field}
+                        dateFormat="dd/mm/yy"
+                        required
+                        showTime
+                        hourFormat="24"
+                      />
+                    )}
                   />
-                )}
-              />
-            </div>
-          </div>
+                </div>
+              </div>
 
-          <div className="flex flex-col sm:items-center gap-2 sm:flex-row">
-            <div className="flex items-center gap-2">
-              <label htmlFor="pace">Ritmo</label>
-              <i
-                className="pi pi-question-circle cursor-pointer"
-                onClick={() => setVisible(true)}
-              ></i>
-            </div>
-            <Dialog
-              header="Ritmo de las rutas."
-              visible={visible}
-              className="w-full md:w-[60vw]"
-              onHide={() => setVisible(false)}
-            >
-              <p className="m-0">
-                🪨<span className="font-bold">Nivel Roca.</span> Aún no te ves
-                seguro sobre los patines y evitas las cuestas a toda costa. No
-                sabes frenar. <br />
-                🐌 <span className="font-bold">Nivel Caracol.</span> Eres
-                autónomo en rectas y cuesta arriba, pero necesitas ayuda todavía
-                para frenar, aunque lo intentes solo. <br />
-                🐛 <span className="font-bold">Nivel Gusano.</span> Eres
-                autónomo 100% y te gusta ir a las caracoleras, pero te gusta
-                salir por la calle, ritmo disfrutón. <br />
-                🦋{" "}
-                <span className="font-bold">
-                  Nivel Mariposa (Avanzado o Pro).
-                </span>{" "}
-                Te gusta la calle, bajar cuestas infinitas sin frenar, pasar por
-                túneles, ritmo avanzado. <br />
-                🚀 <span className="font-bold">Nivel Experimentado. </span>{" "}
-                rutas X, Galáctica, 7 picos... <br />
-                ☠️ <span className="font-bold">Nivel Locura total.</span> Te
-                pasas los semáforos, esquivas coches, descensos a toda hostia y
-                alcohol en las venas. <br />
-                🐈 🦄 <span className="font-bold">Nivel Miaucornia.</span>{" "}
-                Siempre cerveza en mano, nadie te gana a patinar pedo. Coges la
-                ruta a mitad de camino para evitar las cuestas. Llegas tarde y
-                persigues la ruta. Te quejas del cansancio y pides un descanso
-                para ir al chino. Bomba de humo. <br /> <br />
-                Para pasar de uno a otro hay que ir probando poco a poco. <br />
-                🪨🔜🐌🔜🐛🔜🦋🔜🚀🔜☠️🔜🐈🦄
-              </p>
-            </Dialog>
-            <Controller
-              name="paceRoute"
-              control={control}
-              render={({ field }) => (
-                <MultiSelect
-                  {...field}
-                  options={paceRoute}
-                  optionLabel="level"
-                  itemTemplate={optionTemplate}
-                  placeholder="Selecciona el ritmo"
-                  display="chip"
-                  className="w-full md:w-14rem"
-                  required
-                />
-              )}
-            />
-          </div>
-
-          <div className="flex flex-col sm:grid sm:grid-cols-2 gap-5 w-full">
-            <div>
-              <label htmlFor="meetingPoint">Punto de encuentro</label>
-              <Controller
-                name="meetingPoint"
-                control={control}
-                render={({ field }) => (
-                  <Dropdown
-                    {...field}
-                    options={[...meetingPoints, { name: "Otro" }]}
-                    optionLabel="name"
-                    placeholder="Selecciona punto"
-                    className="w-full md:w-14rem"
-                    required
-                  />
-                )}
-              />
-            </div>
-            {watchShowMeetingPoint && watchShowMeetingPoint.name === "Otro" && (
-              <div>
-                <label htmlFor="">Nuevo punto</label>
+              <div className="flex flex-col sm:items-center gap-2 sm:flex-row">
+                <div className="flex items-center gap-2">
+                  <label htmlFor="pace">Ritmo</label>
+                  <i
+                    className="pi pi-question-circle cursor-pointer"
+                    onClick={() => setVisible(true)}
+                  ></i>
+                </div>
+                <Dialog
+                  header="Ritmo de las rutas."
+                  visible={visible}
+                  className="w-full md:w-[60vw]"
+                  onHide={() => setVisible(false)}
+                >
+                  <p className="m-0">
+                    🪨<span className="font-bold">Nivel Roca.</span> Aún no te
+                    ves seguro sobre los patines y evitas las cuestas a toda
+                    costa. No sabes frenar. <br />
+                    🐌 <span className="font-bold">Nivel Caracol.</span> Eres
+                    autónomo en rectas y cuesta arriba, pero necesitas ayuda
+                    todavía para frenar, aunque lo intentes solo. <br />
+                    🐛 <span className="font-bold">Nivel Gusano.</span> Eres
+                    autónomo 100% y te gusta ir a las caracoleras, pero te gusta
+                    salir por la calle, ritmo disfrutón. <br />
+                    🦋{" "}
+                    <span className="font-bold">
+                      Nivel Mariposa (Avanzado o Pro).
+                    </span>{" "}
+                    Te gusta la calle, bajar cuestas infinitas sin frenar, pasar
+                    por túneles, ritmo avanzado. <br />
+                    🚀 <span className="font-bold">
+                      Nivel Experimentado.{" "}
+                    </span>{" "}
+                    rutas X, Galáctica, 7 picos... <br />
+                    ☠️ <span className="font-bold">Nivel Locura total.</span> Te
+                    pasas los semáforos, esquivas coches, descensos a toda
+                    hostia y alcohol en las venas. <br />
+                    🐈 🦄 <span className="font-bold">
+                      Nivel Miaucornia.
+                    </span>{" "}
+                    Siempre cerveza en mano, nadie te gana a patinar pedo. Coges
+                    la ruta a mitad de camino para evitar las cuestas. Llegas
+                    tarde y persigues la ruta. Te quejas del cansancio y pides
+                    un descanso para ir al chino. Bomba de humo. <br /> <br />
+                    Para pasar de uno a otro hay que ir probando poco a poco.{" "}
+                    <br />
+                    🪨🔜🐌🔜🐛🔜🦋🔜🚀🔜☠️🔜🐈🦄
+                  </p>
+                </Dialog>
                 <Controller
-                  name="meetingPointOther"
+                  name="paceRoute"
                   control={control}
                   render={({ field }) => (
-                    <InputText
+                    <MultiSelect
                       {...field}
-                      placeholder="Inicio de ruta"
-                      className="w-full"
+                      options={paceRoute}
+                      optionLabel="level"
+                      itemTemplate={optionTemplate}
+                      placeholder="Selecciona el ritmo"
+                      display="chip"
+                      className="w-full md:w-14rem"
+                      required
                     />
                   )}
                 />
               </div>
-            )}
-          </div>
 
-          <div className="flex items-center gap-2">
-            <label htmlFor="otherPoint">
-              ¿Existe punto de encuentro secundario?
-            </label>
-            <Controller
-              name="otherPoint"
-              control={control}
-              render={({ field }) => (
-                <Dropdown
-                  {...field}
-                  options={[{ name: "Si" }, { name: "No" }]}
-                  optionLabel="name"
-                  className="md:w-14rem"
-                  required
-                />
-              )}
-            />
-          </div>
+              <div className="flex flex-col sm:grid sm:grid-cols-2 gap-5 w-full">
+                <div>
+                  <label htmlFor="meetingPoint">Punto de encuentro</label>
+                  <Controller
+                    name="meetingPoint"
+                    control={control}
+                    render={({ field }) => (
+                      <Dropdown
+                        {...field}
+                        options={[...meetingPoints, { name: "Otro" }]}
+                        optionLabel="name"
+                        placeholder="Selecciona punto"
+                        className="w-full md:w-14rem"
+                        required
+                      />
+                    )}
+                  />
+                </div>
+                {watchShowMeetingPoint &&
+                  watchShowMeetingPoint.name === "Otro" && (
+                    <div>
+                      <label htmlFor="">Nuevo punto</label>
+                      <Controller
+                        name="meetingPointOther"
+                        control={control}
+                        render={({ field }) => (
+                          <InputText
+                            {...field}
+                            placeholder="Inicio de ruta"
+                            className="w-full"
+                          />
+                        )}
+                      />
+                    </div>
+                  )}
+              </div>
 
-          {watchShowOtherPoint && watchShowOtherPoint.name === "Si" && (
-            <div className="flex flex-col sm:grid sm:grid-cols-2 gap-5">
-              <div className="flex flex-col gap-2">
-                <label htmlFor="meetingOtherPoint">Punto de encuentro</label>
+              <div className="flex items-center gap-2">
+                <label htmlFor="otherPoint">
+                  ¿Existe punto de encuentro secundario?
+                </label>
                 <Controller
-                  name="meetingOtherPoint"
+                  name="otherPoint"
                   control={control}
                   render={({ field }) => (
                     <Dropdown
                       {...field}
-                      options={[...meetingPoints, { name: "Otro" }]}
+                      options={[{ name: "Si" }, { name: "No" }]}
                       optionLabel="name"
-                      placeholder="Selecciona punto"
-                      className="w-full md:w-14rem"
+                      className="md:w-14rem"
+                      required
                     />
                   )}
                 />
-                {watchShowMeetingOtherPoint &&
-                  watchShowMeetingOtherPoint.name === "Otro" && (
+              </div>
+
+              {watchShowOtherPoint && watchShowOtherPoint.name === "Si" && (
+                <div className="flex flex-col sm:grid sm:grid-cols-2 gap-5">
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="meetingOtherPoint">
+                      Punto de encuentro
+                    </label>
                     <Controller
-                      name="meetingOtherPointOther"
+                      name="meetingOtherPoint"
                       control={control}
                       render={({ field }) => (
-                        <InputText {...field} placeholder="Inicio de ruta" />
+                        <Dropdown
+                          {...field}
+                          options={[...meetingPoints, { name: "Otro" }]}
+                          optionLabel="name"
+                          placeholder="Selecciona punto"
+                          className="w-full md:w-14rem"
+                        />
                       )}
                     />
-                  )}
-              </div>
+                    {watchShowMeetingOtherPoint &&
+                      watchShowMeetingOtherPoint.name === "Otro" && (
+                        <Controller
+                          name="meetingOtherPointOther"
+                          control={control}
+                          render={({ field }) => (
+                            <InputText
+                              {...field}
+                              placeholder="Inicio de ruta"
+                            />
+                          )}
+                        />
+                      )}
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="timeMeetingOtherPoint">Hora</label>
+                    <Controller
+                      name="timeMeetingOtherPoint"
+                      control={control}
+                      render={({ field }) => (
+                        <Calendar
+                          {...field}
+                          timeOnly
+                          onChange={(e) => field.onChange(e.value)}
+                          value={field.value}
+                        />
+                      )}
+                    />
+                  </div>
+                </div>
+              )}
+
               <div className="flex flex-col gap-2">
-                <label htmlFor="timeMeetingOtherPoint">Hora</label>
+                <label htmlFor="comments">Comentarios / Descripción</label>
                 <Controller
-                  name="timeMeetingOtherPoint"
+                  name="comments"
                   control={control}
                   render={({ field }) => (
-                    <Calendar
+                    <InputTextarea
                       {...field}
-                      timeOnly
-                      onChange={(e) => field.onChange(e.value)}
-                      value={field.value}
+                      rows={5}
+                      cols={30}
+                      placeholder="Deja tu comentario o especificaciones de la ruta."
                     />
                   )}
                 />
               </div>
-            </div>
-          )}
 
-          <div className="flex flex-col gap-2">
-            <label htmlFor="comments">Comentarios / Descripción</label>
-            <Controller
-              name="comments"
-              control={control}
-              render={({ field }) => (
-                <InputTextarea
-                  {...field}
-                  rows={5}
-                  cols={30}
-                  placeholder="Deja tu comentario o especificaciones de la ruta."
-                />
-              )}
-            />
+              <Button type="submit" label="Convocar" />
+            </form>
           </div>
-
-          <Button type="submit" label="Convocar" />
-        </form>
-      </div>
+        </div>
+      </Sidebar>
+      <Button
+        label="Convoca tu ruta"
+        icon="pi pi-external-link"
+        onClick={() => setOpen(true)}
+      />
     </div>
   );
 };
