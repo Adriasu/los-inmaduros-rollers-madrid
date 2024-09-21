@@ -35,7 +35,13 @@ const FormRouteCall = () => {
     }
   }, [isLoaded, isSignedIn, user]);
 
-  const { control, handleSubmit, watch, reset } = useForm({
+  const {
+    control,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       nameRoute: null,
       newNameRoute: "",
@@ -44,7 +50,7 @@ const FormRouteCall = () => {
       meetingPoint: null,
       meetingPointOther: "",
       timeMeetingPoint: null,
-      otherPoint: null,
+      otherPoint: { name: "No" },
       meetingOtherPoint: null,
       meetingOtherPointOther: "",
       timeMeetingOtherPoint: null,
@@ -135,24 +141,51 @@ const FormRouteCall = () => {
                   <Controller
                     name="nameRoute"
                     control={control}
-                    render={({ field }) => (
-                      <Dropdown
-                        {...field}
-                        options={[{ name: "Nueva" }, ...dataRoutes]}
-                        optionLabel="name"
-                        placeholder="Selecciona ruta"
-                        className="w-full md:w-14rem"
-                        required
-                      />
+                    rules={{ required: "Selecciona una ruta" }}
+                    render={({ field, fieldState }) => (
+                      <>
+                        <Dropdown
+                          {...field}
+                          options={[{ name: "Nueva" }, ...dataRoutes]}
+                          optionLabel="name"
+                          placeholder="Selecciona ruta"
+                          className={`w-full md:w-14rem ${
+                            fieldState.error ? "p-invalid" : ""
+                          }`}
+                        />
+                        {fieldState.error && (
+                          <small className="p-error">
+                            {fieldState.error.message}
+                          </small>
+                        )}
+                      </>
                     )}
                   />
                   {watchShowWriteNewRoute &&
                     watchShowWriteNewRoute.name === "Nueva" && (
                       <Controller
                         name="newNameRoute"
+                        rules={{
+                          required: "El nombre de la ruta es obligatorio",
+                          minLength: {
+                            value: 3,
+                            message: "Debe tener al menos 3 caracteres",
+                          },
+                        }}
                         control={control}
-                        render={({ field }) => (
-                          <InputText {...field} placeholder="Nombre de ruta" />
+                        render={({ field, fieldState }) => (
+                          <>
+                            <InputText
+                              {...field}
+                              placeholder="Nombre de ruta"
+                              className={fieldState.error ? "p-invalid" : ""}
+                            />
+                            {fieldState.error && (
+                              <small className="p-error">
+                                {fieldState.error.message}
+                              </small>
+                            )}
+                          </>
                         )}
                       />
                     )}
@@ -163,14 +196,28 @@ const FormRouteCall = () => {
                   <Controller
                     name="dateRoute"
                     control={control}
-                    render={({ field }) => (
-                      <Calendar
-                        {...field}
-                        dateFormat="dd/mm/yy"
-                        required
-                        showTime
-                        hourFormat="24"
-                      />
+                    rules={{
+                      required: "La fecha es obligatoria",
+                      validate: (value) =>
+                        value >= new Date() ||
+                        "No puedes seleccionar una fecha pasada",
+                    }}
+                    render={({ field, fieldState }) => (
+                      <>
+                        <Calendar
+                          {...field}
+                          dateFormat="dd/mm/yy"
+                          showTime
+                          hourFormat="24"
+                          className={fieldState.error ? "p-invalid" : ""}
+                          minDate={new Date()} // Evita seleccionar fechas pasadas
+                        />
+                         {fieldState.error && (
+                              <small className="p-error">
+                                {fieldState.error.message}
+                              </small>
+                            )}
+                      </>
                     )}
                   />
                 </div>
@@ -228,17 +275,41 @@ const FormRouteCall = () => {
                 <Controller
                   name="paceRoute"
                   control={control}
-                  render={({ field }) => (
-                    <MultiSelect
-                      {...field}
-                      options={paceRoute}
-                      optionLabel="level"
-                      itemTemplate={optionTemplate}
-                      placeholder="Selecciona el ritmo"
-                      display="chip"
-                      className="w-full md:w-14rem"
-                      required
-                    />
+                  rules={{
+                    validate: (value) => {
+                      if (value.length < 1) {
+                        return "Debes seleccionar al menos 1 ritmo";
+                      }
+                      if (value.length > 3) {
+                        return "Solo puedes seleccionar hasta 3 ritmos";
+                      }
+                      return true;
+                    },
+                  }}
+                  render={({ field, fieldState }) => (
+                    <div className="flex flex-col">
+                      <MultiSelect
+                        {...field}
+                        options={paceRoute}
+                        optionLabel="level"
+                        itemTemplate={optionTemplate}
+                        placeholder="Selecciona el ritmo (Max 3)"
+                        display="chip"
+                        className={`w-full md:w-14rem ${
+                          fieldState.error ? "p-invalid" : ""
+                        }`}
+                        onChange={(e) => {
+                          if (e.value.length <= 3) {
+                            field.onChange(e.value);
+                          }
+                        }}
+                      />
+                      {fieldState.error && (
+                        <small className="p-error">
+                          {fieldState.error.message}
+                        </small> // Mostrar error
+                      )}
+                    </div>
                   )}
                 />
               </div>
@@ -249,15 +320,24 @@ const FormRouteCall = () => {
                   <Controller
                     name="meetingPoint"
                     control={control}
-                    render={({ field }) => (
-                      <Dropdown
-                        {...field}
-                        options={[...meetingPoints, { name: "Otro" }]}
-                        optionLabel="name"
-                        placeholder="Selecciona punto"
-                        className="w-full md:w-14rem"
-                        required
-                      />
+                    rules={{ required: "Selecciona una punto de encuentro" }}
+                    render={({ field, fieldState }) => (
+                      <>
+                        <Dropdown
+                          {...field}
+                          options={[...meetingPoints, { name: "Otro" }]}
+                          optionLabel="name"
+                          placeholder="Selecciona punto"
+                          className={`w-full md:w-14rem ${
+                            fieldState.error ? "p-invalid" : ""
+                          }`}
+                        />
+                        {fieldState.error && (
+                          <small className="p-error">
+                            {fieldState.error.message}
+                          </small> // Mostrar error
+                        )}
+                      </>
                     )}
                   />
                 </div>
@@ -268,12 +348,29 @@ const FormRouteCall = () => {
                       <Controller
                         name="meetingPointOther"
                         control={control}
-                        render={({ field }) => (
-                          <InputText
-                            {...field}
-                            placeholder="Inicio de ruta"
-                            className="w-full"
-                          />
+                        rules={{
+                          required:
+                            "El nuevo punto de encuentro es obligatorio",
+                          minLength: {
+                            value: 3,
+                            message: "Debe tener al menos 3 caracteres",
+                          },
+                        }}
+                        render={({ field, fieldState }) => (
+                          <>
+                            <InputText
+                              {...field}
+                              placeholder="Inicio de ruta"
+                              className={`w-full ${
+                                fieldState.error ? "p-invalid" : ""
+                              }`}
+                            />
+                            {fieldState.error && (
+                              <small className="p-error">
+                                {fieldState.error.message}
+                              </small>
+                            )}
+                          </>
                         )}
                       />
                     </div>
@@ -293,7 +390,6 @@ const FormRouteCall = () => {
                       options={[{ name: "Si" }, { name: "No" }]}
                       optionLabel="name"
                       className="md:w-14rem"
-                      required
                     />
                   )}
                 />
@@ -308,14 +404,26 @@ const FormRouteCall = () => {
                     <Controller
                       name="meetingOtherPoint"
                       control={control}
-                      render={({ field }) => (
-                        <Dropdown
-                          {...field}
-                          options={[...meetingPoints, { name: "Otro" }]}
-                          optionLabel="name"
-                          placeholder="Selecciona punto"
-                          className="w-full md:w-14rem"
-                        />
+                      rules={{
+                        required: "Selecciona una punto de encuentro",
+                      }}
+                      render={({ field, fieldState }) => (
+                        <>
+                          <Dropdown
+                            {...field}
+                            options={[...meetingPoints, { name: "Otro" }]}
+                            optionLabel="name"
+                            placeholder="Selecciona punto"
+                            className={`w-full md:w-14rem ${
+                              fieldState.error ? "p-invalid" : ""
+                            }`}
+                          />
+                          {fieldState.error && (
+                            <small className="p-error">
+                              {fieldState.error.message}
+                            </small>
+                          )}
+                        </>
                       )}
                     />
                     {watchShowMeetingOtherPoint &&
@@ -323,11 +431,29 @@ const FormRouteCall = () => {
                         <Controller
                           name="meetingOtherPointOther"
                           control={control}
-                          render={({ field }) => (
-                            <InputText
-                              {...field}
-                              placeholder="Inicio de ruta"
-                            />
+                          rules={{
+                            required:
+                              "El nuevo punto de encuentro es obligatorio",
+                            minLength: {
+                              value: 3,
+                              message: "Debe tener al menos 3 caracteres",
+                            },
+                          }}
+                          render={({ field, fieldState }) => (
+                            <>
+                              <InputText
+                                {...field}
+                                placeholder="Inicio de ruta"
+                                className={`w-full md:w-14rem ${
+                                  fieldState.error ? "p-invalid" : ""
+                                }`}
+                              />
+                              {fieldState.error && (
+                                <small className="p-error">
+                                  {fieldState.error.message}
+                                </small>
+                              )}
+                            </>
                           )}
                         />
                       )}
@@ -337,13 +463,33 @@ const FormRouteCall = () => {
                     <Controller
                       name="timeMeetingOtherPoint"
                       control={control}
-                      render={({ field }) => (
-                        <Calendar
-                          {...field}
-                          timeOnly
-                          onChange={(e) => field.onChange(e.value)}
-                          value={field.value}
-                        />
+                      rules={{
+                        required: "La hora es obligatoria",
+                        validate: (value) => {
+                          const startTime = watch("dateRoute"); // Obtén la hora de inicio del evento
+                          if (!startTime) {
+                            return "Primero selecciona la hora de inicio";
+                          }
+                          if (value && value.getTime() <= startTime.getTime()) {
+                            return "La hora debe ser posterior a la hora de inicio";
+                          }
+                          return true;
+                        },
+                      }}
+                      render={({ field, fieldState }) => (
+                        <>
+                          <Calendar
+                            {...field}
+                            timeOnly
+                            onChange={(e) => field.onChange(e.value)}
+                            value={field.value}
+                          />
+                          {fieldState.error && (
+                            <small className="p-error">
+                              {fieldState.error.message}
+                            </small>
+                          )}
+                        </>
                       )}
                     />
                   </div>
@@ -355,13 +501,24 @@ const FormRouteCall = () => {
                 <Controller
                   name="comments"
                   control={control}
-                  render={({ field }) => (
-                    <InputTextarea
-                      {...field}
-                      rows={5}
-                      cols={30}
-                      placeholder="Deja tu comentario o especificaciones de la ruta."
-                    />
+                  rules={{
+                    required:
+                      "Los comentarios y especificaciones de la ruta son obligatorios",
+                  }}
+                  render={({ field, fieldState }) => (
+                    <>
+                      <InputTextarea
+                        {...field}
+                        rows={5}
+                        cols={30}
+                        placeholder="Deja tu comentario o especificaciones de la ruta."
+                      />
+                      {fieldState.error && (
+                        <small className="p-error">
+                          {fieldState.error.message}
+                        </small>
+                      )}
+                    </>
                   )}
                 />
               </div>
