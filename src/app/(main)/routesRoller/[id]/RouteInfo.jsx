@@ -24,6 +24,7 @@ const RouteInfo = () => {
     );
   }
 
+
   return (
     <div className="m-auto hidden md:flex gap-6 max-w-[1200px] text-white justify-center mt-3">
       <div className="flex flex-col gap-5 relative">

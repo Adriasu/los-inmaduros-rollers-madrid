@@ -3,17 +3,18 @@ import React, { useContext } from "react";
 import { useParams } from "next/navigation";
 import { RoutesContext } from "@/context/RoutesContext";
 import Image from "next/image";
-import { Bookmark, Send, Star, ArrowLeft } from "lucide-react";
+import { ArrowLeft, Bookmark, Send, Star } from "lucide-react";
 import RouteMapGoogle from "@/components/RouteMapGoogle";
 import Buttons from "@/components/Buttons";
 import Link from "next/link";
+
 
 const RouteInfoMobile = () => {
   const params = useParams();
   const { dataRoutes, isLoading } = useContext(RoutesContext);
   const id = params.id;
 
-  const route = dataRoutes.find((route) => route.routeId === id);
+  const route = dataRoutes.find((route) => route.id === id);
 
   if (!route || isLoading) {
     return (
