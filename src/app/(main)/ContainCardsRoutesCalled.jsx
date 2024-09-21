@@ -20,23 +20,25 @@ const ContainCardsRoutesCalled = () => {
 
       const nowInSeconds = Math.floor(new Date().getTime() / 1000);
 
+      // Ordenar eventos usando el campo dateRoute.seconds (ya incluye fecha y hora)
       const sortedEvents = eventsArray.sort((a, b) => {
-        const dateA = a.dateRoute.seconds;
-        const timeMeetingPointA = a.timeMeetingPoint.seconds;
-        const dateB = b.dateRoute.seconds;
-        const timeMeetingPointB = b.timeMeetingPoint.seconds;
+        const eventAStart = a.dateRoute.seconds;
+        const eventBStart = b.dateRoute.seconds;
 
-        const endTimeA = timeMeetingPointA + 2 * 60 * 60;
-        const endTimeB = timeMeetingPointB + 2 * 60 * 60;
+        const eventAEnd = eventAStart + 2 * 60 * 60;
+        const eventBEnd = eventBStart + 2 * 60 * 60;
 
-        if (endTimeA < nowInSeconds && endTimeB < nowInSeconds) {
-          return dateA - dateB;
+        // Si ambos eventos ya han pasado, ordenarlos por fecha de inicio
+        if (eventAEnd < nowInSeconds && eventBEnd < nowInSeconds) {
+          return eventAStart - eventBStart;
         }
 
-        if (endTimeA < nowInSeconds) return 1;
-        if (endTimeB < nowInSeconds) return -1;
+        // Si uno ha pasado y el otro no, prioriza el futuro
+        if (eventAEnd < nowInSeconds) return 1;
+        if (eventBEnd < nowInSeconds) return -1;
 
-        return dateA - dateB;
+        // Si ninguno ha pasado, ordenarlos por fecha de inicio
+        return eventAStart - eventBStart;
       });
 
       setEvents(sortedEvents);
@@ -55,7 +57,7 @@ const ContainCardsRoutesCalled = () => {
           <Masonry
             items={events}
             config={{
-              columns: [2, 2, 3],
+              columns: [1, 2, 3],
               gap: [10, 12, 25],
               media: [640, 1024, 1280],
             }}
