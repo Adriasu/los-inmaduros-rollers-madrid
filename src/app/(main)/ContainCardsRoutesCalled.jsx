@@ -28,28 +28,22 @@ const ContainCardsRoutesCalled = () => {
   }
   return (
     <div>
-      {/* {events.length > 0 ? (
-          events.map((routeCall, index) => (
-            <CardCalledRoute
-              key={index}
-              event={routeCall}
-              loading={isLoading}
-            />
-          ))
+       <div className="w-full">
+        {events.length > 0 ? (
+          <Masonry
+            items={events}
+            config={{
+              columns: [2, 2, 3],
+              gap: [10, 12, 25],
+              media: [640, 1024, 1280],
+            }}
+            render={(item, index) => (
+              <CardCalledRoute key={index} event={item} />
+            )}
+          />
         ) : (
           <div>No hay eventos disponibles</div>
-        )} */}
-
-      <div className="w-full">
-        <Masonry
-          items={events}
-          config={{
-            columns: [2, 2, 3],
-            gap: [10, 12, 25],
-            media: [640, 1024, 1280],
-          }}
-          render={(item, index) => <CardCalledRoute key={index} event={item} />}
-        />
+        )}
       </div>
     </div>
   );

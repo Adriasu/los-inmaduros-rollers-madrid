@@ -86,7 +86,7 @@ const CardCalledRoute = ({ event }) => {
   };
 
   return (
-    <div className="border border-black bg-gradient-to-r from-orange-300 to-cyan-600 shadow-[0px_0px_40px_2px_#f6ad55] rounded-2xl p-2">
+    <div className="border border-black bg-gradient-to-r from-orange-300 to-cyan-600 shadow-[0px_0px_40px_2px_#f6ad55] rounded-2xl p-2 h-[500px]">
       <div className="flex justify-between">
         <div className="flex gap-2">
           <i
