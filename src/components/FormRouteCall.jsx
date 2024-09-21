@@ -202,16 +202,21 @@ const FormRouteCall = () => {
                         value >= new Date() ||
                         "No puedes seleccionar una fecha pasada",
                     }}
-                    render={({ field }) => (
+                    render={({ field, fieldState }) => (
                       <>
                         <Calendar
                           {...field}
                           dateFormat="dd/mm/yy"
                           showTime
                           hourFormat="24"
+                          className={fieldState.error ? "p-invalid" : ""}
                           minDate={new Date()} // Evita seleccionar fechas pasadas
                         />
-                        {errors.dateRoute && <p>{errors.dateRoute.message}</p>}
+                         {fieldState.error && (
+                              <small className="p-error">
+                                {fieldState.error.message}
+                              </small>
+                            )}
                       </>
                     )}
                   />
