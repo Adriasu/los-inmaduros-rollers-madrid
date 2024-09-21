@@ -96,60 +96,76 @@ const CardCalledRoute = ({ event }) => {
 
   return (
     <div
-      className={`relative border border-black shadow-[0px_0px_40px_2px_#f6ad55] rounded-2xl p-2 max-h-[600px] flex flex-col gap-2 hover:scale-[1.02] hover:border-orange-400 hover:border-[2px] 
+      className={`border border-black shadow-[0px_0px_40px_2px_#f6ad55] rounded-2xl p-2 max-h-[600px] flex flex-col gap-2  
     ${
       isPastEvent
         ? "bg-slate-600 opacity-90"
-        : "bg-gradient-to-r from-orange-300 to-cyan-600"
+        : "bg-gradient-to-r from-orange-300 to-cyan-600 hover:scale-[1.02] hover:border-orange-400 hover:border-[2px]"
     }`}
     >
-      {isPastEvent && (
-        <Image
-          src={"/images/finalizado.webp"}
-          alt="Finalizado"
-          width={500}
-          height={500}
-          className="absolute w-[280px] top-8"
-        />
-      )}
-
       <Tooltip target=".custom-target-icon" />
-      <div className="flex flex-col gap-2 h-full overflow-hidden">
+      <div className="flex flex-col gap-2 h-full">
         <div className="flex justify-between">
           <div className="flex gap-2">
-            <i
-              className="custom-target-icon pi pi-times-circle bg-red-600 text-white p-2 rounded-full cursor-pointer"
-              style={{ fontSize: "1.2rem" }}
-              data-pr-tooltip="Cancelar ruta"
-              data-pr-position="top"
-            ></i>
-            <i
-              className="custom-target-icon pi pi-file-edit bg-blue-700 text-white p-2 rounded-full cursor-pointer"
-              style={{ fontSize: "1.2rem" }}
-              data-pr-tooltip="Editar"
-              data-pr-position="top"
-            ></i>
+            <button disabled={isPastEvent}>
+              <i
+                className={`pi pi-times-circle text-white p-2 rounded-full  
+                ${
+                  isPastEvent
+                    ? "bg-slate-400"
+                    : "bg-red-600 cursor-pointer custom-target-icon"
+                }`}
+                style={{ fontSize: "1.2rem" }}
+                data-pr-tooltip="Cancelar ruta"
+                data-pr-position="top"
+              ></i>
+            </button>
+            <button disabled={isPastEvent}>
+              <i
+                className={`pi pi-file-edit text-white p-2 rounded-full  
+                ${
+                  isPastEvent
+                    ? "bg-slate-400"
+                    : "bg-blue-700 cursor-pointer custom-target-icon"
+                }`}
+                style={{ fontSize: "1.2rem" }}
+                data-pr-tooltip="Editar"
+                data-pr-position="top"
+              ></i>
+            </button>
           </div>
 
           <div className="flex gap-2">
-            <i
-              className="custom-target-icon pi pi-user-plus bg-orange-500 text-white p-2 rounded-full cursor-pointer"
-              style={{ fontSize: "1.2rem" }}
-              onClick={handleShareWhatsApp}
-              data-pr-tooltip="Asistir"
-              data-pr-position="top"
-            ></i>
-            <i
-              className="custom-target-icon pi pi-whatsapp bg-green-500 text-white p-2 rounded-full cursor-pointer"
-              style={{ fontSize: "1.2rem" }}
-              onClick={handleShareWhatsApp}
-              data-pr-tooltip="Compartir"
-              data-pr-position="top"
-            ></i>
+            <button disabled={isPastEvent}>
+              <i
+                className={`pi pi-user-plus text-white p-2 rounded-full  
+                ${
+                  isPastEvent
+                    ? "bg-slate-400"
+                    : "bg-orange-500 cursor-pointer custom-target-icon"
+                }`}
+                style={{ fontSize: "1.2rem" }}
+                data-pr-tooltip="Asistir"
+                data-pr-position="top"
+              ></i>
+            </button>
+            <button disabled={isPastEvent} onClick={handleShareWhatsApp}>
+              <i
+                className={`pi pi-whatsapp text-white p-2 rounded-full  
+                ${
+                  isPastEvent
+                    ? "bg-slate-400"
+                    : "bg-green-500 cursor-pointer custom-target-icon"
+                }`}
+                style={{ fontSize: "1.2rem" }}
+                data-pr-tooltip="Compartir"
+                data-pr-position="top"
+              ></i>
+            </button>
           </div>
         </div>
 
-        <div>
+        <div className="relative">
           {event.nameRoute.name === "Nueva" ? (
             <Image
               src={
@@ -169,9 +185,24 @@ const CardCalledRoute = ({ event }) => {
               className="rounded-2xl"
             />
           )}
+          {isPastEvent && (
+            <div>
+              <Image
+                src={"/images/finalizado.webp"}
+                alt="Finalizado"
+                width={500}
+                height={500}
+                className="absolute w-[280px] top-0 left-0 right-0 bottom-0 m-auto"
+              />
+            </div>
+          )}
         </div>
 
-        <div className="flex gap-2 justify-between w-full border border-gray-600 rounded-2xl p-2">
+        <div
+          className={`flex gap-2 justify-between w-full border rounded-2xl p-2 ${
+            isPastEvent ? "border-black" : "border-gray-600"
+          }`}
+        >
           <div className="flex items-center">
             {event.nameRoute.name === "Nueva" ? (
               <h1 className="font-bold">{formattedName}</h1>
@@ -193,7 +224,11 @@ const CardCalledRoute = ({ event }) => {
           </div>
         </div>
 
-        <div className="border border-gray-600 rounded-2xl p-2 flex flex-col gap-1">
+        <div
+          className={`border rounded-2xl p-2 flex flex-col gap-1 ${
+            isPastEvent ? "border-black" : "border-gray-600"
+          } container`}
+        >
           <div className="flex gap-2">
             <CalendarDays />
             <p>{formattedDate}</p>
