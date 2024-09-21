@@ -1,6 +1,7 @@
 import { CalendarDays, Clock, Drum, Map, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { Button } from "primereact/button";
 import React from "react";
 
 const CardCalledRoute = ({ event }) => {
@@ -86,12 +87,25 @@ const CardCalledRoute = ({ event }) => {
 
   return (
     <div className="border border-black bg-gradient-to-r from-orange-300 to-cyan-600 shadow-[0px_0px_40px_2px_#f6ad55] rounded-2xl p-2">
-      <button
-        onClick={handleShareWhatsApp}
-        className="bg-green-500 text-white px-4 py-2 rounded-md mt-2"
-      >
-        Compartir por WhatsApp
-      </button>
+      <div className="flex justify-between">
+        <div className="flex gap-2">
+          <i
+            className="pi pi-times-circle bg-red-600 text-white p-2 rounded-full cursor-pointer"
+            style={{ fontSize: "1.2rem" }}
+          ></i>
+          <i
+            className="pi pi-file-edit bg-blue-700 text-white p-2 rounded-full cursor-pointer"
+            style={{ fontSize: "1.2rem" }}
+          ></i>
+        </div>
+
+        <i
+          className="pi pi-whatsapp bg-green-500 text-white p-2 rounded-full cursor-pointer"
+          style={{ fontSize: "1.2rem" }}
+          onClick={handleShareWhatsApp}
+        ></i>
+      </div>
+
       <div>
         {event.nameRoute.name === "Nueva" ? (
           <Image
