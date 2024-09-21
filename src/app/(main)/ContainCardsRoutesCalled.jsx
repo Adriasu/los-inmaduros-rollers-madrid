@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { db, getCollection } from "../../../lib/fireBase.mjs";
+import { db } from "../../../lib/fireBase.mjs";
 import CardCalledRoute from "./CardCalledRoute";
 import { collection, onSnapshot } from "firebase/firestore";
 import { Masonry } from "react-plock";
@@ -17,7 +17,29 @@ const ContainCardsRoutesCalled = () => {
         id: doc.id,
         ...doc.data(),
       }));
-      setEvents(eventsArray);
+
+      const nowInSeconds = Math.floor(new Date().getTime() / 1000);
+
+      const sortedEvents = eventsArray.sort((a, b) => {
+        const dateA = a.dateRoute.seconds;
+        const timeMeetingPointA = a.timeMeetingPoint.seconds;
+        const dateB = b.dateRoute.seconds;
+        const timeMeetingPointB = b.timeMeetingPoint.seconds;
+
+        const endTimeA = timeMeetingPointA + 2 * 60 * 60;
+        const endTimeB = timeMeetingPointB + 2 * 60 * 60;
+
+        if (endTimeA < nowInSeconds && endTimeB < nowInSeconds) {
+          return dateA - dateB;
+        }
+
+        if (endTimeA < nowInSeconds) return 1;
+        if (endTimeB < nowInSeconds) return -1;
+
+        return dateA - dateB;
+      });
+
+      setEvents(sortedEvents);
       setIsLoading(false);
     });
     return () => unsubscribe();
@@ -28,7 +50,7 @@ const ContainCardsRoutesCalled = () => {
   }
   return (
     <div>
-       <div className="w-full">
+      <div className="w-full">
         {events.length > 0 ? (
           <Masonry
             items={events}

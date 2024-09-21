@@ -86,7 +86,7 @@ const CardCalledRoute = ({ event }) => {
   };
 
   return (
-    <div className="border border-black bg-gradient-to-r from-orange-300 to-cyan-600 shadow-[0px_0px_40px_2px_#f6ad55] rounded-2xl p-2 h-[500px] flex flex-col gap-2 hover:scale-[1.02] hover:border-orange-400 hover:border-[2px]">
+    <div className="border border-black bg-gradient-to-r from-orange-300 to-cyan-600 shadow-[0px_0px_40px_2px_#f6ad55] rounded-2xl p-2 max-h-[600px] flex flex-col gap-2 hover:scale-[1.02] hover:border-orange-400 hover:border-[2px]">
       <Tooltip target=".custom-target-icon" />
       <div className="flex flex-col gap-2 h-full overflow-hidden">
         <div className="flex justify-between">
@@ -145,23 +145,29 @@ const CardCalledRoute = ({ event }) => {
           )}
         </div>
 
-        <div className="flex gap-2 w-full border border-gray-600 rounded-2xl">
-          {event.nameRoute.name === "Nueva" ? (
-            <h1>{formattedName}</h1>
-          ) : (
-            <h1>{event.nameRoute.name}</h1>
-          )}
-          <p>by {event.firstName}</p>
-          <Image
-            src={event.imageUser}
-            alt={event.firstName}
-            width={50}
-            height={50}
-            className="rounded-full"
-          />
+        <div className="flex gap-2 justify-between w-full border border-gray-600 rounded-2xl p-2">
+          <div className="flex items-center">
+            {event.nameRoute.name === "Nueva" ? (
+              <h1 className="font-bold">{formattedName}</h1>
+            ) : (
+              <h1 className="font-bold text-xl">{event.nameRoute.name}</h1>
+            )}
+          </div>
+          <div className="flex items-center justify-end gap-2">
+            <p className="font-semibold text-end">
+              <span className="font-normal">by</span> {event.firstName}
+            </p>
+            <Image
+              src={event.imageUser}
+              alt={event.firstName}
+              width={40}
+              height={40}
+              className="rounded-full"
+            />
+          </div>
         </div>
 
-        <div>
+        <div className="border border-gray-600 rounded-2xl p-2 flex flex-col gap-1">
           <div className="flex gap-2">
             <CalendarDays />
             <p>{formattedDate}</p>
