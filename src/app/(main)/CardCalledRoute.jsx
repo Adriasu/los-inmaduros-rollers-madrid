@@ -33,6 +33,15 @@ const CardCalledRoute = ({ event }) => {
   if (!event) {
     return null;
   }
+
+  const nowInSeconds = Math.floor(new Date().getTime() / 1000);
+
+  const eventStart = event.dateRoute.seconds;
+  const eventEnd = eventStart + 2 * 60 * 60;
+
+  // Condición: evento pasado (más de dos horas)
+  const isPastEvent = eventEnd < nowInSeconds;
+
   const formattedDate =
     event.dateRoute && event.dateRoute.seconds
       ? convertTimestampToDate(event.dateRoute.seconds)
@@ -86,7 +95,24 @@ const CardCalledRoute = ({ event }) => {
   };
 
   return (
-    <div className="border border-black bg-gradient-to-r from-orange-300 to-cyan-600 shadow-[0px_0px_40px_2px_#f6ad55] rounded-2xl p-2 max-h-[600px] flex flex-col gap-2 hover:scale-[1.02] hover:border-orange-400 hover:border-[2px]">
+    <div
+      className={`relative border border-black shadow-[0px_0px_40px_2px_#f6ad55] rounded-2xl p-2 max-h-[600px] flex flex-col gap-2 hover:scale-[1.02] hover:border-orange-400 hover:border-[2px] 
+    ${
+      isPastEvent
+        ? "bg-slate-600 opacity-90"
+        : "bg-gradient-to-r from-orange-300 to-cyan-600"
+    }`}
+    >
+      {isPastEvent && (
+        <Image
+          src={"/images/finalizado.webp"}
+          alt="Finalizado"
+          width={500}
+          height={500}
+          className="absolute w-[280px] top-8"
+        />
+      )}
+
       <Tooltip target=".custom-target-icon" />
       <div className="flex flex-col gap-2 h-full overflow-hidden">
         <div className="flex justify-between">
