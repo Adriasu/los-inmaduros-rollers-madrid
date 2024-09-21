@@ -20,7 +20,6 @@ const ContainCardsRoutesCalled = () => {
 
       const nowInSeconds = Math.floor(new Date().getTime() / 1000);
 
-      // Ordenar eventos usando el campo dateRoute.seconds (ya incluye fecha y hora)
       const sortedEvents = eventsArray.sort((a, b) => {
         const eventAStart = a.dateRoute.seconds;
         const eventBStart = b.dateRoute.seconds;
@@ -28,16 +27,13 @@ const ContainCardsRoutesCalled = () => {
         const eventAEnd = eventAStart + 2 * 60 * 60;
         const eventBEnd = eventBStart + 2 * 60 * 60;
 
-        // Si ambos eventos ya han pasado, ordenarlos por fecha de inicio
         if (eventAEnd < nowInSeconds && eventBEnd < nowInSeconds) {
           return eventAStart - eventBStart;
         }
 
-        // Si uno ha pasado y el otro no, prioriza el futuro
         if (eventAEnd < nowInSeconds) return 1;
         if (eventBEnd < nowInSeconds) return -1;
 
-        // Si ninguno ha pasado, ordenarlos por fecha de inicio
         return eventAStart - eventBStart;
       });
 
@@ -58,7 +54,7 @@ const ContainCardsRoutesCalled = () => {
             items={events}
             config={{
               columns: [1, 2, 3],
-              gap: [10, 12, 25],
+              gap: [20, 10, 25],
               media: [640, 1024, 1280],
             }}
             render={(item, index) => (

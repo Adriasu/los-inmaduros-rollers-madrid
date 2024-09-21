@@ -14,8 +14,9 @@ import { Button } from "primereact/button";
 import { useUser } from "@clerk/nextjs";
 import { setDocument } from "../../lib/fireBase.mjs";
 import { Toast } from "primereact/toast";
+import { Sidebar } from "primereact/sidebar";
 
-const FormRouteCall = () => {
+const FormRouteCallMobile = () => {
   const [open, setOpen] = useState(false);
   const { dataRoutes } = useContext(RoutesContext);
   const { meetingPoints, paceRoute } = useContext(FormCallRouteContext);
@@ -105,26 +106,13 @@ const FormRouteCall = () => {
       </div>
     );
   };
-
   return (
-    <div className="hidden md:flex card justify-content-center">
-      <Toast ref={toast} />
-      <Button
-        label="Convoca tu ruta"
-        icon="pi pi-external-link"
-        onClick={() => setOpen(true)}
-      />
-      <Dialog
-        header="Convocar ruta"
-        visible={open}
-        style={{ width: "50vw" }}
-        onHide={() => {
-          if (!open) return;
-          setOpen(false);
-        }}
-      >
+    <div className="card flex justify-content-center md:hidden">
+      <Sidebar visible={open} onHide={() => setOpen(false)} fullScreen>
         <div className="bg-white flex justify-center p-3 sm:p-10">
+          <Toast ref={toast} />
           <div className="w-full lg:w-[60vw] xl:w-[40vw] border border-black p-5 rounded-2xl">
+            <h1 className="mb-5 text-xl font-bold">Convocar ruta</h1>
             <form
               className="flex flex-col gap-5"
               onSubmit={handleSubmit(onSubmit)}
@@ -370,9 +358,14 @@ const FormRouteCall = () => {
             </form>
           </div>
         </div>
-      </Dialog>
+      </Sidebar>
+      <Button
+        label="Convoca tu ruta"
+        icon="pi pi-external-link"
+        onClick={() => setOpen(true)}
+      />
     </div>
   );
 };
 
-export default FormRouteCall;
+export default FormRouteCallMobile;
