@@ -1,8 +1,8 @@
 import { CalendarDays, Clock, Drum, Map, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "primereact/button";
 import React from "react";
+import { Tooltip } from "primereact/tooltip";
 
 const CardCalledRoute = ({ event }) => {
   console.log(event);
@@ -86,134 +86,152 @@ const CardCalledRoute = ({ event }) => {
   };
 
   return (
-    <div className="border border-black bg-gradient-to-r from-orange-300 to-cyan-600 shadow-[0px_0px_40px_2px_#f6ad55] rounded-2xl p-2 h-[500px]">
-      <div className="flex justify-between">
-        <div className="flex gap-2">
-          <i
-            className="pi pi-times-circle bg-red-600 text-white p-2 rounded-full cursor-pointer"
-            style={{ fontSize: "1.2rem" }}
-          ></i>
-          <i
-            className="pi pi-file-edit bg-blue-700 text-white p-2 rounded-full cursor-pointer"
-            style={{ fontSize: "1.2rem" }}
-          ></i>
-        </div>
-
-        <i
-          className="pi pi-whatsapp bg-green-500 text-white p-2 rounded-full cursor-pointer"
-          style={{ fontSize: "1.2rem" }}
-          onClick={handleShareWhatsApp}
-        ></i>
-      </div>
-
-      <div>
-        {event.nameRoute.name === "Nueva" ? (
-          <Image
-            src={
-              "https://res.cloudinary.com/dj4j3uoia/image/upload/v1726855799/otraRuta_az0ggq.jpg"
-            }
-            alt={event.nameRoute.name}
-            width={1000}
-            height={1000}
-            className="w-[300px] rounded-2xl"
-          />
-        ) : (
-          <Image
-            src={event.nameRoute.image}
-            alt={event.nameRoute.name}
-            width={1000}
-            height={1000}
-            className="w-[300px] rounded-2xl"
-          />
-        )}
-      </div>
-
-      <div className="flex gap-2">
-        {event.nameRoute.name === "Nueva" ? (
-          <h1>{formattedName}</h1>
-        ) : (
-          <h1>{event.nameRoute.name}</h1>
-        )}
-        <p>by {event.firstName}</p>
-        <Image
-          src={event.imageUser}
-          alt={event.firstName}
-          width={50}
-          height={50}
-          className="rounded-full"
-        />
-      </div>
-
-      <div>
-        <div className="flex gap-2">
-          <CalendarDays />
-          <p>{formattedDate}</p>
-        </div>
-
-        <div className="flex gap-2">
-          <MapPin />
-          {event.meetingPoint.name === "Otro" ? (
-            <p>{event.meetingPointOther}</p>
-          ) : (
-            <p>{event.meetingPoint.name}</p>
-          )}
-          {event.meetingPoint.name !== "Otro" && (
-            <Link target="_blank" href={event.meetingPoint.location}>
-              <Map />
-            </Link>
-          )}
-        </div>
-
-        <div className="flex gap-2">
-          <Clock />
-          <p>{formattedTimeFirstPoint}</p>
-        </div>
-
-        {event.otherPoint.name === "Si" && (
-          <div>
-            <div className="flex gap-2">
-              <MapPin />
-              {event.meetingOtherPoint.name === "Otro" ? (
-                <p>{event.meetingOtherPointOther}</p>
-              ) : (
-                <p>{event.meetingOtherPoint.name}</p>
-              )}
-              {event.meetingOtherPoint.name !== "Otro" && (
-                <Link target="_blank" href={event.meetingOtherPoint.location}>
-                  <Map />
-                </Link>
-              )}
-            </div>
-
-            <div className="flex gap-2">
-              <Clock />
-              <p>{formattedTimeSecondPoint}</p>
-            </div>
+    <div className="border border-black bg-gradient-to-r from-orange-300 to-cyan-600 shadow-[0px_0px_40px_2px_#f6ad55] rounded-2xl p-2 h-[500px] flex flex-col gap-2 hover:scale-[1.02] hover:border-orange-400 hover:border-[2px]">
+      <Tooltip target=".custom-target-icon" />
+      <div className="flex flex-col gap-2 h-full overflow-hidden">
+        <div className="flex justify-between">
+          <div className="flex gap-2">
+            <i
+              className="custom-target-icon pi pi-times-circle bg-red-600 text-white p-2 rounded-full cursor-pointer"
+              style={{ fontSize: "1.2rem" }}
+              data-pr-tooltip="Cancelar ruta"
+              data-pr-position="top"
+            ></i>
+            <i
+              className="custom-target-icon pi pi-file-edit bg-blue-700 text-white p-2 rounded-full cursor-pointer"
+              style={{ fontSize: "1.2rem" }}
+              data-pr-tooltip="Editar"
+              data-pr-position="top"
+            ></i>
           </div>
-        )}
 
-        <div className="flex gap-2">
-          <Drum />
-          <div className="flex flex-col">
-            {event.paceRoute.map((pace, i) => {
-              return (
-                <div className="flex gap-2" key={i}>
-                  <Image
-                    src={pace.img}
-                    alt={pace.level}
-                    width={30}
-                    height={30}
-                  />
-                  <p>{pace.level}</p>
-                </div>
-              );
-            })}
+          <div className="flex gap-2">
+            <i
+              className="custom-target-icon pi pi-user-plus bg-orange-500 text-white p-2 rounded-full cursor-pointer"
+              style={{ fontSize: "1.2rem" }}
+              onClick={handleShareWhatsApp}
+              data-pr-tooltip="Asistir"
+              data-pr-position="top"
+            ></i>
+            <i
+              className="custom-target-icon pi pi-whatsapp bg-green-500 text-white p-2 rounded-full cursor-pointer"
+              style={{ fontSize: "1.2rem" }}
+              onClick={handleShareWhatsApp}
+              data-pr-tooltip="Compartir"
+              data-pr-position="top"
+            ></i>
           </div>
         </div>
 
         <div>
-          <h1>Comentarios</h1>
-          <p>{event.comments}</p>
+          {event.nameRoute.name === "Nueva" ? (
+            <Image
+              src={
+                "https://res.cloudinary.com/dj4j3uoia/image/upload/v1726855799/otraRuta_az0ggq.jpg"
+              }
+              alt={event.nameRoute.name}
+              width={1000}
+              height={1000}
+              className="rounded-2xl"
+            />
+          ) : (
+            <Image
+              src={event.nameRoute.image}
+              alt={event.nameRoute.name}
+              width={1000}
+              height={1000}
+              className="rounded-2xl"
+            />
+          )}
+        </div>
+
+        <div className="flex gap-2 w-full border border-gray-600 rounded-2xl">
+          {event.nameRoute.name === "Nueva" ? (
+            <h1>{formattedName}</h1>
+          ) : (
+            <h1>{event.nameRoute.name}</h1>
+          )}
+          <p>by {event.firstName}</p>
+          <Image
+            src={event.imageUser}
+            alt={event.firstName}
+            width={50}
+            height={50}
+            className="rounded-full"
+          />
+        </div>
+
+        <div>
+          <div className="flex gap-2">
+            <CalendarDays />
+            <p>{formattedDate}</p>
+          </div>
+
+          <div className="flex gap-2">
+            <MapPin />
+            {event.meetingPoint.name === "Otro" ? (
+              <p>{event.meetingPointOther}</p>
+            ) : (
+              <p>{event.meetingPoint.name}</p>
+            )}
+            {event.meetingPoint.name !== "Otro" && (
+              <Link target="_blank" href={event.meetingPoint.location}>
+                <Map />
+              </Link>
+            )}
+          </div>
+
+          <div className="flex gap-2">
+            <Clock />
+            <p>{formattedTimeFirstPoint}</p>
+          </div>
+
+          {event.otherPoint.name === "Si" && (
+            <div>
+              <div className="flex gap-2">
+                <MapPin />
+                {event.meetingOtherPoint.name === "Otro" ? (
+                  <p>{event.meetingOtherPointOther}</p>
+                ) : (
+                  <p>{event.meetingOtherPoint.name}</p>
+                )}
+                {event.meetingOtherPoint.name !== "Otro" && (
+                  <Link target="_blank" href={event.meetingOtherPoint.location}>
+                    <Map />
+                  </Link>
+                )}
+              </div>
+
+              <div className="flex gap-2">
+                <Clock />
+                <p>{formattedTimeSecondPoint}</p>
+              </div>
+            </div>
+          )}
+
+          <div className="flex gap-2">
+            <Drum />
+            <div className="flex flex-col">
+              {event.paceRoute.map((pace, i) => {
+                return (
+                  <div className="flex gap-2" key={i}>
+                    <Image
+                      src={pace.img}
+                      alt={pace.level}
+                      width={30}
+                      height={30}
+                    />
+                    <p>{pace.level}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div>
+            <h1>Comentarios</h1>
+            <p>{event.comments}</p>
+          </div>
         </div>
       </div>
     </div>
