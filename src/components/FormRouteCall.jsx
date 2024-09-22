@@ -481,9 +481,18 @@ const FormRouteCall = () => {
                           if (!startTime) {
                             return "Primero selecciona la hora de inicio";
                           }
-                          if (value && value.getTime() <= startTime.getTime()) {
+                    
+                          // Extraer solo la hora de la fecha completa (tanto para la hora inicial como para el segundo punto)
+                          const startHours = new Date(startTime).getHours();
+                          const startMinutes = new Date(startTime).getMinutes();
+                          const selectedHours = new Date(value).getHours();
+                          const selectedMinutes = new Date(value).getMinutes();
+                    
+                          // Comparar solo horas y minutos
+                          if (selectedHours < startHours || (selectedHours === startHours && selectedMinutes <= startMinutes)) {
                             return "La hora debe ser posterior a la hora de inicio";
                           }
+                    
                           return true;
                         },
                       }}
