@@ -7,6 +7,9 @@ import { useUser } from "@clerk/nextjs";
 
 const CardCalledRoute = ({ event }) => {
   console.log(event);
+  const { isSignedIn, user, isLoaded } = useUser();
+
+  console.log(user);
 
   const convertTimestampToDate = (seconds) => {
     const date = new Date(seconds * 1000);
@@ -108,48 +111,6 @@ const CardCalledRoute = ({ event }) => {
       <div className="flex flex-col gap-2 h-full">
         <div className="flex justify-between">
           <div className="flex gap-2">
-            <button disabled={isPastEvent}>
-              <i
-                className={`pi pi-times-circle text-white p-2 rounded-full  
-                ${
-                  isPastEvent
-                    ? "bg-slate-400"
-                    : "bg-red-600 cursor-pointer custom-target-icon"
-                }`}
-                style={{ fontSize: "1.2rem" }}
-                data-pr-tooltip="Cancelar ruta"
-                data-pr-position="top"
-              ></i>
-            </button>
-            <button disabled={isPastEvent}>
-              <i
-                className={`pi pi-file-edit text-white p-2 rounded-full  
-                ${
-                  isPastEvent
-                    ? "bg-slate-400"
-                    : "bg-blue-700 cursor-pointer custom-target-icon"
-                }`}
-                style={{ fontSize: "1.2rem" }}
-                data-pr-tooltip="Editar"
-                data-pr-position="top"
-              ></i>
-            </button>
-          </div>
-
-          <div className="flex gap-2">
-            <button disabled={isPastEvent}>
-              <i
-                className={`pi pi-user-plus text-white p-2 rounded-full  
-                ${
-                  isPastEvent
-                    ? "bg-slate-400"
-                    : "bg-orange-500 cursor-pointer custom-target-icon"
-                }`}
-                style={{ fontSize: "1.2rem" }}
-                data-pr-tooltip="Asistir"
-                data-pr-position="top"
-              ></i>
-            </button>
             <button disabled={isPastEvent} onClick={handleShareWhatsApp}>
               <i
                 className={`pi pi-whatsapp text-white p-2 rounded-full  
@@ -163,7 +124,51 @@ const CardCalledRoute = ({ event }) => {
                 data-pr-position="top"
               ></i>
             </button>
+            <button disabled={isPastEvent}>
+              <i
+                className={`pi pi-user-plus text-white p-2 rounded-full  
+                ${
+                  isPastEvent
+                    ? "bg-slate-400"
+                    : "bg-orange-500 cursor-pointer custom-target-icon"
+                }`}
+                style={{ fontSize: "1.2rem" }}
+                data-pr-tooltip="Asistir"
+                data-pr-position="top"
+              ></i>
+            </button>
           </div>
+
+          {isSignedIn && user.id === event.idUser && (
+            <div className="flex gap-2">
+              <button disabled={isPastEvent}>
+                <i
+                  className={`pi pi-times-circle text-white p-2 rounded-full  
+                ${
+                  isPastEvent
+                    ? "bg-slate-400"
+                    : "bg-red-600 cursor-pointer custom-target-icon"
+                }`}
+                  style={{ fontSize: "1.2rem" }}
+                  data-pr-tooltip="Cancelar ruta"
+                  data-pr-position="top"
+                ></i>
+              </button>
+              <button disabled={isPastEvent}>
+                <i
+                  className={`pi pi-file-edit text-white p-2 rounded-full  
+                ${
+                  isPastEvent
+                    ? "bg-slate-400"
+                    : "bg-blue-700 cursor-pointer custom-target-icon"
+                }`}
+                  style={{ fontSize: "1.2rem" }}
+                  data-pr-tooltip="Editar"
+                  data-pr-position="top"
+                ></i>
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="relative">
