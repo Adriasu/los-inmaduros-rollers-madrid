@@ -15,12 +15,18 @@ import { db } from "../../../lib/fireBase.mjs";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { useRouter } from "next/navigation";
+import Attendees from "@/components/Attendees";
 
 const CardCalledRoute = ({ event }) => {
   const { isSignedIn, user, isLoaded } = useUser();
   const toast = useRef(null);
   const [visible, setVisible] = useState(false);
   const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const showHideListAttendance = () => {
+    isOpen === false ? setIsOpen(true) : setIsOpen(false);
+  };
 
   const confirmAttendance = async (eventId) => {
     const userInfo = {
@@ -121,16 +127,16 @@ const CardCalledRoute = ({ event }) => {
   }
 
   if (!event) {
-    return null; 
+    return null;
   }
 
   const prueba = () => {
     if (isSignedIn) {
-      return event.attendees.some((att) => att.id === user.id);  
+      return event.attendees.some((att) => att.id === user.id);
     }
-  }
+  };
 
-  const isUserAttending = prueba()
+  const isUserAttending = prueba();
 
   const nowInSeconds = Math.floor(new Date().getTime() / 1000);
   const eventStart = event.dateRoute.seconds;
@@ -238,7 +244,7 @@ const CardCalledRoute = ({ event }) => {
                   if (isSignedIn) {
                     confirmAttendance(event.id); // Función que maneja la asistencia
                   } else {
-                    router.push('/sign-in'); // Redirigir al login
+                    router.push("/sign-in"); // Redirigir al login
                   }
                 }}
               >
@@ -257,7 +263,12 @@ const CardCalledRoute = ({ event }) => {
                   data-pr-position="top"
                 ></i>
               </button>
-              <p className="font-bold">({event.attendees.length || 0})</p>
+              <div>
+              <p onClick={showHideListAttendance} className="font-bold cursor-pointer">({event.attendees.length || 0})</p>
+              {isOpen && <Attendees eventId={event.id} open={isOpen} />}
+              </div>
+              
+
               {isEventToday && (
                 <h1
                   className={`${
