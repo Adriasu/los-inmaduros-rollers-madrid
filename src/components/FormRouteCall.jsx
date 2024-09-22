@@ -25,12 +25,13 @@ const FormRouteCall = () => {
   const [userData, setUserData] = useState(null);
   const toast = useRef(null);
   const router = useRouter();
-  
+
   useEffect(() => {
     if (isLoaded && isSignedIn && user) {
       const data = {
         id: user.id,
         firstName: user.firstName,
+        email: user.primaryEmailAddress?.emailAddress || "Sin correo",
         imageUser: user.imageUrl,
       };
       setUserData(data);
@@ -41,10 +42,9 @@ const FormRouteCall = () => {
     if (isSignedIn) {
       setOpen(true);
     } else {
-      router.push(`/sign-in`)
+      router.push(`/sign-in`);
     }
   };
-
 
   const {
     control,
@@ -92,8 +92,16 @@ const FormRouteCall = () => {
         firstName: userData.firstName,
         idUser: userData.id,
         imageUser: userData.imageUser,
+        attendees: [
+          {
+            id: userData.id,
+            name: userData.firstName,
+            email: userData.email,
+            photoUrl: userData.imageUser,
+          },
+        ],
       };
-
+      
       const postId = Date.now().toString();
 
       await setDocument("routesCalled", postDataEvent, postId);
@@ -223,11 +231,11 @@ const FormRouteCall = () => {
                           className={fieldState.error ? "p-invalid" : ""}
                           minDate={new Date()} // Evita seleccionar fechas pasadas
                         />
-                         {fieldState.error && (
-                              <small className="p-error">
-                                {fieldState.error.message}
-                              </small>
-                            )}
+                        {fieldState.error && (
+                          <small className="p-error">
+                            {fieldState.error.message}
+                          </small>
+                        )}
                       </>
                     )}
                   />
@@ -481,18 +489,22 @@ const FormRouteCall = () => {
                           if (!startTime) {
                             return "Primero selecciona la hora de inicio";
                           }
-                    
+
                           // Extraer solo la hora de la fecha completa (tanto para la hora inicial como para el segundo punto)
                           const startHours = new Date(startTime).getHours();
                           const startMinutes = new Date(startTime).getMinutes();
                           const selectedHours = new Date(value).getHours();
                           const selectedMinutes = new Date(value).getMinutes();
-                    
+
                           // Comparar solo horas y minutos
-                          if (selectedHours < startHours || (selectedHours === startHours && selectedMinutes <= startMinutes)) {
+                          if (
+                            selectedHours < startHours ||
+                            (selectedHours === startHours &&
+                              selectedMinutes <= startMinutes)
+                          ) {
                             return "La hora debe ser posterior a la hora de inicio";
                           }
-                    
+
                           return true;
                         },
                       }}

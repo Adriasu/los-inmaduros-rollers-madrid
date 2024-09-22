@@ -32,6 +32,7 @@ const FormRouteCallMobile = () => {
       const data = {
         id: user.id,
         firstName: user.firstName,
+        email: user.primaryEmailAddress?.emailAddress || "Sin correo",
         imageUser: user.imageUrl,
       };
       setUserData(data);
@@ -92,6 +93,14 @@ const FormRouteCallMobile = () => {
         firstName: userData.firstName,
         idUser: userData.id,
         imageUser: userData.imageUser,
+        attendees: [
+          {
+            id: userData.id,
+            name: userData.firstName,
+            email: userData.email,
+            photoUrl: userData.imageUser,
+          },
+        ],
       };
 
       const postId = Date.now().toString();
