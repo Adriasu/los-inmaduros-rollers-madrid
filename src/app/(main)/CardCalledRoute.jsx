@@ -10,10 +10,13 @@ import { Toast } from "primereact/toast";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 
 const CardCalledRoute = ({ event }) => {
-  console.log(event);
+  //console.log(event);
   const { isSignedIn, user, isLoaded } = useUser();
   const toast = useRef(null);
   const [visible, setVisible] = useState(false);
+
+  //console.log(user);
+  
 
   const accept = (eventId) => {
     cancelEvent(eventId);
@@ -112,31 +115,31 @@ const CardCalledRoute = ({ event }) => {
   const handleShareWhatsApp = () => {
     const paceLevels = event.paceRoute.map((pace) => pace.level).join(", ");
     const message = `
-      * ¡Rut4! ${
+      ¡Rut4! ${
         event.nameRoute.name === "Nueva"
-          ? event.newNameRoute
-          : event.nameRoute.name
+          ? `"${event.newNameRoute}"`
+          : `"${event.nameRoute.name}"`
       }
 
-      * Ritmo:  ${paceLevels}
-      * Fecha: ${formattedDate}
-      * Punto de encuentro: ${
+      - Ritmo:  ${paceLevels}
+      - Fecha: ${formattedDate}
+      - Punto de encuentro: ${
         event.meetingPoint.name === "Otro"
           ? event.meetingPointOther
           : event.meetingPoint.name
       }
-      * Hora: ${formattedTimeFirstPoint}
+      - Hora: ${formattedTimeFirstPoint}
       ${
         event.otherPoint.name === "Si"
-          ? `* Segundo punto de encuentro: ${
+          ? `- Segundo punto de encuentro: ${
               event.meetingOtherPoint.name === "Otro"
                 ? event.event.meetingOtherPointOther
                 : event.meetingOtherPoint.name
             }
-      * Hora: ${formattedTimeSecondPoint}`
+      - Hora: ${formattedTimeSecondPoint}`
           : ""
       } 
-      * Comentarios: ${event.comments}
+      - Comentarios: ${event.comments}
 
       Puedes ver más detalles en: https://los-inmaduros-rollers-madrid.vercel.app/`;
 
