@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Page() {
   return (
-    <section className="bg-white z-50">
+    <section className="bg-white z-50 min-h-screen">
       <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
         <section className="bg-auth inset-0 relative flex h-32 items-end lg:col-span-5 lg:h-full xl:col-span-6">
           <div className="hidden lg:relative lg:block lg:p-12">

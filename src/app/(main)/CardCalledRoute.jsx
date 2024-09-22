@@ -4,19 +4,53 @@ import Link from "next/link";
 import React, { useRef, useState } from "react";
 import { Tooltip } from "primereact/tooltip";
 import { useUser } from "@clerk/nextjs";
-import { doc, updateDoc } from "firebase/firestore";
+import {
+  arrayRemove,
+  arrayUnion,
+  doc,
+  getDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../../../lib/fireBase.mjs";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
+import { useRouter } from "next/navigation";
 
 const CardCalledRoute = ({ event }) => {
-  //console.log(event);
   const { isSignedIn, user, isLoaded } = useUser();
   const toast = useRef(null);
   const [visible, setVisible] = useState(false);
+  const router = useRouter();
 
-  //console.log(user);
-  
+  const confirmAttendance = async (eventId) => {
+    const userInfo = {
+      id: user.id,
+      name: user.fullName,
+      email: user.primaryEmailAddress?.emailAddress || "Sin correo",
+      photoUrl: user.imageUrl,
+    };
+
+    console.log(userInfo);
+
+    const eventRef = doc(db, "routesCalled", eventId);
+
+    try {
+      const eventDoc = await getDoc(eventRef);
+      const eventData = eventDoc.data();
+
+      const isUserAttending = eventData.attendees.some(
+        (att) => att.id === user.id
+      );
+
+      await updateDoc(eventRef, {
+        attendees: isUserAttending
+          ? arrayRemove(userInfo)
+          : arrayUnion(userInfo),
+      });
+    } catch (error) {
+      console.error("Error al confirmar asistencia: ", error);
+    }
+  };
 
   const accept = (eventId) => {
     cancelEvent(eventId);
@@ -87,8 +121,16 @@ const CardCalledRoute = ({ event }) => {
   }
 
   if (!event) {
-    return null;
+    return null; 
   }
+
+  const prueba = () => {
+    if (isSignedIn) {
+      return event.attendees.some((att) => att.id === user.id);  
+    }
+  }
+
+  const isUserAttending = prueba()
 
   const nowInSeconds = Math.floor(new Date().getTime() / 1000);
   const eventStart = event.dateRoute.seconds;
@@ -190,19 +232,32 @@ const CardCalledRoute = ({ event }) => {
                   data-pr-position="top"
                 ></i>
               </button>
-              <button disabled={isPastEvent || event.isCanceled}>
+              <button
+                disabled={isPastEvent || event.isCanceled}
+                onClick={() => {
+                  if (isSignedIn) {
+                    confirmAttendance(event.id); // Función que maneja la asistencia
+                  } else {
+                    router.push('/sign-in'); // Redirigir al login
+                  }
+                }}
+              >
                 <i
-                  className={`pi pi-user-plus text-white p-2 rounded-full  
+                  className={`text-white p-2 rounded-full 
+                    ${
+                      isUserAttending ? "pi pi-user-minus" : "pi pi-user-plus"
+                    }  
                 ${
                   isPastEvent || event.isCanceled
                     ? "bg-slate-400"
                     : "bg-orange-500 cursor-pointer custom-target-icon"
                 }`}
                   style={{ fontSize: "1.2rem" }}
-                  data-pr-tooltip="Asistir"
+                  data-pr-tooltip={isUserAttending ? "No asistiré" : "Asistir"}
                   data-pr-position="top"
                 ></i>
               </button>
+              <p className="font-bold">({event.attendees.length || 0})</p>
               {isEventToday && (
                 <h1
                   className={`${
