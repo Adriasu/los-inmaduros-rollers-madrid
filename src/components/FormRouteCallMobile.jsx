@@ -15,6 +15,7 @@ import { useUser } from "@clerk/nextjs";
 import { setDocument } from "../../lib/fireBase.mjs";
 import { Toast } from "primereact/toast";
 import { Sidebar } from "primereact/sidebar";
+import { useRouter } from "next/navigation";
 
 const FormRouteCallMobile = () => {
   const [open, setOpen] = useState(false);
@@ -24,6 +25,7 @@ const FormRouteCallMobile = () => {
   const { isSignedIn, user, isLoaded } = useUser();
   const [userData, setUserData] = useState(null);
   const toast = useRef(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (isLoaded && isSignedIn && user) {
@@ -35,6 +37,14 @@ const FormRouteCallMobile = () => {
       setUserData(data);
     }
   }, [isLoaded, isSignedIn, user]);
+
+  const handleOpenModal = () => {
+    if (isSignedIn) {
+      setOpen(true);
+    } else {
+      router.push(`/sign-in`)
+    }
+  };
 
   const {
     control,
@@ -114,8 +124,9 @@ const FormRouteCallMobile = () => {
   };
   return (
     <div className="card flex justify-content-center md:hidden">
+       <Toast ref={toast} />
       <Sidebar visible={open} onHide={() => setOpen(false)} fullScreen>
-        <div className="bg-white flex justify-center p-3 sm:p-10">
+        <div className="bg-white flex justify-center p-2">
           <div className="w-full lg:w-[60vw] xl:w-[40vw] border border-black p-5 rounded-2xl">
             <form
               className="flex flex-col gap-5"
@@ -517,7 +528,7 @@ const FormRouteCallMobile = () => {
       <Button
         label="Convoca tu ruta"
         icon="pi pi-external-link"
-        onClick={() => setOpen(true)}
+        onClick={handleOpenModal}
       />
     </div>
   );

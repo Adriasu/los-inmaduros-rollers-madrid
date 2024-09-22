@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { Tooltip } from "primereact/tooltip";
+import { useUser } from "@clerk/nextjs";
 
 const CardCalledRoute = ({ event }) => {
   console.log(event);
