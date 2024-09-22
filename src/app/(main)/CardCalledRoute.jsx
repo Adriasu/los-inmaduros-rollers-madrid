@@ -264,10 +264,17 @@ const CardCalledRoute = ({ event }) => {
                 ></i>
               </button>
               <div>
-              <p onClick={showHideListAttendance} className="font-bold cursor-pointer">({event.attendees.length || 0})</p>
-              {isOpen && <Attendees eventId={event.id} open={isOpen} />}
+                <button
+                  disabled={isPastEvent || event.isCanceled}
+                  className="font-bold"
+                  onClick={showHideListAttendance}
+                >
+                  ({event.attendees.length || 0})
+                </button>
+                <div className="absolute z-50">
+                  {isOpen && <Attendees eventId={event.id} open={isOpen} />}
+                </div>
               </div>
-              
 
               {isEventToday && (
                 <h1

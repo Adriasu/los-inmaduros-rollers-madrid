@@ -35,7 +35,7 @@ const Attendees = ({ eventId, open }) => {
 
   return (
     <div>
-      <div className="flex flex-col gap-2 border border-black p-2 rounded-xl">
+      <div className="flex flex-col gap-2 border border-black p-2 rounded-xl bg-white w-full">
         {attendees.map((user, i) => {
           return (
             <div key={i} className="flex gap-2">
