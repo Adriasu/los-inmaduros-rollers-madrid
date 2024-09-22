@@ -14,6 +14,7 @@ import { Button } from "primereact/button";
 import { useUser } from "@clerk/nextjs";
 import { setDocument } from "../../lib/fireBase.mjs";
 import { Toast } from "primereact/toast";
+import { useRouter } from "next/navigation";
 
 const FormRouteCall = () => {
   const [open, setOpen] = useState(false);
@@ -23,7 +24,8 @@ const FormRouteCall = () => {
   const { isSignedIn, user, isLoaded } = useUser();
   const [userData, setUserData] = useState(null);
   const toast = useRef(null);
-
+  const router = useRouter();
+  
   useEffect(() => {
     if (isLoaded && isSignedIn && user) {
       const data = {
@@ -34,6 +36,15 @@ const FormRouteCall = () => {
       setUserData(data);
     }
   }, [isLoaded, isSignedIn, user]);
+
+  const handleOpenModal = () => {
+    if (isSignedIn) {
+      setOpen(true);
+    } else {
+      router.push(`/sign-in`)
+    }
+  };
+
 
   const {
     control,
@@ -118,7 +129,7 @@ const FormRouteCall = () => {
       <Button
         label="Convoca tu ruta"
         icon="pi pi-external-link"
-        onClick={() => setOpen(true)}
+        onClick={handleOpenModal}
       />
       <Dialog
         header="Convocar ruta"
