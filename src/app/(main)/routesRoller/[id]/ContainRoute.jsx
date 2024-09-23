@@ -17,7 +17,7 @@ const ContainRoute = () => {
       <RouteInfo />
       <RouteInfoMobile />
       <Reviews routeId={routeId}/>
-      <ReviewsMobile />
+      <ReviewsMobile routeId={routeId}/>
     </div>
   );
 };
