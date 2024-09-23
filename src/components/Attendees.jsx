@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../lib/fireBase.mjs";
 import Image from "next/image";
 
-const Attendees = ({ eventId, open }) => {
+const Attendees = ({ eventId, open, setOpen }) => {
   const [attendees, setAttendees] = useState([]);
 
   useEffect(() => {
@@ -18,27 +18,34 @@ const Attendees = ({ eventId, open }) => {
             setAttendees(eventData.attendees || []);
           } else {
             console.log("El evento no existe.");
-            setAttendees([]); // No hay datos, lista vacía
+            setAttendees([]);
           }
         }
       } catch (error) {
         console.error("Error al obtener los asistentes:", error);
-        setAttendees([]); // En caso de error, mostrar lista vacía
+        setAttendees([]);
       }
     };
 
-    // Llamamos a la función cuando el modal es visible y tiene un `eventId`
     if (open && eventId) {
       fetchAttendees();
     }
   }, [eventId, open]);
 
+  console.log(attendees);
+
   return (
     <div>
-      <div className="flex flex-col gap-2 border border-black p-2 rounded-xl bg-white w-full">
+      <div className="flex flex-col gap-2 border border-black p-2 rounded-xl bg-white min-w-[280px] max-h-[400px] max-w-[200px] container">
+        <div className="w-full flex justify-between">
+          <h1 className="font-bold text-lg">Asistentes</h1>
+          <button onClick={setOpen}>
+            <i className="pi pi-times-circle" style={{ fontSize: "1rem" }}></i>
+          </button>
+        </div>
         {attendees.map((user, i) => {
           return (
-            <div key={i} className="flex gap-2">
+            <div key={i} className="flex gap-2 items-center">
               <Image
                 src={user.photoUrl}
                 alt={user.name}

@@ -31,7 +31,7 @@ const CardCalledRoute = ({ event }) => {
   const confirmAttendance = async (eventId) => {
     const userInfo = {
       id: user.id,
-      name: user.fullName,
+      name: user.firstName,
       email: user.primaryEmailAddress?.emailAddress || "Sin correo",
       photoUrl: user.imageUrl,
     };
@@ -221,7 +221,7 @@ const CardCalledRoute = ({ event }) => {
         <Tooltip target=".custom-target-icon" />
         <div className="flex flex-col gap-2 h-full">
           <div className="flex justify-between">
-            <div className="flex gap-2 items-center">
+            <div className="flex gap-2 items-center relative">
               <button
                 disabled={isPastEvent || event.isCanceled}
                 onClick={handleShareWhatsApp}
@@ -242,9 +242,9 @@ const CardCalledRoute = ({ event }) => {
                 disabled={isPastEvent || event.isCanceled}
                 onClick={() => {
                   if (isSignedIn) {
-                    confirmAttendance(event.id); // Función que maneja la asistencia
+                    confirmAttendance(event.id);
                   } else {
-                    router.push("/sign-in"); // Redirigir al login
+                    router.push("/sign-in");
                   }
                 }}
               >
@@ -271,8 +271,8 @@ const CardCalledRoute = ({ event }) => {
                 >
                   ({event.attendees.length || 0})
                 </button>
-                <div className="absolute z-50">
-                  {isOpen && <Attendees eventId={event.id} open={isOpen} />}
+                <div className="absolute left-1 z-50">
+                  {isOpen && <Attendees eventId={event.id} open={isOpen} setOpen={showHideListAttendance} />}
                 </div>
               </div>
 
