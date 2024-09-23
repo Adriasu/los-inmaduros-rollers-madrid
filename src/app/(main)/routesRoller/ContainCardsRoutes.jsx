@@ -6,7 +6,24 @@ import { Masonry } from "react-plock";
 import { Search, SlidersHorizontal } from "lucide-react";
 
 const ContainCardsRoutes = () => {
-  const { dataRoutes, isLoading } = useContext(RoutesContext);
+  const { dataRoutes, isLoading, setFilterDataRoutes, filterDataRoutes } =
+    useContext(RoutesContext);
+
+  const routeFinder = (e) => {
+    e.preventDefault();
+    const letterInput = e.target.value.toLowerCase();
+    //console.log(letra);
+
+    const filterArray = dataRoutes.filter((route) => {
+      const letterApi = route.name.toLowerCase();
+      if (letterApi.indexOf(letterInput) !== -1) {
+        return route;
+      }
+      return;
+    });
+
+    setFilterDataRoutes(filterArray);
+  };
 
   if (isLoading) {
     return (
@@ -63,6 +80,7 @@ const ContainCardsRoutes = () => {
           <div className="flex max-w-[300px] items-center h-10 rounded-[12px] py-2 px-4 bg-[#454752] focus-within:bg-[#5d606e]">
             <Search />
             <input
+              onKeyUp={routeFinder}
               type="text"
               placeholder="Buscar por nombre"
               className="w-full px-3 py-2 text-sm bg-transparent border-none outline-none placeholder:text-[#999b9e] focus-within:placeholder:text-[#bfc1c5] caret-[#999b9e]"
@@ -74,7 +92,7 @@ const ContainCardsRoutes = () => {
         </div>
         <div className="w-full">
           <Masonry
-            items={dataRoutes}
+            items={filterDataRoutes}
             config={{
               columns: [2, 2, 3],
               gap: [10, 12, 25],
