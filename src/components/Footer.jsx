@@ -5,6 +5,7 @@ import "primeicons/primeicons.css";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import FormRouteCall from "./FormRouteCall";
+import FormRouteCallMobile from "./FormRouteCallMobile";
 
 const Footer = () => {
   const router = useRouter();
@@ -64,6 +65,7 @@ const Footer = () => {
           </Link>
           <li className="hover:scale-[1.05] cursor-pointer">
             <FormRouteCall location={"footer"} />
+            <FormRouteCallMobile location={"footer"}/>
           </li>
           <Link
             href={"mailto:losinmadurosrollermadrid@gmail.com"}
