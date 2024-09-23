@@ -88,12 +88,12 @@ const MenuNav = () => {
               Rutas
             </li>
           </Link>
-          <Link href={"/favoriteRoutes"} onClick={() => setVisible(false)}>
-            <li className={`${styleMenu}`}>
-              <FolderHeart />
-              Tus favoritos
-            </li>
-          </Link>
+
+          <li className={`${styleMenu}`}>
+            <FolderHeart />
+            Tus favoritos
+          </li>
+
           <li className={`${styleMenu}`}>
             <SquarePen />
             <FormRouteCall location={"menuBar"} closeMenuBar={setVisible} />
@@ -105,6 +105,7 @@ const MenuNav = () => {
           <Link
             href={"mailto:losinmadurosrollermadrid@gmail.com"}
             title="Enviar correo"
+            onClick={() => setVisible(false)}
           >
             <li className={`${styleMenu}`}>
               <Mail />
