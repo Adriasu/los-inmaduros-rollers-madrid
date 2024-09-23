@@ -15,8 +15,9 @@ import { useUser } from "@clerk/nextjs";
 import { setDocument } from "../../lib/fireBase.mjs";
 import { Toast } from "primereact/toast";
 import { useRouter } from "next/navigation";
+import { SquarePen } from "lucide-react";
 
-const FormRouteCall = () => {
+const FormRouteCall = ({ location, closeMenuBar }) => {
   const [open, setOpen] = useState(false);
   const { dataRoutes } = useContext(RoutesContext);
   const { meetingPoints, paceRoute } = useContext(FormCallRouteContext);
@@ -101,7 +102,7 @@ const FormRouteCall = () => {
           },
         ],
       };
-      
+
       const postId = Date.now().toString();
 
       await setDocument("routesCalled", postDataEvent, postId);
@@ -115,6 +116,8 @@ const FormRouteCall = () => {
 
       reset();
       setOpen(false);
+      location === "menuBar" ? closeMenuBar(false) : "";
+      router.push(`/`);
 
       console.log("Evento creado con ID:", postId);
     } catch (error) {
@@ -134,11 +137,16 @@ const FormRouteCall = () => {
   return (
     <div className="hidden md:flex card justify-content-center">
       <Toast ref={toast} />
-      <Button
-        label="Convoca tu ruta"
-        icon="pi pi-external-link"
-        onClick={handleOpenModal}
-      />
+      {location === "home" ? (
+        <Button
+          label="Convoca tu ruta"
+          icon="pi pi-external-link"
+          onClick={handleOpenModal}
+        />
+      ) : (
+        <div onClick={handleOpenModal}>Convocar ruta</div>
+      )}
+
       <Dialog
         header="Convocar ruta"
         visible={open}

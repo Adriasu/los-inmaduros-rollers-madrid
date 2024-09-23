@@ -4,6 +4,8 @@ import React from "react";
 import "primeicons/primeicons.css";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import FormRouteCall from "./FormRouteCall";
+import FormRouteCallMobile from "./FormRouteCallMobile";
 
 const Footer = () => {
   const router = useRouter();
@@ -35,13 +37,6 @@ const Footer = () => {
               <i className="pi pi-instagram" style={{ fontSize: "1.5rem" }}></i>
             </Link>
             <Link
-              className="hover:scale-[1.05]"
-              href={"mailto:losinmadurosrollermadrid@gmail.com"}
-              title="Enviar correo"
-            >
-              <i className="pi pi-envelope" style={{ fontSize: "1.5rem" }}></i>
-            </Link>
-            <Link
               target="_blank"
               href={"https://chat.whatsapp.com/DZBoC7M8jtc0YMLpOGIwlo"}
               className="hover:scale-[1.05]"
@@ -68,8 +63,16 @@ const Footer = () => {
           <Link href={"/routesRoller"}>
             <li className="hover:scale-[1.05]">Rutas</li>
           </Link>
-          <li className="hover:scale-[1.05]">Convocar ruta</li>
-          <li className="hover:scale-[1.05]">Propón tu ruta</li>
+          <li className="hover:scale-[1.05] cursor-pointer">
+            <FormRouteCall location={"footer"} />
+            <FormRouteCallMobile location={"footer"}/>
+          </li>
+          <Link
+            href={"mailto:losinmadurosrollermadrid@gmail.com"}
+            title="Enviar correo"
+          >
+            <li className="hover:scale-[1.05]">Contacto</li>
+          </Link>
         </ul>
       </div>
 

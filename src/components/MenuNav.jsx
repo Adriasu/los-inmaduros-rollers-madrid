@@ -6,6 +6,7 @@ import {
   FolderHeart,
   HeartHandshake,
   House,
+  Mail,
   Menu,
   Route,
   SquarePen,
@@ -13,6 +14,8 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
+import FormRouteCall from "./FormRouteCall";
+import FormRouteCallMobile from "./FormRouteCallMobile";
 
 const MenuNav = () => {
   const [visible, setVisible] = useState(false);
@@ -92,12 +95,22 @@ const MenuNav = () => {
             </li>
           </Link>
           <li className={`${styleMenu}`}>
-            <SquarePen /> Convocar ruta
+            <SquarePen />
+            <FormRouteCall location={"menuBar"} closeMenuBar={setVisible} />
+            <FormRouteCallMobile
+              location={"menuBar"}
+              closeMenuBar={setVisible}
+            />
           </li>
-          <li className={`${styleMenu}`}>
-            <HeartHandshake />
-            Propón tu ruta
-          </li>
+          <Link
+            href={"mailto:losinmadurosrollermadrid@gmail.com"}
+            title="Enviar correo"
+          >
+            <li className={`${styleMenu}`}>
+              <Mail />
+              Contacto
+            </li>
+          </Link>
         </ul>
 
         <div className="mt-[180px] w-full flex items-center justify-end gap-2">

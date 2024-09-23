@@ -17,7 +17,7 @@ import { Toast } from "primereact/toast";
 import { Sidebar } from "primereact/sidebar";
 import { useRouter } from "next/navigation";
 
-const FormRouteCallMobile = () => {
+const FormRouteCallMobile = ({ location, closeMenuBar }) => {
   const [open, setOpen] = useState(false);
   const { dataRoutes } = useContext(RoutesContext);
   const { meetingPoints, paceRoute } = useContext(FormCallRouteContext);
@@ -43,7 +43,7 @@ const FormRouteCallMobile = () => {
     if (isSignedIn) {
       setOpen(true);
     } else {
-      router.push(`/sign-in`)
+      router.push(`/sign-in`);
     }
   };
 
@@ -116,6 +116,8 @@ const FormRouteCallMobile = () => {
 
       reset();
       setOpen(false);
+      location === "menuBar" ? closeMenuBar(false) : "";
+      router.push(`/`);
 
       console.log("Evento creado con ID:", postId);
     } catch (error) {
@@ -133,7 +135,7 @@ const FormRouteCallMobile = () => {
   };
   return (
     <div className="card flex justify-content-center md:hidden">
-       <Toast ref={toast} />
+      <Toast ref={toast} />
       <Sidebar visible={open} onHide={() => setOpen(false)} fullScreen>
         <div className="bg-white flex justify-center p-2">
           <div className="w-full lg:w-[60vw] xl:w-[40vw] border border-black p-5 rounded-2xl">
@@ -216,13 +218,13 @@ const FormRouteCallMobile = () => {
                           showTime
                           hourFormat="24"
                           className={fieldState.error ? "p-invalid" : ""}
-                          minDate={new Date()} 
+                          minDate={new Date()}
                         />
-                         {fieldState.error && (
-                              <small className="p-error">
-                                {fieldState.error.message}
-                              </small>
-                            )}
+                        {fieldState.error && (
+                          <small className="p-error">
+                            {fieldState.error.message}
+                          </small>
+                        )}
                       </>
                     )}
                   />
@@ -534,11 +536,15 @@ const FormRouteCallMobile = () => {
           </div>
         </div>
       </Sidebar>
-      <Button
-        label="Convoca tu ruta"
-        icon="pi pi-external-link"
-        onClick={handleOpenModal}
-      />
+      {location === "home" ? (
+        <Button
+          label="Convoca tu ruta"
+          icon="pi pi-external-link"
+          onClick={handleOpenModal}
+        />
+      ) : (
+        <div onClick={handleOpenModal}>Convocar ruta</div>
+      )}
     </div>
   );
 };
