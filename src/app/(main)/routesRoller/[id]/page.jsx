@@ -1,17 +1,11 @@
 import React from 'react'
-import RouteInfo from './RouteInfo'
-import Reviews from './Reviews'
-import RouteInfoMobile from './RouteInfoMobile'
-import ReviewsMobile from './ReviewsMobile'
+import ContainRoute from './ContainRoute'
 
 
 const page = () => {
   return (
     <div>
-    <RouteInfo/>
-    <RouteInfoMobile/>
-    <Reviews/>
-    <ReviewsMobile/>
+   <ContainRoute/>
     </div>
   )
 }
