@@ -61,11 +61,12 @@ const Reviews = ({ routeId }) => {
 
   // Calcular el promedio de calificaciones
   const calculateNewAverageRating = (reviews) => {
-    const totalRatings = reviews.reduce(
-      (sum, review) => sum + review.rating,
-      0
-    );
-    return totalRatings / reviews.length;
+    const totalRatings = reviews.reduce((sum, review) => {
+      const reviewRating = typeof review.rating === "number" ? review.rating : 0;
+      return sum + reviewRating;
+    }, 0);
+  
+    return reviews.length > 0 ? totalRatings / reviews.length : 0;
   };
 
   return (
