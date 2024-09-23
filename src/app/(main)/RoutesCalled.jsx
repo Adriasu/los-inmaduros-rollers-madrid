@@ -13,7 +13,7 @@ const RoutesCalled = () => {
             Próximas rutas
           </h1>
           <FormRouteCall location={"home"} />
-          <FormRouteCallMobile/>
+          <FormRouteCallMobile location={"home"}/>
         </div>
         <div className="w-full">
           <ContainCardsRoutesCalled />

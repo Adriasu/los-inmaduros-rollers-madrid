@@ -279,7 +279,7 @@ const CardCalledRoute = ({ event }) => {
               {isEventToday && (
                 <h1
                   className={`${
-                    event.isCanceled ? "text-gray-500 text-3xl" : "today"
+                    event.isCanceled ? "text-gray-500 text-xl" : "today"
                   }`}
                 >
                   ¡HOY!
