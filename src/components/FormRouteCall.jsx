@@ -15,7 +15,6 @@ import { useUser } from "@clerk/nextjs";
 import { setDocument } from "../../lib/fireBase.mjs";
 import { Toast } from "primereact/toast";
 import { useRouter } from "next/navigation";
-import { SquarePen } from "lucide-react";
 
 const FormRouteCall = ({ location, closeMenuBar }) => {
   const [open, setOpen] = useState(false);
