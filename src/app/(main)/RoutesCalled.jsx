@@ -12,7 +12,7 @@ const RoutesCalled = () => {
           <h1 className="text-3xl font-bold bg-gradient-to-r from-orange-700 to-orange-500 bg-clip-text text-transparent">
             Próximas rutas
           </h1>
-          <FormRouteCall />
+          <FormRouteCall location={"home"} />
           <FormRouteCallMobile/>
         </div>
         <div className="w-full">
