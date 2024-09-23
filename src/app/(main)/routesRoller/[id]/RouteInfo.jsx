@@ -8,7 +8,6 @@ import RouteMapGoogle from "@/components/RouteMapGoogle";
 import Buttons from "@/components/Buttons";
 import Link from "next/link";
 
-
 const RouteInfo = () => {
   const params = useParams();
   const { dataRoutes, isLoading } = useContext(RoutesContext);
@@ -23,7 +22,6 @@ const RouteInfo = () => {
       </div>
     );
   }
-
 
   return (
     <div className="m-auto hidden md:flex gap-6 max-w-[1200px] text-white justify-center mt-3">
@@ -55,7 +53,11 @@ const RouteInfo = () => {
             </h2>
             <div className="flex gap-2 items-center">
               <Star className="text-[#58cbe8] fill-[#58cbe8]" />
-              <p>(4.5)</p>
+              {route.rating ? (
+                <p>({route.rating.toFixed(1)})</p>
+              ) : (
+                <p>Sin valoraciones aún</p>
+              )}
             </div>
             <div className="flex flex-col gap-2">
               <p>Distancia: {route.approximateDistance} aprox</p>

@@ -7,7 +7,7 @@ import ReviewsMobile from "./ReviewsMobile";
 import { useParams } from "next/navigation";
 
 const ContainRoute = () => {
-  const params = useParams(); // Esto te dará acceso al id de la URL dinámica.
+  const params = useParams(); 
   const routeId = params?.id;
 
   if (!routeId) return <div>Cargando...</div>;

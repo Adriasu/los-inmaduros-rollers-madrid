@@ -103,7 +103,7 @@ const ReviewsMobile = ({ routeId }) => {
             </Link>
           </div>
         )}
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 max-h-[447px] overflow-auto container">
           {reviewsList.slice(1).map((rev, index) => (
             <div
               key={index}
