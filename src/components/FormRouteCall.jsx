@@ -21,7 +21,6 @@ const FormRouteCall = ({ location, closeMenuBar }) => {
   const [open, setOpen] = useState(false);
   const { dataRoutes } = useContext(RoutesContext);
   const { meetingPoints, paceRoute } = useContext(FormCallRouteContext);
-  const [visible, setVisible] = React.useState(false);
   const { isSignedIn, user, isLoaded } = useUser();
   const [userData, setUserData] = useState(null);
   const toast = useRef(null);
