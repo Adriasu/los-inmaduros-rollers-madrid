@@ -305,7 +305,7 @@ const CardCalledRoute = ({ event }) => {
                     data-pr-position="top"
                   ></i>
                 </button>
-                <button disabled={isPastEvent || event.isCanceled}>
+                {/* <button disabled={isPastEvent || event.isCanceled}>
                   <i
                     className={`pi pi-file-edit text-white p-2 rounded-full  
                 ${
@@ -317,7 +317,7 @@ const CardCalledRoute = ({ event }) => {
                     data-pr-tooltip="Editar"
                     data-pr-position="top"
                   ></i>
-                </button>
+                </button> */}
               </div>
             )}
           </div>
