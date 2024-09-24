@@ -1,10 +1,16 @@
 import { FolderHeart, House, Mail, Route, SquarePen } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import FormRouteCall from "./FormRouteCall";
 import FormRouteCallMobile from "./FormRouteCallMobile";
+import Favorites from "./Favorites";
 
 const MenuList = ({ location, setVisible }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const showHideListFavorites = () => {
+    isOpen === false ? setIsOpen(true) : setIsOpen(false);
+  };
   const styleUl = () => {
     if (location === "navbar") {
       return "hidden md:flex gap-7 p-3 text-white font-semibold";
@@ -46,10 +52,20 @@ const MenuList = ({ location, setVisible }) => {
         </li>
       </Link>
 
-      <li className={`${styleLi()} flex gap-2 hover:underline cursor-pointer`}>
-        {location !== "navbar" && <FolderHeart />}
-        Tus favoritos
-      </li>
+      <div>
+        <li
+          onClick={showHideListFavorites}
+          className={`${styleLi()} flex gap-2 hover:underline cursor-pointer`}
+        >
+          {location !== "navbar" && <FolderHeart />}
+          Tus favoritos
+        </li>
+        {isOpen && (
+          <div className="absolute">
+            <Favorites />
+          </div>
+        )}
+      </div>
 
       <li className={`${styleLi()} flex gap-2 hover:underline cursor-pointer`}>
         {location !== "navbar" && <SquarePen />}

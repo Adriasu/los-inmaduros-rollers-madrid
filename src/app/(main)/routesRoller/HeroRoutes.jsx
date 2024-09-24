@@ -2,6 +2,7 @@
 import React, { useContext } from "react";
 import { RoutesContext } from "@/context/RoutesContext";
 import Image from "next/image";
+import Favorites from "@/components/Favorites";
 
 const HeroRoutes = () => {
   const { isLoading } = useContext(RoutesContext);
