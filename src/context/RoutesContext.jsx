@@ -1,5 +1,7 @@
 "use client";
 import React, { createContext, useEffect, useState } from "react";
+import { onSnapshot, collection } from "firebase/firestore";
+import { db } from "../../lib/fireBase.mjs";
 
 export const RoutesContext = createContext(null);
 
@@ -8,26 +10,23 @@ export default function RoutersContextProvider({ children }) {
   const [filterDataRoutes, setFilterDataRoutes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchDataRoutes = async () => {
-    try {
-      const response = await fetch(
-        "https://los-inmaduros-rollers-madrid.vercel.app/api/routes"
-      );
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      setDataRoutes(data);
-      setFilterDataRoutes(data);
+  const fetchDataRoutes = () => {
+    const unsubscribe = onSnapshot(collection(db, "routes"), (snapshot) => {
+      const routesData = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setDataRoutes(routesData);
+      setFilterDataRoutes(routesData);
       setIsLoading(false);
-    } catch (error) {
-      console.log("Error al hacer el fetch:", error.message);
-    }
+    });
+
+    return () => unsubscribe(); 
   };
 
   useEffect(() => {
-    fetchDataRoutes();
+    const unsubscribe = fetchDataRoutes();
+    return () => unsubscribe(); // Cleanup
   }, []);
 
   return (
