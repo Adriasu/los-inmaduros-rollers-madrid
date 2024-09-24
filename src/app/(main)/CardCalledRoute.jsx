@@ -13,9 +13,10 @@ import {
 } from "firebase/firestore";
 import { db } from "../../../lib/fireBase.mjs";
 import { Toast } from "primereact/toast";
-import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
+import { ConfirmDialog } from "primereact/confirmdialog";
 import { useRouter } from "next/navigation";
 import Attendees from "@/components/Attendees";
+import PaceDialogInfo from "@/components/PaceDialogInfo";
 
 const CardCalledRoute = ({ event }) => {
   const { isSignedIn, user, isLoaded } = useUser();
@@ -35,8 +36,6 @@ const CardCalledRoute = ({ event }) => {
       email: user.primaryEmailAddress?.emailAddress || "Sin correo",
       photoUrl: user.imageUrl,
     };
-
-    console.log(userInfo);
 
     const eventRef = doc(db, "routesCalled", eventId);
 
@@ -130,13 +129,13 @@ const CardCalledRoute = ({ event }) => {
     return null;
   }
 
-  const prueba = () => {
+  const attendees = () => {
     if (isSignedIn) {
       return event.attendees.some((att) => att.id === user.id);
     }
   };
 
-  const isUserAttending = prueba();
+  const isUserAttending = attendees();
 
   const nowInSeconds = Math.floor(new Date().getTime() / 1000);
   const eventStart = event.dateRoute.seconds;
@@ -272,7 +271,13 @@ const CardCalledRoute = ({ event }) => {
                   ({event.attendees.length || 0})
                 </button>
                 <div className="absolute left-1 z-50">
-                  {isOpen && <Attendees eventId={event.id} open={isOpen} setOpen={showHideListAttendance} />}
+                  {isOpen && (
+                    <Attendees
+                      eventId={event.id}
+                      open={isOpen}
+                      setOpen={showHideListAttendance}
+                    />
+                  )}
                 </div>
               </div>
 
@@ -305,19 +310,6 @@ const CardCalledRoute = ({ event }) => {
                     data-pr-position="top"
                   ></i>
                 </button>
-                {/* <button disabled={isPastEvent || event.isCanceled}>
-                  <i
-                    className={`pi pi-file-edit text-white p-2 rounded-full  
-                ${
-                  isPastEvent || event.isCanceled
-                    ? "bg-slate-400"
-                    : "bg-blue-700 cursor-pointer custom-target-icon"
-                }`}
-                    style={{ fontSize: "1.2rem" }}
-                    data-pr-tooltip="Editar"
-                    data-pr-position="top"
-                  ></i>
-                </button> */}
               </div>
             )}
           </div>
@@ -368,7 +360,9 @@ const CardCalledRoute = ({ event }) => {
 
           <div
             className={`flex gap-2 justify-between w-full border rounded-2xl p-2 ${
-              isPastEvent ? "border-black" : "border-gray-600"
+              isPastEvent || event.isCanceled
+                ? "border-black"
+                : "border-gray-600"
             }`}
           >
             <div className="flex items-center">
@@ -394,7 +388,9 @@ const CardCalledRoute = ({ event }) => {
 
           <div
             className={`border rounded-2xl p-2 flex flex-col gap-1 ${
-              isPastEvent ? "border-black" : "border-gray-600"
+              isPastEvent || event.isCanceled
+                ? "border-black"
+                : "border-gray-600"
             } container`}
           >
             <div className="flex gap-2">
@@ -409,11 +405,14 @@ const CardCalledRoute = ({ event }) => {
               ) : (
                 <p>{event.meetingPoint.name}</p>
               )}
-              {event.meetingPoint.name !== "Otro" && (
-                <Link target="_blank" href={event.meetingPoint.location}>
+              {event.meetingPoint.name !== "Otro" &&
+                (isPastEvent || event.isCanceled ? (
                   <Map />
-                </Link>
-              )}
+                ) : (
+                  <Link target="_blank" href={event.meetingPoint.location}>
+                    <Map />
+                  </Link>
+                ))}
             </div>
 
             <div className="flex gap-2">
@@ -430,14 +429,14 @@ const CardCalledRoute = ({ event }) => {
                   ) : (
                     <p>{event.meetingOtherPoint.name}</p>
                   )}
-                  {event.meetingOtherPoint.name !== "Otro" && (
-                    <Link
-                      target="_blank"
-                      href={event.meetingOtherPoint.location}
-                    >
+                  {event.meetingOtherPoint.name !== "Otro" &&
+                    (isPastEvent || event.isCanceled ? (
                       <Map />
-                    </Link>
-                  )}
+                    ) : (
+                      <Link target="_blank" href={event.meetingPoint.location}>
+                        <Map />
+                      </Link>
+                    ))}
                 </div>
 
                 <div className="flex gap-2">
@@ -448,7 +447,10 @@ const CardCalledRoute = ({ event }) => {
             )}
 
             <div className="flex gap-2">
+              <div className="flex flex-col items-center">
               <Drum />
+              <PaceDialogInfo location={"card"}/>
+              </div>
               <div className="flex flex-col">
                 {event.paceRoute.map((pace, i) => {
                   return (

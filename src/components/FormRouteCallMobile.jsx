@@ -9,19 +9,18 @@ import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import { Calendar } from "primereact/calendar";
 import { InputTextarea } from "primereact/inputtextarea";
-import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { useUser } from "@clerk/nextjs";
 import { setDocument } from "../../lib/fireBase.mjs";
 import { Toast } from "primereact/toast";
 import { Sidebar } from "primereact/sidebar";
 import { useRouter } from "next/navigation";
+import PaceDialogInfo from "./PaceDialogInfo";
 
 const FormRouteCallMobile = ({ location, closeMenuBar }) => {
   const [open, setOpen] = useState(false);
   const { dataRoutes } = useContext(RoutesContext);
   const { meetingPoints, paceRoute } = useContext(FormCallRouteContext);
-  const [visible, setVisible] = React.useState(false);
   const { isSignedIn, user, isLoaded } = useUser();
   const [userData, setUserData] = useState(null);
   const toast = useRef(null);
@@ -234,52 +233,8 @@ const FormRouteCallMobile = ({ location, closeMenuBar }) => {
               <div className="flex flex-col sm:items-center gap-2 sm:flex-row">
                 <div className="flex items-center gap-2">
                   <label htmlFor="pace">Ritmo</label>
-                  <i
-                    className="pi pi-question-circle cursor-pointer"
-                    onClick={() => setVisible(true)}
-                  ></i>
+                  <PaceDialogInfo/>
                 </div>
-                <Dialog
-                  header="Ritmo de las rutas."
-                  visible={visible}
-                  className="w-full md:w-[60vw]"
-                  onHide={() => setVisible(false)}
-                >
-                  <p className="m-0">
-                    🪨<span className="font-bold">Nivel Roca.</span> Aún no te
-                    ves seguro sobre los patines y evitas las cuestas a toda
-                    costa. No sabes frenar. <br />
-                    🐌 <span className="font-bold">Nivel Caracol.</span> Eres
-                    autónomo en rectas y cuesta arriba, pero necesitas ayuda
-                    todavía para frenar, aunque lo intentes solo. <br />
-                    🐛 <span className="font-bold">Nivel Gusano.</span> Eres
-                    autónomo 100% y te gusta ir a las caracoleras, pero te gusta
-                    salir por la calle, ritmo disfrutón. <br />
-                    🦋{" "}
-                    <span className="font-bold">
-                      Nivel Mariposa (Avanzado o Pro).
-                    </span>{" "}
-                    Te gusta la calle, bajar cuestas infinitas sin frenar, pasar
-                    por túneles, ritmo avanzado. <br />
-                    🚀 <span className="font-bold">
-                      Nivel Experimentado.{" "}
-                    </span>{" "}
-                    rutas X, Galáctica, 7 picos... <br />
-                    ☠️ <span className="font-bold">Nivel Locura total.</span> Te
-                    pasas los semáforos, esquivas coches, descensos a toda
-                    hostia y alcohol en las venas. <br />
-                    🐈 🦄 <span className="font-bold">
-                      Nivel Miaucornia.
-                    </span>{" "}
-                    Siempre cerveza en mano, nadie te gana a patinar pedo. Coges
-                    la ruta a mitad de camino para evitar las cuestas. Llegas
-                    tarde y persigues la ruta. Te quejas del cansancio y pides
-                    un descanso para ir al chino. Bomba de humo. <br /> <br />
-                    Para pasar de uno a otro hay que ir probando poco a poco.{" "}
-                    <br />
-                    🪨🔜🐌🔜🐛🔜🦋🔜🚀🔜☠️🔜🐈🦄
-                  </p>
-                </Dialog>
                 <Controller
                   name="paceRoute"
                   control={control}
