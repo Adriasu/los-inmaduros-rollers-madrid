@@ -4,7 +4,7 @@ import { Sidebar } from "primereact/sidebar";
 import { Button } from "primereact/button";
 import { Menu } from "lucide-react";
 import Image from "next/image";
-import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
+import { SignOutButton, useUser } from "@clerk/nextjs";
 import MenuList from "./MenuList";
 
 const MenuNav = () => {
@@ -35,15 +35,7 @@ const MenuNav = () => {
         )}
       >
         {!isLoaded || !isSignedIn ? (
-          <div className="w-full flex justify-center items-center p-3">
-            <SignInButton>
-              <Button
-                label="login"
-                className="px-8 py-2"
-                onClick={() => setVisible(false)}
-              />
-            </SignInButton>
-          </div>
+          <div></div>
         ) : (
           <div className="flex items-center gap-5 rounded-2xl border-[1px] border-[#58cbe8] p-3">
             <div>
@@ -57,23 +49,25 @@ const MenuNav = () => {
             </div>
             <div>
               <h1 className="font-bold">Hola,</h1>
-              <h1>{user.fullName}</h1>
+              <h1>{user.firstName}</h1>
             </div>
           </div>
         )}
 
         <MenuList setVisible={setVisible} />
 
-        <div className="mt-[180px] w-full flex items-center justify-end gap-2">
-          <SignOutButton>
-            <Button
-              label="Cerrar sesión"
-              icon="pi pi-sign-out"
-              iconPos="right"
-              className="px-3 py-2"
-            />
-          </SignOutButton>
-        </div>
+        {isSignedIn && (
+          <div className="mt-[100px] w-full flex items-center justify-end gap-2">
+            <SignOutButton>
+              <Button
+                label="Cerrar sesión"
+                icon="pi pi-sign-out"
+                iconPos="right"
+                className="px-3 py-2"
+              />
+            </SignOutButton>
+          </div>
+        )}
       </Sidebar>
     </div>
   );
