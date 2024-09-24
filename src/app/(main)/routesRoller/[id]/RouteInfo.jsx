@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { RoutesContext } from "@/context/RoutesContext";
 import Image from "next/image";
@@ -7,13 +7,58 @@ import { ArrowLeft, Bookmark, Send, Star } from "lucide-react";
 import RouteMapGoogle from "@/components/RouteMapGoogle";
 import Buttons from "@/components/Buttons";
 import Link from "next/link";
+import { useUser } from "@clerk/nextjs";
+import {
+  doc,
+  getDoc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+} from "firebase/firestore";
+import { db } from "../../../../../lib/fireBase.mjs";
 
 const RouteInfo = () => {
   const params = useParams();
   const { dataRoutes, isLoading } = useContext(RoutesContext);
   const id = params.id;
+  const [isFavorite, setIsFavorite] = useState(false);
+  const { user } = useUser();
 
   const route = dataRoutes.find((route) => route.id === id);
+
+  useEffect(() => {
+    const checkFavoriteStatus = async () => {
+      if (user) {
+        const userRef = doc(db, "dataUsers", user.id);
+        const userDoc = await getDoc(userRef);
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          setIsFavorite(userData.favorites?.includes(id));
+        }
+      }
+    };
+    checkFavoriteStatus();
+  }, [user, id]);
+
+  const handleFavoriteClick = async () => {
+    if (!user) return alert("Debes iniciar sesión para guardar esta ruta en favoritos");
+
+    const userRef = doc(db, "dataUsers", user.id);
+
+    if (isFavorite) {
+      // Eliminar de favoritos
+      await updateDoc(userRef, {
+        favorites: arrayRemove(id),
+      });
+      setIsFavorite(false);
+    } else {
+      // Agregar a favoritos
+      await updateDoc(userRef, {
+        favorites: arrayUnion(id),
+      });
+      setIsFavorite(true);
+    }
+  };
 
   if (!route || isLoading) {
     return (
@@ -37,8 +82,9 @@ const RouteInfo = () => {
           className="rounded-2xl"
         />
         <div className="flex w-full justify-end gap-3">
-          <div className="bg-[#464954] size-8 flex justify-center items-center rounded-md cursor-pointer hover:scale-[1.15] border-[1px] border-[#58cbe8]">
-            <Bookmark />
+          <div onClick={handleFavoriteClick}
+           className={`bg-[#464954] size-8 flex justify-center items-center rounded-md cursor-pointer hover:scale-[1.15] border-[1px] border-[#58cbe8]`}>
+            <Bookmark className={`${isFavorite ? " fill-[#58cbe8]": "text-white"}`} />
           </div>
           <div className="bg-[#464954] size-8 flex justify-center items-center rounded-md cursor-pointer hover:scale-[1.15] border-[1px] border-[#58cbe8]">
             <Send />
