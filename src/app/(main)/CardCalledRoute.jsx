@@ -210,11 +210,11 @@ const CardCalledRoute = ({ event }) => {
         breakpoints={{ "1100px": "75vw", "960px": "100vw" }}
       />
       <div
-        className={`border border-black shadow-[0px_0px_40px_2px_#f6ad55] rounded-2xl p-2 max-h-[600px] flex flex-col gap-2  
+        className={`shadow-[0px_0px_40px_2px_#f6ad55] rounded-2xl p-2 max-h-[600px] flex flex-col gap-2  
     ${
       isPastEvent || event.isCanceled
         ? "bg-slate-600 opacity-90"
-        : "bg-gradient-to-r from-orange-300 to-cyan-600 hover:scale-[1.02] hover:border-orange-400 hover:border-[2px]"
+        : "bg-gradient-to-r from-orange-300 to-cyan-600 hover:scale-[1.02] hover:border-orange-400 hover:border-[2px] border"
     }`}
       >
         <Tooltip target=".custom-target-icon" />
@@ -361,8 +361,8 @@ const CardCalledRoute = ({ event }) => {
           <div
             className={`flex gap-2 justify-between w-full border rounded-2xl p-2 ${
               isPastEvent || event.isCanceled
-                ? "border-black"
-                : "border-gray-600"
+                ? "border-black "
+                : "border-gray-600 bg-gradient-to-r from-cyan-100 to-cyan-50"
             }`}
           >
             <div className="flex items-center">
@@ -390,7 +390,7 @@ const CardCalledRoute = ({ event }) => {
             className={`border rounded-2xl p-2 flex flex-col gap-1 ${
               isPastEvent || event.isCanceled
                 ? "border-black"
-                : "border-gray-600"
+                : "border-gray-600 bg-gradient-to-r from-cyan-100 to-cyan-50 "
             } container`}
           >
             <div className="flex gap-2">

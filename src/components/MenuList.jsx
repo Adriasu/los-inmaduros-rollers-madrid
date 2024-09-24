@@ -4,12 +4,20 @@ import React, { useState } from "react";
 import FormRouteCall from "./FormRouteCall";
 import FormRouteCallMobile from "./FormRouteCallMobile";
 import Favorites from "./Favorites";
+import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 const MenuList = ({ location, setVisible }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { isSignedIn } = useUser();
+  const router = useRouter();
 
   const showHideListFavorites = () => {
-    isOpen === false ? setIsOpen(true) : setIsOpen(false);
+    if (isSignedIn) {
+      isOpen === false ? setIsOpen(true) : setIsOpen(false);
+    } else {
+      router.push(`/sign-in`);
+    }
   };
   const styleUl = () => {
     if (location === "navbar") {
