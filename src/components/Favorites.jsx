@@ -14,11 +14,19 @@ import { MapPin } from "lucide-react";
 import Buttons from "./Buttons";
 import { Button } from "primereact/button";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-const Favorites = () => {
+const Favorites = ({ openClose, setIsOpen }) => {
   const { user } = useUser(); // Obtener usuario autenticado
   const [favoriteRoutes, setFavoriteRoutes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const router = useRouter();
+
+  const handleClick = (route) => {
+    router.push(`/routesRoller/${route.id}`);
+    setIsOpen(false);
+  };
 
   useEffect(() => {
     const fetchFavorites = async () => {
@@ -56,45 +64,55 @@ const Favorites = () => {
   }, [user]);
 
   if (isLoading) {
-    return <div>Cargando tus rutas favoritas...</div>;
+    return <div></div>;
   }
 
-  console.log(favoriteRoutes);
-
-  if (favoriteRoutes.length === 0) {
-    return <div>No tienes rutas favoritas aún.</div>;
-  }
   return (
-    <div className="bg-white border border-black p-2 rounded-xl flex flex-col gap-2">
-      {favoriteRoutes.map((route, i) => {
-        return (
-          <div className="flex gap-2" key={i}>
-            <Image
-              src={route.image}
-              alt={route.name}
-              width={200}
-              height={200}
-              className="rounded-lg w-[150px] h-[115px] object-fill"
-            />
-            <div>
-              <h1 className="text-[#58cbe8] text-lg">{route.name}</h1>
-              <div className="flex gap-2 text-black">
-                <MapPin />
-                <p>Aprox {route.approximateDistance}</p>
+    <div className="bg-white border border-black py-2 px-4 rounded-xl flex flex-col gap-2 bg-gradient-to-r from-cyan-100 to-cyan-50 md:max-h-[600px]">
+      <div className="flex w-full justify-end items-center">
+        <i
+          onClick={openClose}
+          className="pi pi-times-circle text-black cursor-pointer"
+          style={{ fontSize: "1.5rem" }}
+        ></i>
+      </div>
+      <div className="flex flex-col gap-2 overflow-auto cart-scrollbar pr-2">
+        {favoriteRoutes.length === 0 ? (
+          <p className="text-black">No tienes rutas favoritas aún.</p>
+        ) : (
+          favoriteRoutes.map((route, i) => {
+            return (
+              <div
+                className="flex gap-2 border border-gray-500 p-2 rounded-md items-center bg-slate-50"
+                key={i}
+              >
+                <Image
+                  src={route.image}
+                  alt={route.name}
+                  width={200}
+                  height={200}
+                  className="rounded-lg w-[150px] h-[115px] object-fill"
+                />
+                <div className="flex flex-col gap-2">
+                  <h1 className="text-[#58cbe8] text-lg">{route.name}</h1>
+                  <div className="flex gap-2 text-black">
+                    <MapPin />
+                    <p>Aprox {route.approximateDistance}</p>
+                  </div>
+                  <div className="flex gap-1 sm:gap-2">
+                    {route.level.map((level, i) => {
+                      return <Buttons key={i} text={level} level={level} />;
+                    })}
+                  </div>
+                  <div onClick={() => handleClick(route)}>
+                    <Button className="py-0" label="Ver ruta" />
+                  </div>
+                </div>
               </div>
-              <div className="flex gap-1 sm:gap-2">
-                {route.level.map((level, i) => {
-                  return <Buttons key={i} text={level} level={level} />;
-                })}
-              </div>
-            </div>
-
-            <Link href={`/routesRoller/${route.id}`}>
-              <Button label="Ver ruta" />
-            </Link>
-          </div>
-        );
-      })}
+            );
+          })
+        )}
+      </div>
     </div>
   );
 };

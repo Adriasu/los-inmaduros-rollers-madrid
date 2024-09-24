@@ -104,7 +104,7 @@ const Reviews = ({ routeId }) => {
           </div>
         )}
 
-        <div className="flex flex-col max-h-[468px] overflow-auto cart-scrollbar p-1 gap-3 w-[70%]">
+        <div className="flex flex-col max-h-[468px] overflow-auto cart-scrollbar pr-2 p-1 gap-3 w-[70%]">
           {reviewsList.slice(1).map((rev, index) => (
             <div
               key={index}

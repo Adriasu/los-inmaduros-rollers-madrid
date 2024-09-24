@@ -70,7 +70,7 @@ const MenuList = ({ location, setVisible }) => {
         </li>
         {isOpen && (
           <div className="absolute">
-            <Favorites />
+            <Favorites openClose={showHideListFavorites} setIsOpen={setIsOpen} />
           </div>
         )}
       </div>
