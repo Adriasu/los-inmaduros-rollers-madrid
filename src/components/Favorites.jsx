@@ -95,30 +95,6 @@ const Favorites = () => {
           </div>
         );
       })}
-
-      {/* <h2 className="text-3xl font-bold text-center mb-6">
-        Mis Rutas Favoritas
-      </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {favoriteRoutes.map((route) => (
-          <div key={route.id} className="border rounded-lg p-4 shadow-md">
-            <Link href={`/routesRoller/${route.id}`}>
-              <Image
-                src={route.image}
-                alt={route.name}
-                width={300}
-                height={200}
-                className="rounded-lg"
-              />
-            </Link>
-            <h3 className="text-xl font-semibold mt-4">{route.name}</h3>
-            <p>{route.description}</p>
-            <div className="flex items-center mt-2">
-              <span>Distancia: {route.approximateDistance}</span>
-            </div>
-          </div>
-        ))}
-      </div> */}
     </div>
   );
 };
