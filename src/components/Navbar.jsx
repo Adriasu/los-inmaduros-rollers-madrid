@@ -4,14 +4,18 @@ import { Button } from "primereact/button";
 import Image from "next/image";
 import MenuNav from "./MenuNav";
 import { useRouter } from "next/navigation";
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import { usePathname } from "next/navigation";
+import {
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+  useUser,
+} from "@clerk/nextjs";
+import MenuList from "./MenuList";
 
 const Navbar = () => {
   const router = useRouter();
-  const pathName = usePathname();
-
-  const navHidden = pathName === "/sign-in" && pathName === "/sign-up"
+  const { isLoaded, isSignedIn, user } = useUser();
 
   const handleClick = () => {
     router.push("/");
@@ -30,15 +34,36 @@ const Navbar = () => {
           className="cursor-pointer"
         />
 
-        <div>
-          <SignedOut>
-            <SignInButton>
-              <Button label="login" className="px-3 py-1" />
-            </SignInButton>
-          </SignedOut>
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
+        <MenuList location={"navbar"} />
+
+        <div className="flex gap-2 items-center">
+          {!isLoaded || !isSignedIn ? (
+            <div></div>
+          ) : (
+            <div className="hidden md:flex gap-2 text-white ">
+              <h1 className="font-bold">Hola,</h1>
+              <h1 className="font-semibold">{user.firstName}</h1>
+            </div>
+          )}
+          <div>
+            <SignedOut>
+              <SignInButton>
+                <Button label="login" className="px-3 py-1" />
+              </SignInButton>
+            </SignedOut>
+            <SignedIn>
+              <UserButton
+                appearance={{
+                  elements: {
+                    userButtonAvatarBox: {
+                      width: "48px",
+                      height: "48px",
+                    },
+                  },
+                }}
+              />
+            </SignedIn>
+          </div>
         </div>
       </div>
     </div>
