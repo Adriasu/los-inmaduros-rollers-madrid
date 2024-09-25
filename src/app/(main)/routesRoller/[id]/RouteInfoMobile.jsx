@@ -16,6 +16,7 @@ import {
   arrayRemove,
 } from "firebase/firestore";
 import { db } from "../../../../../lib/fireBase.mjs";
+import { Tooltip } from "primereact/tooltip";
 
 const RouteInfoMobile = () => {
   const params = useParams();
@@ -86,6 +87,7 @@ const RouteInfoMobile = () => {
 
   return (
     <div className="m-auto flex flex-col gap-3 max-w-[1200px] text-white px-5 md:hidden">
+      <Tooltip target=".custom-target-icon" />
       <div className="flex flex-col gap-5 relative">
         <Link href={"/routesRoller"} className="absolute top-3 left-3">
           <ArrowLeft className="bg-[#464954] size-8 flex justify-center items-center rounded-full cursor-pointer hover:scale-[1.15] border-[1px] border-[#58cbe8]" />
@@ -104,7 +106,12 @@ const RouteInfoMobile = () => {
             {isSignedIn && (
               <div
                 onClick={handleFavoriteClick}
-                className="bg-[#464954] size-8 flex justify-center items-center rounded-md cursor-pointer hover:scale-[1.15] border-[1px] border-[#58cbe8]"
+                style={{ fontSize: "1.2rem" }}
+                data-pr-tooltip={
+                  isFavorite ? "Eliminar de favoritos" : "Añadir a favoritos"
+                }
+                data-pr-position="top"
+                className="custom-target-icon bg-[#464954] size-8 flex justify-center items-center rounded-md cursor-pointer hover:scale-[1.15] border-[1px] border-[#58cbe8]"
               >
                 <Heart
                   className={`${isFavorite ? " fill-[#58cbe8]" : "text-white"}`}
@@ -112,7 +119,13 @@ const RouteInfoMobile = () => {
               </div>
             )}
 
-            <div onClick={handleShareWhatsApp} className="bg-[#464954] size-8 flex justify-center items-center rounded-md cursor-pointer hover:scale-[1.15] border-[1px] border-[#58cbe8]">
+            <div
+              onClick={handleShareWhatsApp}
+              style={{ fontSize: "1.2rem" }}
+              data-pr-tooltip="Compartir"
+              data-pr-position="top"
+              className="custom-target-icon bg-[#464954] size-8 flex justify-center items-center rounded-md cursor-pointer hover:scale-[1.15] border-[1px] border-[#58cbe8]"
+            >
               <Send />
             </div>
           </div>
