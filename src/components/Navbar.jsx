@@ -12,7 +12,6 @@ import {
   useUser,
 } from "@clerk/nextjs";
 import MenuList from "./MenuList";
-import Technologies from "./Technologies";
 
 const Navbar = () => {
   const router = useRouter();
@@ -39,13 +38,6 @@ const Navbar = () => {
           onClick={handleClick}
           className="cursor-pointer"
         />
-
-        <div className="cursor-pointer" onClick={showHideListTech}>aca</div>
-        {isOpen && (
-          <div className="absolute top-[50%] z-50">
-            <Technologies />
-          </div>
-        )}
 
         <MenuList location={"navbar"} />
 

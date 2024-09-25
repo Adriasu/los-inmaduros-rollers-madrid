@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -7,9 +7,15 @@ import "swiper/css/navigation";
 import "swiper/css/autoplay";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import Image from "next/image";
+import Technologies from "@/components/Technologies";
 
 const Hero = () => {
-  
+  const [isOpen, setIsOpen] = useState(false);
+
+  const showHideListTech = () => {
+    isOpen === false ? setIsOpen(true) : setIsOpen(false);
+  };
+
   const imagesHeroLanding = [
     "/images/carrusel3.jpg",
     "/images/carrusel2.png",
@@ -20,7 +26,11 @@ const Hero = () => {
 
   return (
     <div className="hidden md:flex px-5">
-        <Swiper
+      <div className="absolute">
+        <Technologies />
+      </div>
+
+      <Swiper
         spaceBetween={30}
         centeredSlides={true}
         loop={true}
