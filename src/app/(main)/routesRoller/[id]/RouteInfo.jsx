@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { RoutesContext } from "@/context/RoutesContext";
 import Image from "next/image";
-import { ArrowLeft, Bookmark, Send, Star } from "lucide-react";
+import { ArrowLeft, Bookmark, Heart, Send, Star } from "lucide-react";
 import RouteMapGoogle from "@/components/RouteMapGoogle";
 import Buttons from "@/components/Buttons";
 import Link from "next/link";
@@ -22,7 +22,7 @@ const RouteInfo = () => {
   const { dataRoutes, isLoading } = useContext(RoutesContext);
   const id = params.id;
   const [isFavorite, setIsFavorite] = useState(false);
-  const { user } = useUser();
+  const { user, isSignedIn } = useUser();
 
   const route = dataRoutes.find((route) => route.id === id);
 
@@ -41,7 +41,8 @@ const RouteInfo = () => {
   }, [user, id]);
 
   const handleFavoriteClick = async () => {
-    if (!user) return alert("Debes iniciar sesión para guardar esta ruta en favoritos");
+    if (!user)
+      return alert("Debes iniciar sesión para guardar esta ruta en favoritos");
 
     const userRef = doc(db, "dataUsers", user.id);
 
@@ -58,6 +59,21 @@ const RouteInfo = () => {
       });
       setIsFavorite(true);
     }
+  };
+
+  const handleShareWhatsApp = () => {
+    const message = `
+    Conoce esta ruta: 
+
+    - Nombre: ${route.name}
+    - Distancia aprox: ${route.approximateDistance}
+    - Descripción: ${route.description}
+    - Recorrido: ${route.map}
+
+    Puedes ver más detalles en: https://los-inmaduros-rollers-madrid.vercel.app/routesRoller/${route.id}`;
+
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, "_blank");
   };
 
   if (!route || isLoading) {
@@ -82,11 +98,20 @@ const RouteInfo = () => {
           className="rounded-2xl"
         />
         <div className="flex w-full justify-end gap-3">
-          <div onClick={handleFavoriteClick}
-           className={`bg-[#464954] size-8 flex justify-center items-center rounded-md cursor-pointer hover:scale-[1.15] border-[1px] border-[#58cbe8]`}>
-            <Bookmark className={`${isFavorite ? " fill-[#58cbe8]": "text-white"}`} />
-          </div>
-          <div className="bg-[#464954] size-8 flex justify-center items-center rounded-md cursor-pointer hover:scale-[1.15] border-[1px] border-[#58cbe8]">
+          {isSignedIn && (
+            <div
+              onClick={handleFavoriteClick}
+              className={`bg-[#464954] size-8 flex justify-center items-center rounded-md cursor-pointer hover:scale-[1.15] border-[1px] border-[#58cbe8]`}
+            >
+              <Heart
+                className={`${isFavorite ? " fill-[#58cbe8]" : "text-white"}`}
+              />
+            </div>
+          )}
+          <div
+            onClick={handleShareWhatsApp}
+            className="bg-[#464954] size-8 flex justify-center items-center rounded-md cursor-pointer hover:scale-[1.15] border-[1px] border-[#58cbe8]"
+          >
             <Send />
           </div>
         </div>
