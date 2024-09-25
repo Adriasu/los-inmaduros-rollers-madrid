@@ -387,13 +387,13 @@ const CardCalledRoute = ({ event }) => {
           </div>
 
           <div
-            className={`border rounded-2xl p-2 flex flex-col gap-1 overflow-auto ${
+            className={`border rounded-2xl p-2 flex flex-col overflow-auto ${
               isPastEvent || event.isCanceled
                 ? "border-black"
                 : "border-gray-600 bg-gradient-to-r from-cyan-100 to-cyan-50 "
             }`}
           >
-            <div className="flex flex-col overflow-auto pr-2 cart-scrollbar">
+            <div className="flex flex-col overflow-auto pr-2 cart-scrollbar gap-1">
               <div className="flex justify-between">
                 <div className="flex gap-2">
                   <CalendarDays />
@@ -477,7 +477,7 @@ const CardCalledRoute = ({ event }) => {
               </div>
 
               <div>
-                <h1>Comentarios</h1>
+                <h1 className="font-bold">Comentarios</h1>
                 <p>{event.comments}</p>
               </div>
             </div>
