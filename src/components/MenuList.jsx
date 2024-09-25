@@ -1,3 +1,4 @@
+"use client";
 import { FolderHeart, House, Mail, Route, SquarePen } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -69,8 +70,13 @@ const MenuList = ({ location, setVisible }) => {
           Tus favoritos
         </li>
         {isOpen && (
-          <div className="absolute">
-            <Favorites openClose={showHideListFavorites} setIsOpen={setIsOpen} />
+          <div className={`${location === "navbar" ? "absolute" : "absolute top-2 w-full z-50"}`}>
+            <Favorites
+              openClose={showHideListFavorites}
+              setIsOpen={setIsOpen}
+              closeMenuBar={closeMenuBar}
+              setVisible={setVisible}
+            />
           </div>
         )}
       </div>

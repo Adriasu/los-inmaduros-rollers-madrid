@@ -16,7 +16,7 @@ import { Button } from "primereact/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-const Favorites = ({ openClose, setIsOpen }) => {
+const Favorites = ({ openClose, setIsOpen, closeMenuBar, setVisible }) => {
   const { user } = useUser(); // Obtener usuario autenticado
   const [favoriteRoutes, setFavoriteRoutes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -26,6 +26,7 @@ const Favorites = ({ openClose, setIsOpen }) => {
   const handleClick = (route) => {
     router.push(`/routesRoller/${route.id}`);
     setIsOpen(false);
+    closeMenuBar(setVisible)
   };
 
   useEffect(() => {
@@ -68,7 +69,7 @@ const Favorites = ({ openClose, setIsOpen }) => {
   }
 
   return (
-    <div className="bg-white border border-black py-2 px-4 rounded-xl flex flex-col gap-2 bg-gradient-to-r from-cyan-100 to-cyan-50 md:max-h-[600px]">
+    <div className="bg-white border border-black py-2 px-4 rounded-xl flex flex-col gap-2 bg-gradient-to-r from-cyan-100 to-cyan-50 max-h-[600px]">
       <div className="flex w-full justify-end items-center">
         <i
           onClick={openClose}
