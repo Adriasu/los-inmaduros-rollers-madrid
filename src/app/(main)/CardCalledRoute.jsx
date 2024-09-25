@@ -387,90 +387,99 @@ const CardCalledRoute = ({ event }) => {
           </div>
 
           <div
-            className={`border rounded-2xl p-2 flex flex-col gap-1 ${
+            className={`border rounded-2xl p-2 flex flex-col gap-1 overflow-auto ${
               isPastEvent || event.isCanceled
                 ? "border-black"
                 : "border-gray-600 bg-gradient-to-r from-cyan-100 to-cyan-50 "
-            } container`}
+            }`}
           >
-            <div className="flex gap-2">
-              <CalendarDays />
-              <p>{formattedDate}</p>
-            </div>
+            <div className="flex flex-col overflow-auto pr-2 cart-scrollbar">
+              <div className="flex justify-between">
+                <div className="flex gap-2">
+                  <CalendarDays />
+                  <p>{formattedDate}</p>
+                </div>
 
-            <div className="flex gap-2">
-              <MapPin />
-              {event.meetingPoint.name === "Otro" ? (
-                <p>{event.meetingPointOther}</p>
-              ) : (
-                <p>{event.meetingPoint.name}</p>
-              )}
-              {event.meetingPoint.name !== "Otro" &&
-                (isPastEvent || event.isCanceled ? (
-                  <Map />
+                <div>
+                  <div className="flex gap-2">
+                    <Clock />
+                    <p>{formattedTimeFirstPoint}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-2">
+                <MapPin />
+                {event.meetingPoint.name === "Otro" ? (
+                  <p>{event.meetingPointOther}</p>
                 ) : (
-                  <Link target="_blank" href={event.meetingPoint.location}>
-                    <Map className="hover:text-blue-800" />
-                  </Link>
-                ))}
-            </div>
-
-            <div className="flex gap-2">
-              <Clock />
-              <p>{formattedTimeFirstPoint}</p>
-            </div>
-
-            {event.otherPoint.name === "Si" && (
-              <div>
-                <div className="flex gap-2">
-                  <MapPin />
-                  {event.meetingOtherPoint.name === "Otro" ? (
-                    <p>{event.meetingOtherPointOther}</p>
+                  <p>{event.meetingPoint.name}</p>
+                )}
+                {event.meetingPoint.name !== "Otro" &&
+                  (isPastEvent || event.isCanceled ? (
+                    <Map />
                   ) : (
-                    <p>{event.meetingOtherPoint.name}</p>
-                  )}
-                  {event.meetingOtherPoint.name !== "Otro" &&
-                    (isPastEvent || event.isCanceled ? (
-                      <Map />
+                    <Link target="_blank" href={event.meetingPoint.location}>
+                      <Map className="hover:text-blue-800" />
+                    </Link>
+                  ))}
+              </div>
+
+              {event.otherPoint.name === "Si" && (
+                <div>
+                  <div className="flex gap-2">
+                    <MapPin />
+                    {event.meetingOtherPoint.name === "Otro" ? (
+                      <p>{event.meetingOtherPointOther}</p>
                     ) : (
-                      <Link target="_blank" href={event.meetingPoint.location}>
+                      <p>{event.meetingOtherPoint.name}</p>
+                    )}
+                    {event.meetingOtherPoint.name !== "Otro" &&
+                      (isPastEvent || event.isCanceled ? (
                         <Map />
-                      </Link>
-                    ))}
+                      ) : (
+                        <Link
+                          target="_blank"
+                          href={event.meetingPoint.location}
+                        >
+                          <Map />
+                        </Link>
+                      ))}
+                  </div>
+
+                  <div className="flex gap-2">
+                    <Clock />
+                    <p>{formattedTimeSecondPoint}</p>
+                  </div>
                 </div>
+              )}
 
-                <div className="flex gap-2">
-                  <Clock />
-                  <p>{formattedTimeSecondPoint}</p>
+              <div className="flex gap-2">
+                <div className="flex flex-col items-center">
+                  <Drum />
+                  <PaceDialogInfo location={"card"} />
+                </div>
+                <div className="flex flex-col">
+                  {event.paceRoute.map((pace, i) => {
+                    return (
+                      <div className="flex gap-2" key={i}>
+                        <Image
+                          src={pace.img}
+                          alt={pace.level}
+                          width={30}
+                          height={30}
+                        />
+                        <p>{pace.level}</p>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
-            )}
 
-            <div className="flex gap-2">
-              <div className="flex flex-col items-center">
-              <Drum />
-              <PaceDialogInfo location={"card"}/>
+              <div>
+                <h1>Comentarios</h1>
+                <p>{event.comments}</p>
               </div>
-              <div className="flex flex-col">
-                {event.paceRoute.map((pace, i) => {
-                  return (
-                    <div className="flex gap-2" key={i}>
-                      <Image
-                        src={pace.img}
-                        alt={pace.level}
-                        width={30}
-                        height={30}
-                      />
-                      <p>{pace.level}</p>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div>
-              <h1>Comentarios</h1>
-              <p>{event.comments}</p>
             </div>
           </div>
         </div>
