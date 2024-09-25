@@ -17,8 +17,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider>
-      <html lang="en">
+    <html lang="en">
+      <ClerkProvider>
         <AuthContextProvider>
           <RoutersContextProvider>
             <FormCallRouteContextProvider>
@@ -26,16 +26,13 @@ export default function RootLayout({ children }) {
                 <body
                   className={`${inter.className} bg-gradient-to-r from-slate-900 to-slate-700`}
                 >
-                  {/* <Navbar /> */}
-
                   {children}
-                  {/* <Footer /> */}
                 </body>
               </PrimeReactProvider>
             </FormCallRouteContextProvider>
           </RoutersContextProvider>
         </AuthContextProvider>
-      </html>
-    </ClerkProvider>
+      </ClerkProvider>
+    </html>
   );
 }

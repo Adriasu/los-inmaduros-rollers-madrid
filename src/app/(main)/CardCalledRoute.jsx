@@ -410,7 +410,7 @@ const CardCalledRoute = ({ event }) => {
                   <Map />
                 ) : (
                   <Link target="_blank" href={event.meetingPoint.location}>
-                    <Map />
+                    <Map className="hover:text-blue-800" />
                   </Link>
                 ))}
             </div>

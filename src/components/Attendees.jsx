@@ -32,8 +32,6 @@ const Attendees = ({ eventId, open, setOpen }) => {
     }
   }, [eventId, open]);
 
-  console.log(attendees);
-
   return (
     <div>
       <div className="flex flex-col gap-2 border border-black p-2 rounded-xl bg-white min-w-[280px] max-h-[400px] max-w-[200px] container">
