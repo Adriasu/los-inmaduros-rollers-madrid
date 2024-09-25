@@ -194,6 +194,8 @@ const CardCalledRoute = ({ event }) => {
     window.open(whatsappUrl, "_blank");
   };
 
+  console.log(event);
+
   return (
     <>
       <Toast ref={toast} />
@@ -326,13 +328,17 @@ const CardCalledRoute = ({ event }) => {
                 className="rounded-2xl"
               />
             ) : (
-              <Image
-                src={event.nameRoute.image}
-                alt={event.nameRoute.name}
-                width={1000}
-                height={1000}
-                className="rounded-2xl"
-              />
+              <Link href={`/routesRoller/${event.nameRoute.id}`}>
+                <div>
+                  <Image
+                    src={event.nameRoute.image}
+                    alt={event.nameRoute.name}
+                    width={1000}
+                    height={1000}
+                    className="rounded-2xl"
+                  />
+                </div>
+              </Link>
             )}
             {isPastEvent && (
               <div>
@@ -369,7 +375,9 @@ const CardCalledRoute = ({ event }) => {
               {event.nameRoute.name === "Nueva" ? (
                 <h1 className="font-bold">{formattedName}</h1>
               ) : (
-                <h1 className="font-bold text-xl">{event.nameRoute.name}</h1>
+                <Link href={`/routesRoller/${event.nameRoute.id}`}>
+                  <h1 className="font-bold text-xl hover:text-blue-600">{event.nameRoute.name}</h1>
+                </Link>
               )}
             </div>
             <div className="flex items-center justify-end gap-2">
