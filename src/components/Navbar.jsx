@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "primereact/button";
 import Image from "next/image";
 import MenuNav from "./MenuNav";
@@ -16,6 +16,11 @@ import MenuList from "./MenuList";
 const Navbar = () => {
   const router = useRouter();
   const { isLoaded, isSignedIn, user } = useUser();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const showHideListTech = () => {
+    isOpen === false ? setIsOpen(true) : setIsOpen(false);
+  };
 
   const handleClick = () => {
     router.push("/");

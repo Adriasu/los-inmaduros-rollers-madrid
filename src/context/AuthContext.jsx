@@ -35,11 +35,6 @@ export default function AuthContextProvider({ children }) {
               image: user.imageUrl,
               createdAt: new Date(),
             });
-            console.log("Usuario guardado en Firestore");
-          } else {
-            console.log(
-              "Usuario ya existe en Firestore, no se guarda nuevamente."
-            );
           }
         } catch (error) {
           console.error("Error al guardar el usuario en Firestore:", error);

@@ -12,8 +12,6 @@ const ContainCardsRoutes = () => {
   const routeFinder = (e) => {
     e.preventDefault();
     const letterInput = e.target.value.toLowerCase();
-    //console.log(letra);
-
     const filterArray = dataRoutes.filter((route) => {
       const letterApi = route.name.toLowerCase();
       if (letterApi.indexOf(letterInput) !== -1) {
@@ -85,9 +83,6 @@ const ContainCardsRoutes = () => {
               placeholder="Buscar por nombre"
               className="w-full px-3 py-2 text-sm bg-transparent border-none outline-none placeholder:text-[#999b9e] focus-within:placeholder:text-[#bfc1c5] caret-[#999b9e]"
             />
-          </div>
-          <div className="items-center h-10 rounded-[12px] py-2 px-4 bg-[#454752] cursor-pointer">
-            <SlidersHorizontal />
           </div>
         </div>
         <div className="w-full">

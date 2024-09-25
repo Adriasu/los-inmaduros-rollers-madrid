@@ -1,12 +1,10 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import "primeicons/primeicons.css";
 import { PrimeReactProvider } from "primereact/api";
 import RoutersContextProvider from "@/context/RoutesContext";
 import FormCallRouteContextProvider from "@/context/FormCallRouteContext";
-import Footer from "@/components/Footer";
 import { ClerkProvider } from "@clerk/nextjs";
 import AuthContextProvider from "@/context/AuthContext";
 
@@ -19,8 +17,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider>
-      <html lang="en">
+    <html lang="en">
+      <ClerkProvider>
         <AuthContextProvider>
           <RoutersContextProvider>
             <FormCallRouteContextProvider>
@@ -28,16 +26,13 @@ export default function RootLayout({ children }) {
                 <body
                   className={`${inter.className} bg-gradient-to-r from-slate-900 to-slate-700`}
                 >
-                  {/* <Navbar /> */}
-
                   {children}
-                  {/* <Footer /> */}
                 </body>
               </PrimeReactProvider>
             </FormCallRouteContextProvider>
           </RoutersContextProvider>
         </AuthContextProvider>
-      </html>
-    </ClerkProvider>
+      </ClerkProvider>
+    </html>
   );
 }
