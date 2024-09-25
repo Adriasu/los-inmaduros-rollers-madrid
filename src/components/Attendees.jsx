@@ -43,20 +43,24 @@ const Attendees = ({ eventId, open, setOpen }) => {
             <i className="pi pi-times-circle" style={{ fontSize: "1rem" }}></i>
           </button>
         </div>
-        {attendees.map((user, i) => {
-          return (
-            <div key={i} className="flex gap-2 items-center">
-              <Image
-                src={user.photoUrl}
-                alt={user.name}
-                width={30}
-                height={30}
-                className="rounded-full"
-              />
-              <p>{user.name}</p>
-            </div>
-          );
-        })}
+        {attendees.length === 0 ? (
+          <h1>No hay asistentes aún.</h1>
+        ) : (
+          attendees.map((user, i) => {
+            return (
+              <div key={i} className="flex gap-2 items-center">
+                <Image
+                  src={user.photoUrl}
+                  alt={user.name}
+                  width={30}
+                  height={30}
+                  className="rounded-full"
+                />
+                <p>{user.name}</p>
+              </div>
+            );
+          })
+        )}
       </div>
     </div>
   );

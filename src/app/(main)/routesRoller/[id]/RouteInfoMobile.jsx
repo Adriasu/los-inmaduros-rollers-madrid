@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { RoutesContext } from "@/context/RoutesContext";
 import Image from "next/image";
-import { ArrowLeft, Bookmark, Send, Star } from "lucide-react";
+import { ArrowLeft, Bookmark, Heart, Send, Star } from "lucide-react";
 import RouteMapGoogle from "@/components/RouteMapGoogle";
 import Buttons from "@/components/Buttons";
 import Link from "next/link";
@@ -16,13 +16,14 @@ import {
   arrayRemove,
 } from "firebase/firestore";
 import { db } from "../../../../../lib/fireBase.mjs";
+import { Tooltip } from "primereact/tooltip";
 
 const RouteInfoMobile = () => {
   const params = useParams();
   const { dataRoutes, isLoading } = useContext(RoutesContext);
   const id = params.id;
   const [isFavorite, setIsFavorite] = useState(false);
-  const { user } = useUser();
+  const { user, isSignedIn } = useUser();
 
   const route = dataRoutes.find((route) => route.id === id);
 
@@ -61,6 +62,21 @@ const RouteInfoMobile = () => {
     }
   };
 
+  const handleShareWhatsApp = () => {
+    const message = `
+    Conoce esta ruta: 
+
+    - Nombre: ${route.name}
+    - Distancia aprox: ${route.approximateDistance}
+    - Descripción: ${route.description}
+    - Recorrido: ${route.map}
+
+    Puedes ver más detalles en: https://los-inmaduros-rollers-madrid.vercel.app/routesRoller/${route.id}`;
+
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, "_blank");
+  };
+
   if (!route || isLoading) {
     return (
       <div className="w-full h-[500px] mx-auto max-w-screen-xl px-3 py-4 rounded-2xl flex justify-center items-center sm:hidden">
@@ -71,6 +87,7 @@ const RouteInfoMobile = () => {
 
   return (
     <div className="m-auto flex flex-col gap-3 max-w-[1200px] text-white px-5 md:hidden">
+      <Tooltip target=".custom-target-icon" />
       <div className="flex flex-col gap-5 relative">
         <Link href={"/routesRoller"} className="absolute top-3 left-3">
           <ArrowLeft className="bg-[#464954] size-8 flex justify-center items-center rounded-full cursor-pointer hover:scale-[1.15] border-[1px] border-[#58cbe8]" />
@@ -86,15 +103,29 @@ const RouteInfoMobile = () => {
       <div className="flex flex-col gap-3 m-auto w-full">
         <div className="flex flex-col gap-2">
           <div className="flex w-full justify-end gap-3">
+            {isSignedIn && (
+              <div
+                onClick={handleFavoriteClick}
+                style={{ fontSize: "1.2rem" }}
+                data-pr-tooltip={
+                  isFavorite ? "Eliminar de favoritos" : "Añadir a favoritos"
+                }
+                data-pr-position="top"
+                className="custom-target-icon bg-[#464954] size-8 flex justify-center items-center rounded-md cursor-pointer hover:scale-[1.15] border-[1px] border-[#58cbe8]"
+              >
+                <Heart
+                  className={`${isFavorite ? " fill-[#58cbe8]" : "text-white"}`}
+                />
+              </div>
+            )}
+
             <div
-              onClick={handleFavoriteClick}
-              className="bg-[#464954] size-8 flex justify-center items-center rounded-md cursor-pointer hover:scale-[1.15] border-[1px] border-[#58cbe8]"
+              onClick={handleShareWhatsApp}
+              style={{ fontSize: "1.2rem" }}
+              data-pr-tooltip="Compartir"
+              data-pr-position="top"
+              className="custom-target-icon bg-[#464954] size-8 flex justify-center items-center rounded-md cursor-pointer hover:scale-[1.15] border-[1px] border-[#58cbe8]"
             >
-              <Bookmark
-                className={`${isFavorite ? " fill-[#58cbe8]" : "text-white"}`}
-              />
-            </div>
-            <div className="bg-[#464954] size-8 flex justify-center items-center rounded-md cursor-pointer hover:scale-[1.15] border-[1px] border-[#58cbe8]">
               <Send />
             </div>
           </div>
