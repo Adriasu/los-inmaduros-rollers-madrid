@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "primereact/button";
 import Image from "next/image";
 import MenuNav from "./MenuNav";
@@ -12,10 +12,16 @@ import {
   useUser,
 } from "@clerk/nextjs";
 import MenuList from "./MenuList";
+import Technologies from "./Technologies";
 
 const Navbar = () => {
   const router = useRouter();
   const { isLoaded, isSignedIn, user } = useUser();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const showHideListTech = () => {
+    isOpen === false ? setIsOpen(true) : setIsOpen(false);
+  };
 
   const handleClick = () => {
     router.push("/");
@@ -33,6 +39,13 @@ const Navbar = () => {
           onClick={handleClick}
           className="cursor-pointer"
         />
+
+        <div className="cursor-pointer" onClick={showHideListTech}>aca</div>
+        {isOpen && (
+          <div className="absolute top-[50%] z-50">
+            <Technologies />
+          </div>
+        )}
 
         <MenuList location={"navbar"} />
 
