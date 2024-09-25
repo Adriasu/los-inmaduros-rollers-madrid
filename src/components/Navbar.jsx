@@ -45,7 +45,7 @@ const Navbar = () => {
               <h1 className="font-semibold">{user.firstName}</h1>
             </div>
           )}
-          <div>
+          <div className="flex items-center">
             <SignedOut>
               <SignInButton>
                 <Button label="login" className="px-3 py-1" />
