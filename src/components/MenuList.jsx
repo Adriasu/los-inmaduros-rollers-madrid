@@ -46,7 +46,7 @@ const MenuList = ({ location, setVisible }) => {
     <ul className={`${styleUl()}  `}>
       <Link href={"/"} onClick={() => closeMenuBar(setVisible)}>
         <li
-          className={`${styleLi()} flex gap-2 hover:underline cursor-pointer`}
+          className={`${styleLi()} flex gap-2 hover:scale-[1.05] cursor-pointer`}
         >
           {location !== "navbar" && <House />}
           Inicio
@@ -54,7 +54,7 @@ const MenuList = ({ location, setVisible }) => {
       </Link>
       <Link href={"/routesRoller"} onClick={() => closeMenuBar(setVisible)}>
         <li
-          className={`${styleLi()} flex gap-2 hover:underline cursor-pointer`}
+          className={`${styleLi()} flex gap-2 hover:scale-[1.05] cursor-pointer`}
         >
           {location !== "navbar" && <Route />}
           Rutas
@@ -64,7 +64,7 @@ const MenuList = ({ location, setVisible }) => {
       <div>
         <li
           onClick={showHideListFavorites}
-          className={`${styleLi()} flex gap-2 hover:underline cursor-pointer`}
+          className={`${styleLi()} flex gap-2 hover:scale-[1.05] cursor-pointer`}
         >
           {location !== "navbar" && <FolderHeart />}
           Tus favoritos
@@ -81,7 +81,7 @@ const MenuList = ({ location, setVisible }) => {
         )}
       </div>
 
-      <li className={`${styleLi()} flex gap-2 hover:underline cursor-pointer`}>
+      <li className={`${styleLi()} flex gap-2 hover:scale-[1.05] cursor-pointer`}>
         {location !== "navbar" && <SquarePen />}
         <FormRouteCall location={"menuBar"} closeMenuBar={setVisible} />
         <FormRouteCallMobile location={"menuBar"} closeMenuBar={setVisible} />
@@ -92,7 +92,7 @@ const MenuList = ({ location, setVisible }) => {
         title="Enviar correo"
       >
         <li
-          className={`${styleLi()} flex gap-2 hover:underline cursor-pointer`}
+          className={`${styleLi()} flex gap-2 hover:scale-[1.05] cursor-pointer`}
         >
           {location !== "navbar" && <Mail />}
           Contacto

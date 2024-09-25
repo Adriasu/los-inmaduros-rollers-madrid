@@ -1,12 +1,10 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import "primeicons/primeicons.css";
 import { PrimeReactProvider } from "primereact/api";
 import RoutersContextProvider from "@/context/RoutesContext";
 import FormCallRouteContextProvider from "@/context/FormCallRouteContext";
-import Footer from "@/components/Footer";
 import { ClerkProvider } from "@clerk/nextjs";
 import AuthContextProvider from "@/context/AuthContext";
 
