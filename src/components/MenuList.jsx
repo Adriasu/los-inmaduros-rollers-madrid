@@ -70,7 +70,7 @@ const MenuList = ({ location, setVisible }) => {
           Tus favoritos
         </li>
         {isOpen && (
-          <div className={`${location === "navbar" ? "absolute" : "absolute top-2 w-full z-50"}`}>
+          <div className={`${location === "navbar" ? "absolute" : "absolute top-2 left-3 min-w-[350px] z-50"}`}>
             <Favorites
               openClose={showHideListFavorites}
               setIsOpen={setIsOpen}
