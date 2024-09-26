@@ -194,8 +194,6 @@ const CardCalledRoute = ({ event }) => {
     window.open(whatsappUrl, "_blank");
   };
 
-  console.log(event);
-
   return (
     <>
       <Toast ref={toast} />
