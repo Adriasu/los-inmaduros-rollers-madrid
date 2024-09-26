@@ -212,7 +212,7 @@ const CardCalledRoute = ({ event }) => {
         breakpoints={{ "1100px": "75vw", "960px": "100vw" }}
       />
       <div
-        className={`shadow-[0px_0px_40px_2px_#f6ad55] rounded-2xl p-2 max-h-[600px] flex flex-col gap-2  
+        className={`shadow-[0px_0px_40px_2px_#f6ad55] rounded-2xl p-2 max-h-[800px] md:max-h-[600px] flex flex-col gap-2  
     ${
       isPastEvent || event.isCanceled
         ? "bg-slate-600 opacity-90"
@@ -318,7 +318,7 @@ const CardCalledRoute = ({ event }) => {
 
           <div className="relative">
             {event.nameRoute.name === "Nueva" ? (
-              event.newNameRoute === "Madrid Friday Nigth Skate" ? (
+              event.newNameRoute === "Madrid Friday Night Skate" ? (
                 <Image
                   src={"/images/friday.jpg"}
                   alt={event.nameRoute.name}
