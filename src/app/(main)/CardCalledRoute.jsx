@@ -212,7 +212,7 @@ const CardCalledRoute = ({ event }) => {
         breakpoints={{ "1100px": "75vw", "960px": "100vw" }}
       />
       <div
-        className={`shadow-[0px_0px_40px_2px_#f6ad55] rounded-2xl p-2 max-h-[600px] flex flex-col gap-2  
+        className={`shadow-[0px_0px_40px_2px_#f6ad55] rounded-2xl p-2 max-h-[800px] md:max-h-[600px] flex flex-col gap-2  
     ${
       isPastEvent || event.isCanceled
         ? "bg-slate-600 opacity-90"
@@ -318,6 +318,48 @@ const CardCalledRoute = ({ event }) => {
 
           <div className="relative">
             {event.nameRoute.name === "Nueva" ? (
+              event.newNameRoute === "Madrid Friday Night Skate" ? (
+                <Image
+                  src={"/images/friday.jpg"}
+                  alt={event.nameRoute.name}
+                  width={1000}
+                  height={1000}
+                  className="rounded-2xl"
+                />
+              ) : event.newNameRoute === "Madrid Roller Night" ? (
+                <Image
+                  src={"/images/rollerNight.jpg"}
+                  alt={event.nameRoute.name}
+                  width={1000}
+                  height={1000}
+                  className="rounded-2xl"
+                />
+              ) : (
+                <Image
+                  src={
+                    "https://res.cloudinary.com/dj4j3uoia/image/upload/v1726855799/otraRuta_az0ggq.jpg"
+                  }
+                  alt={event.nameRoute.name}
+                  width={1000}
+                  height={1000}
+                  className="rounded-2xl"
+                />
+              )
+            ) : (
+              <Link href={`/routesRoller/${event.nameRoute.id}`}>
+                <div>
+                  <Image
+                    src={event.nameRoute.image}
+                    alt={event.nameRoute.name}
+                    width={1000}
+                    height={1000}
+                    className="rounded-2xl"
+                  />
+                </div>
+              </Link>
+            )}
+
+            {/* {event.nameRoute.name === "Nueva" ? (
               <Image
                 src={
                   "https://res.cloudinary.com/dj4j3uoia/image/upload/v1726855799/otraRuta_az0ggq.jpg"
@@ -339,7 +381,7 @@ const CardCalledRoute = ({ event }) => {
                   />
                 </div>
               </Link>
-            )}
+            )} */}
             {isPastEvent && (
               <div>
                 <Image
@@ -376,7 +418,9 @@ const CardCalledRoute = ({ event }) => {
                 <h1 className="font-bold">{formattedName}</h1>
               ) : (
                 <Link href={`/routesRoller/${event.nameRoute.id}`}>
-                  <h1 className="font-bold text-xl hover:text-blue-600">{event.nameRoute.name}</h1>
+                  <h1 className="font-bold text-xl hover:text-blue-600">
+                    {event.nameRoute.name}
+                  </h1>
                 </Link>
               )}
             </div>
