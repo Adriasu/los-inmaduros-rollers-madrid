@@ -443,7 +443,7 @@ const CardCalledRoute = ({ event }) => {
                 : "border-gray-600 bg-gradient-to-r from-cyan-100 to-cyan-50 "
             }`}
           >
-            <div className="flex flex-col overflow-auto pr-2 cart-scrollbar gap-1">
+            <div className={`flex flex-col overflow-auto pr-2 gap-1 ${isPastEvent || event.isCanceled ? "cart-scrollbar-cancel" : "cart-scrollbar"}`}>
               <div className="flex justify-between">
                 <div className="flex gap-2">
                   <CalendarDays />
