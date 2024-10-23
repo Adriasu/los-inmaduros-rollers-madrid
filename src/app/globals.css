@@ -148,3 +148,24 @@
     background-color: #58cbe8; /* Color al hacer hover */
   }
 }
+
+@layer utilities {
+  .cart-scrollbar-cancel::-webkit-scrollbar {
+    width: 8px; /* Grosor de la scrollbar */
+  }
+
+  .cart-scrollbar-cancel::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Color del fondo del track */
+    border-radius: 8px; /* Esquinas redondeadas */
+  }
+
+  .cart-scrollbar-cancel::-webkit-scrollbar-thumb {
+    background-color: #afb3b4; /* Color de la scrollbar */
+    border-radius: 8px; /* Esquinas redondeadas */
+    transition: background-color 0.3s ease; /* Efecto de transición para hover */
+  }
+
+  .cart-scrollbar-cancel::-webkit-scrollbar-thumb:hover {
+    background-color: #788081; /* Color al hacer hover */
+  }
+}
