@@ -490,9 +490,9 @@ const CardCalledRoute = ({ event }) => {
                       ) : (
                         <Link
                           target="_blank"
-                          href={event.meetingPoint.location}
+                          href={event.meetingOtherPoint.location}
                         >
-                          <Map />
+                          <Map className="hover:text-blue-800"/>
                         </Link>
                       ))}
                   </div>
@@ -502,7 +502,7 @@ const CardCalledRoute = ({ event }) => {
                     <p>{formattedTimeSecondPoint}</p>
                   </div>
                 </div>
-              )}
+              )} 
 
               <div className="flex gap-2">
                 <div className="flex flex-col items-center">
