@@ -1,18 +1,16 @@
 import React from "react";
-import Hero from "./Hero";
-import HeroMobile from "./HeroMobile";
-import RoutesCalled from "./RoutesCalled";
 import dynamic from "next/dynamic";
 
 const HomeBanner = dynamic(() => import("./HomeBanner"), {
   loading: () => <p>loading...</p>,
 });
+const RoutesCalled = dynamic(() => import("./RoutesCalled"), {
+  loading: () => <p>loading...</p>,
+})
 
 const page = async () => {
   return (
     <div>
-      {/* <Hero />
-      <HeroMobile /> */}
       <div className=" px-[14px]">
         <HomeBanner />
       </div>
