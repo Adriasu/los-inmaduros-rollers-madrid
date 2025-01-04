@@ -233,7 +233,7 @@ const FormRouteCallMobile = ({ location, closeMenuBar }) => {
               <div className="flex flex-col sm:items-center gap-2 sm:flex-row">
                 <div className="flex items-center gap-2">
                   <label htmlFor="pace">Ritmo</label>
-                  <PaceDialogInfo/>
+                  <PaceDialogInfo />
                 </div>
                 <Controller
                   name="paceRoute"
@@ -492,11 +492,10 @@ const FormRouteCallMobile = ({ location, closeMenuBar }) => {
         </div>
       </Sidebar>
       {location === "home" ? (
-        <Button
-          label="Convoca tu ruta"
-          icon="pi pi-external-link"
-          onClick={handleOpenModal}
-        />
+        // <Button icon="pi pi-external-link" onClick={handleOpenModal} />
+        <i className="pi pi-plus bg-[#06b5d4] rounded-full p-2" onClick={handleOpenModal}>
+
+        </i>
       ) : (
         <div onClick={handleOpenModal}>Convocar ruta</div>
       )}
