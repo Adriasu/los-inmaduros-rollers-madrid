@@ -492,7 +492,6 @@ const FormRouteCallMobile = ({ location, closeMenuBar }) => {
         </div>
       </Sidebar>
       {location === "home" ? (
-        // <Button icon="pi pi-external-link" onClick={handleOpenModal} />
         <i className="pi pi-plus bg-[#06b5d4] rounded-full p-2" onClick={handleOpenModal}>
 
         </i>
