@@ -117,8 +117,6 @@ const FormRouteCallMobile = ({ location, closeMenuBar }) => {
       setOpen(false);
       location === "menuBar" ? closeMenuBar(false) : "";
       router.push(`/`);
-
-      console.log("Evento creado con ID:", postId);
     } catch (error) {
       console.error("Error al crear el evento:", error);
     }
@@ -160,7 +158,10 @@ const FormRouteCallMobile = ({ location, closeMenuBar }) => {
                       <>
                         <Dropdown
                           {...field}
-                          options={[{ name: "Nueva" }, ...dataRoutes]}
+                          options={[
+                            { name: "Nueva", image: "" },
+                            ...dataRoutes,
+                          ]}
                           optionLabel="name"
                           placeholder="Selecciona ruta"
                           className={`w-full md:w-14rem ${

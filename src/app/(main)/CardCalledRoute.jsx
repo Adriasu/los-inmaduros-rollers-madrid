@@ -316,17 +316,9 @@ const CardCalledRoute = ({ event }) => {
 
           <div className="relative">
             {event.nameRoute.name === "Nueva" ? (
-              event.newNameRoute === "Madrid Friday Night Skate" ? (
+              event.nameRoute.image && event.nameRoute.image !== "" ? (
                 <Image
-                  src={"/images/friday.jpg"}
-                  alt={event.nameRoute.name}
-                  width={1000}
-                  height={1000}
-                  className="rounded-2xl"
-                />
-              ) : event.newNameRoute === "Madrid Roller Night" ? (
-                <Image
-                  src={"/images/rollerNight.jpg"}
+                  src={event.nameRoute.image}
                   alt={event.nameRoute.name}
                   width={1000}
                   height={1000}
@@ -334,9 +326,7 @@ const CardCalledRoute = ({ event }) => {
                 />
               ) : (
                 <Image
-                  src={
-                    "https://res.cloudinary.com/dj4j3uoia/image/upload/v1726855799/otraRuta_az0ggq.jpg"
-                  }
+                  src={"https://res.cloudinary.com/dj4j3uoia/image/upload/v1726855799/otraRuta_az0ggq.jpg"}
                   alt={event.nameRoute.name}
                   width={1000}
                   height={1000}
@@ -356,30 +346,6 @@ const CardCalledRoute = ({ event }) => {
                 </div>
               </Link>
             )}
-
-            {/* {event.nameRoute.name === "Nueva" ? (
-              <Image
-                src={
-                  "https://res.cloudinary.com/dj4j3uoia/image/upload/v1726855799/otraRuta_az0ggq.jpg"
-                }
-                alt={event.nameRoute.name}
-                width={1000}
-                height={1000}
-                className="rounded-2xl"
-              />
-            ) : (
-              <Link href={`/routesRoller/${event.nameRoute.id}`}>
-                <div>
-                  <Image
-                    src={event.nameRoute.image}
-                    alt={event.nameRoute.name}
-                    width={1000}
-                    height={1000}
-                    className="rounded-2xl"
-                  />
-                </div>
-              </Link>
-            )} */}
             {isPastEvent && (
               <div>
                 <Image
@@ -443,7 +409,13 @@ const CardCalledRoute = ({ event }) => {
                 : "border-gray-600 bg-gradient-to-r from-cyan-100 to-cyan-50 "
             }`}
           >
-            <div className={`flex flex-col overflow-auto pr-2 gap-1 ${isPastEvent || event.isCanceled ? "cart-scrollbar-cancel" : "cart-scrollbar"}`}>
+            <div
+              className={`flex flex-col overflow-auto pr-2 gap-1 ${
+                isPastEvent || event.isCanceled
+                  ? "cart-scrollbar-cancel"
+                  : "cart-scrollbar"
+              }`}
+            >
               <div className="flex justify-between">
                 <div className="flex gap-2">
                   <CalendarDays />
@@ -492,7 +464,7 @@ const CardCalledRoute = ({ event }) => {
                           target="_blank"
                           href={event.meetingOtherPoint.location}
                         >
-                          <Map className="hover:text-blue-800"/>
+                          <Map className="hover:text-blue-800" />
                         </Link>
                       ))}
                   </div>
@@ -502,7 +474,7 @@ const CardCalledRoute = ({ event }) => {
                     <p>{formattedTimeSecondPoint}</p>
                   </div>
                 </div>
-              )} 
+              )}
 
               <div className="flex gap-2">
                 <div className="flex flex-col items-center">
