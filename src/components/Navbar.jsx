@@ -45,7 +45,7 @@ const Navbar = () => {
           {!isLoaded || !isSignedIn ? (
             <div></div>
           ) : (
-            <div className="hidden md:flex gap-2 text-white ">
+            <div className="hidden lg:flex gap-2 text-white ">
               <h1 className="font-bold">Hola,</h1>
               <h1 className="font-semibold">{user.firstName}</h1>
             </div>

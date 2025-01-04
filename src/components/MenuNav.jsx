@@ -12,7 +12,7 @@ const MenuNav = () => {
   const { isLoaded, isSignedIn, user } = useUser();
 
   return (
-    <div className="flex, flex-col md:hidden">
+    <div className="flex, flex-col lg:hidden">
       <Menu
         onClick={() => setVisible(true)}
         className="p-button-rounded p-button-text text-[#58cbe8] hover:bg-[#464954] size-8 flex justify-center items-center rounded-sm cursor-pointer hover:scale-[1.15]"

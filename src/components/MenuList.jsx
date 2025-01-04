@@ -22,9 +22,9 @@ const MenuList = ({ location, setVisible }) => {
   };
   const styleUl = () => {
     if (location === "navbar") {
-      return "hidden md:flex gap-7 p-3 text-white font-semibold";
+      return "hidden lg:flex gap-7 p-3 text-white font-semibold";
     } else {
-      return "mt-10 flex flex-col gap-5 rounded-2xl border-[1px] border-[#58cbe8] p-3 md:hidden";
+      return "mt-10 flex flex-col gap-5 rounded-2xl border-[1px] border-[#58cbe8] p-3 lg:hidden";
     }
   };
 
@@ -81,11 +81,11 @@ const MenuList = ({ location, setVisible }) => {
         )}
       </div>
 
-      <li className={`${styleLi()} flex gap-2 hover:scale-[1.05] cursor-pointer`}>
+      {/* <li className={`${styleLi()} flex gap-2 hover:scale-[1.05] cursor-pointer`}>
         {location !== "navbar" && <SquarePen />}
         <FormRouteCall location={"menuBar"} closeMenuBar={setVisible} />
         <FormRouteCallMobile location={"menuBar"} closeMenuBar={setVisible} />
-      </li>
+      </li> */}
       <Link
         onClick={() => closeMenuBar(setVisible)}
         href={"mailto:losinmadurosrollermadrid@gmail.com"}
