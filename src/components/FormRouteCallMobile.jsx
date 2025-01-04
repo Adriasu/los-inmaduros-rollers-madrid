@@ -135,7 +135,14 @@ const FormRouteCallMobile = ({ location, closeMenuBar }) => {
   return (
     <div className="card flex justify-content-center md:hidden">
       <Toast ref={toast} />
-      <Sidebar visible={open} onHide={() => setOpen(false)} fullScreen>
+      <Sidebar
+        visible={open}
+        onHide={() => setOpen(false)}
+        fullScreen
+        header={() => (
+          <h1 className=" text-xl font-semibold">Convoca tu ruta</h1>
+        )}
+      >
         <div className="bg-white flex justify-center p-2">
           <div className="w-full lg:w-[60vw] xl:w-[40vw] border border-black p-5 rounded-2xl">
             <form
@@ -270,7 +277,7 @@ const FormRouteCallMobile = ({ location, closeMenuBar }) => {
                       {fieldState.error && (
                         <small className="p-error">
                           {fieldState.error.message}
-                        </small> // Mostrar error
+                        </small>
                       )}
                     </div>
                   )}
@@ -298,7 +305,7 @@ const FormRouteCallMobile = ({ location, closeMenuBar }) => {
                         {fieldState.error && (
                           <small className="p-error">
                             {fieldState.error.message}
-                          </small> // Mostrar error
+                          </small>
                         )}
                       </>
                     )}
@@ -492,9 +499,10 @@ const FormRouteCallMobile = ({ location, closeMenuBar }) => {
         </div>
       </Sidebar>
       {location === "home" ? (
-        <i className="pi pi-plus bg-[#06b5d4] rounded-full p-2" onClick={handleOpenModal}>
-
-        </i>
+        <i
+          className="pi pi-plus bg-[#06b5d4] rounded-full p-2"
+          onClick={handleOpenModal}
+        ></i>
       ) : (
         <div onClick={handleOpenModal}>Convocar ruta</div>
       )}
