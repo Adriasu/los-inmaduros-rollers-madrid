@@ -13,7 +13,7 @@ const Footer = () => {
     router.push("/");
   };
   return (
-    <footer className="flex w-full flex-col items-center bg-slate-950 mt-5 text-white">
+    <footer className="flex w-full flex-col items-center bg-slate-950 text-white">
       <div className="flex w-full max-w-4xl flex-col justify-between gap-y-10 px-10 py-16 sm:flex-row sm:px-3">
         <div>
           <Image
