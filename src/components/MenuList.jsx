@@ -70,7 +70,13 @@ const MenuList = ({ location, setVisible }) => {
           Tus favoritos
         </li>
         {isOpen && (
-          <div className={`${location === "navbar" ? "absolute" : "absolute top-2 left-3 min-w-[350px] z-50"}`}>
+          <div
+            className={`${
+              location === "navbar"
+                ? "absolute"
+                : "absolute top-2 left-3 min-w-[350px] z-50"
+            }`}
+          >
             <Favorites
               openClose={showHideListFavorites}
               setIsOpen={setIsOpen}
@@ -81,11 +87,16 @@ const MenuList = ({ location, setVisible }) => {
         )}
       </div>
 
-      {/* <li className={`${styleLi()} flex gap-2 hover:scale-[1.05] cursor-pointer`}>
-        {location !== "navbar" && <SquarePen />}
-        <FormRouteCall location={"menuBar"} closeMenuBar={setVisible} />
-        <FormRouteCallMobile location={"menuBar"} closeMenuBar={setVisible} />
-      </li> */}
+      {location !== "navbar" && (
+        <li
+          className={`${styleLi()} flex gap-2 hover:scale-[1.05] cursor-pointer`}
+        >
+          <SquarePen />
+          <FormRouteCall location={"menuBar"} closeMenuBar={setVisible} />
+          <FormRouteCallMobile location={"menuBar"} closeMenuBar={setVisible} />
+        </li>
+      )}
+
       <Link
         onClick={() => closeMenuBar(setVisible)}
         href={"mailto:losinmadurosrollermadrid@gmail.com"}
