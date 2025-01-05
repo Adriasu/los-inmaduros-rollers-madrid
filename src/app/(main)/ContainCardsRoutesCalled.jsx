@@ -63,7 +63,7 @@ const ContainCardsRoutesCalled = () => {
         {nextEvents.length > 0 ? (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4 mb-10">
             {nextEvents.map((event, index) => {
-              return <CardCalledRouteNew key={index} event={event} />;
+              return <CardCalledRouteNew key={index} event={event} isPastEvent={false} />;
             })}
           </div>
         ) : (
