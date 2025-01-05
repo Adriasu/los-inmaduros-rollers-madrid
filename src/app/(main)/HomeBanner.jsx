@@ -2,10 +2,10 @@ import React from 'react'
 
 const HomeBanner = () => {
   return (
-    <div className="relative max-w-[909px] m-auto xl:max-w-[62%] mb-4">
+    <div className="relative w-full m-auto">
     <video
       src="/images/homeBanner2.mp4"
-      className="h-[150px] rounded-2xl object-cover md:h-[178px]"
+      className="h-[175px] object-cover md:h-[350px]"
       loop
       preload="none"
       autoPlay
@@ -13,10 +13,10 @@ const HomeBanner = () => {
       playsInline
       width="100%"
     ></video>
-    <div className="absolute left-[15px] bottom-5 md:left-10 md:bottom-[50px]">
-      <h1 className="text-xl font-bold sm:text-3xl bg-gradient-to-r from-cyan-600 to-cyan-200 bg-clip-text text-transparent">¡Rueda con nosotros por Madrid!</h1>
-      <p className="text-body13 text-white mt-2 tracking-[-0.004em] md:hidden">La comunidad que reinventa la forma <br /> de explorar la ciudad. <br /> Crea tu propia ruta y comparte.</p>
-      <p className="hidden md:flex text-body13 mt-4 text-white">La comunidad que reinventa la forma de explorar la ciudad. <br /> Crea tu propia ruta y comparte.</p>
+    <div className="absolute px-4 top-1/2 -translate-y-1/2 md:px-20 lg:px-40">
+      <h1 className="text-xl font-bold md:text-3xl lg:text-5xl bg-gradient-to-r from-cyan-600 to-cyan-200 bg-clip-text text-transparent">¡Rueda con nosotros por Madrid!</h1>
+      <p className="text-base text-white mt-2 tracking-[-0.004em] md:hidden">La comunidad que reinventa la forma <br /> de explorar la ciudad. <br /> Crea tu propia ruta y comparte.</p>
+      <p className="hidden md:flex text-base lg:text-xl mt-4 text-white">La comunidad que reinventa la forma de explorar la ciudad. <br /> Crea tu propia ruta y comparte.</p>
     </div>
   </div>
   )

@@ -11,10 +11,10 @@ const RoutesCalled = dynamic(() => import("./RoutesCalled"), {
 const page = async () => {
   return (
     <div>
-      <div className=" px-[14px]">
+      <div className=" ">
         <HomeBanner />
       </div>
-      <div className="bg-gradient-to-r from-slate-800 to-slate-600 rounded-t-3xl sm:rounded-t-[64px] pb-5">
+      <div className="bg-gradient-to-r from-slate-800 to-slate-600 pb-5">
         <RoutesCalled />
       </div>
     </div>

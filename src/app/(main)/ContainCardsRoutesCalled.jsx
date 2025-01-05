@@ -4,6 +4,7 @@ import { db } from "../../../lib/fireBase.mjs";
 import CardCalledRoute from "./CardCalledRoute";
 import { collection, onSnapshot } from "firebase/firestore";
 import { Paginator } from "primereact/paginator";
+import CardCalledRouteNew from "./CardCalledRouteNew";
 
 const ContainCardsRoutesCalled = () => {
   const [nextEvents, setNextEvents] = useState([]);
@@ -60,9 +61,9 @@ const ContainCardsRoutesCalled = () => {
     <div>
       <div className="w-full">
         {nextEvents.length > 0 ? (
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 mb-10">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4 mb-10">
             {nextEvents.map((event, index) => {
-              return <CardCalledRoute key={index} event={event} />;
+              return <CardCalledRouteNew key={index} event={event} />;
             })}
           </div>
         ) : (
