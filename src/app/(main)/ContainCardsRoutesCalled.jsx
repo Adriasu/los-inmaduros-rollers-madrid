@@ -55,7 +55,7 @@ const ContainCardsRoutesCalled = () => {
             config={{
               columns: [1, 2, 3],
               gap: [20, 10, 25],
-              media: [640, 768, 1024],
+              media: [640, 1100, 1280],
             }}
             render={(item, index) => (
               <CardCalledRoute key={index} event={item} />
