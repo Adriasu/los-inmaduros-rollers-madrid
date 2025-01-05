@@ -131,7 +131,7 @@ const FormRouteCallMobile = ({ location, closeMenuBar }) => {
     );
   };
   return (
-    <div className="card flex justify-content-center md:hidden">
+    <div className="card flex justify-content-center sm:hidden">
       <Toast ref={toast} />
       <Sidebar
         visible={open}

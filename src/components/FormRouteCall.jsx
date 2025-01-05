@@ -132,7 +132,7 @@ const FormRouteCall = ({ location, closeMenuBar }) => {
   };
 
   return (
-    <div className="hidden md:flex card justify-content-center">
+    <div className="hidden sm:flex card justify-content-center">
       <Toast ref={toast} />
       {location === "home" ? (
         <Button
@@ -147,13 +147,13 @@ const FormRouteCall = ({ location, closeMenuBar }) => {
       <Dialog
         header="Convocar ruta"
         visible={open}
-        style={{ width: "50vw" }}
+        style={{ width: "85%", maxWidth: "750px" }}
         onHide={() => {
           if (!open) return;
           setOpen(false);
         }}
       >
-        <div className="bg-white flex justify-center p-3 sm:p-10">
+        <div className="bg-white flex justify-center p-3 sm:p-7">
           <div className="w-full lg:w-[60vw] xl:w-[40vw] border border-black p-5 rounded-2xl">
             <form
               className="flex flex-col gap-5"
