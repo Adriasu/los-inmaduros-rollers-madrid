@@ -122,7 +122,7 @@ const CardCalledRoute = ({ event }) => {
   };
 
   function capitalizarPrimeraLetra(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   }
 
   if (!event) {
@@ -379,7 +379,7 @@ const CardCalledRoute = ({ event }) => {
           >
             <div className="flex items-center">
               {event.nameRoute.name === "Nueva" ? (
-                <h1 className="font-bold">{formattedName}</h1>
+                <h1 className="font-bold text-xl">{formattedName}</h1>
               ) : (
                 <Link href={`/routesRoller/${event.nameRoute.id}`}>
                   <h1 className="font-bold text-xl hover:text-blue-600">
