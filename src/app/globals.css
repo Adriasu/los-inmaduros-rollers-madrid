@@ -93,15 +93,15 @@
 
 /* From Uiverse.io by JkHuger */ 
 .today {
-  font-size: 20px;
+  font-size: 14px;
   font-family: sans-serif;
   font-variant: small-caps;
   font-weight: 900;
   background: conic-gradient(
-    #dff2ae 0 25%,
-    #ff904f 25% 50%,
-    #feefe7 50% 75%,
-    #ffde2b 75%
+    #aec0f2 0 25%,
+    #4f5bff 25% 50%,
+    #d4b5e9 50% 75%,
+    #2b52ff 75%
   );
   background-size: 200% 200%;
   animation: animateBackground 4.5s ease-in-out infinite;

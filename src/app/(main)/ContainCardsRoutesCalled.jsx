@@ -58,7 +58,7 @@ const ContainCardsRoutesCalled = () => {
     return () => unsubscribe();
   }, []);
 
-  const paginatedPastEvents = pastEvents.slice(first, first + 6);
+  const paginatedPastEvents = pastEvents.slice(first, first + 8);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -86,7 +86,7 @@ const ContainCardsRoutesCalled = () => {
           alt={"No hay rutas disponibles"}
           width={500}
           height={500}
-          className="m-auto rounded-xl"
+          className="m-auto rounded-xl object-cover"
           />
         )}
         <div>
@@ -95,13 +95,16 @@ const ContainCardsRoutesCalled = () => {
           </h1>
 
           {paginatedPastEvents.length > 0 ? (
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 mb-5">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4 mb-5">
               {paginatedPastEvents.map((event, index) => {
                 return (
-                  <CardCalledRoute
-                    key={index}
-                    event={event}
-                  />
+                  <CardCalledRouteNew
+                  key={index}
+                  event={event}
+                  isPastEvent={true}
+                  isExpanded={expandedCard === event.id}
+                  toggleExpandedCard={toggleExpandedCard}
+                />
                 );
               })}
             </div>
@@ -111,7 +114,7 @@ const ContainCardsRoutesCalled = () => {
           <div>
             <Paginator
               first={first}
-              rows={6}
+              rows={8}
               totalRecords={pastEvents.length}
               onPageChange={onPageChange}
               template={{
