@@ -85,7 +85,7 @@ const ContainCardsRoutesCalled = () => {
           alt={"No hay rutas disponibles"}
           width={500}
           height={500}
-          className="m-auto rounded-xl object-cover"
+          className="m-auto rounded-xl object-cover mb-10 shadow-[-2px_4px_43px_5px_#029EE963]"
           />
         )}
         <div>

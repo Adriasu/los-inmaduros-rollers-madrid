@@ -6,17 +6,13 @@ const HomeBanner = dynamic(() => import("./HomeBanner"), {
 });
 const RoutesCalled = dynamic(() => import("./RoutesCalled"), {
   loading: () => <p>loading...</p>,
-})
+});
 
 const page = async () => {
   return (
     <div>
-      <div className=" ">
-        <HomeBanner />
-      </div>
-      <div className="bg-gradient-to-r from-slate-800 to-slate-600 pb-5">
-        <RoutesCalled />
-      </div>
+      <HomeBanner />
+      <RoutesCalled />
     </div>
   );
 };
