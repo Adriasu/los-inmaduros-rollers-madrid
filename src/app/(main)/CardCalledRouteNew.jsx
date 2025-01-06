@@ -196,7 +196,7 @@ const CardCalledRouteNew = ({
         <div
           className={`flex flex-col rounded-2xl insolate ${
             isPastEvent || event.isCanceled
-              ? "bg-slate-600 opacity-90"
+              ? "bg-slate-600 opacity-90 border border-gray-800"
               : "bg-gradient-to-r from-cyan-100 to-cyan-50 hover:scale-[1.02] hover:border-[#06b3d1] hover:border-[2px]"
           } ${!isPastEvent && "shadow-[-2px_4px_43px_5px_#029EE963]"}`}
         >
@@ -208,7 +208,7 @@ const CardCalledRouteNew = ({
                   alt={event.nameRoute.name}
                   width={500}
                   height={500}
-                  className="sm:h-[220px] w-full rounded-2xl object-fill"
+                  className={`sm:h-[220px] w-full rounded-2xl object-fill ${isPastEvent && "imgPastRoute"}`}
                 />
               ) : (
                 <Image
@@ -218,7 +218,7 @@ const CardCalledRouteNew = ({
                   alt={event.nameRoute.name}
                   width={500}
                   height={500}
-                  className="sm:h-[220px] w-full rounded-2xl object-fill"
+                  className={`sm:h-[220px] w-full rounded-2xl object-fill ${isPastEvent && "imgPastRoute"}`}
                 />
               )
             ) : (
@@ -229,7 +229,7 @@ const CardCalledRouteNew = ({
                     alt={event.nameRoute.name}
                     width={500}
                     height={500}
-                    className="sm:h-[220px] w-full rounded-2xl object-fill"
+                    className={`sm:h-[220px] w-full rounded-2xl object-fill ${isPastEvent && "imgPastRoute"}`}
                   />
                 </div>
               </Link>
