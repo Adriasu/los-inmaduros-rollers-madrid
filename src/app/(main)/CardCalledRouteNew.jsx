@@ -208,7 +208,7 @@ const CardCalledRouteNew = ({
                   alt={event.nameRoute.name}
                   width={500}
                   height={500}
-                  className="sm:h-[220px] w-full rounded-2xl object-fill"
+                  className={`sm:h-[220px] w-full rounded-2xl object-fill ${isPastEvent && "imgPastRoute"}`}
                 />
               ) : (
                 <Image
@@ -218,7 +218,7 @@ const CardCalledRouteNew = ({
                   alt={event.nameRoute.name}
                   width={500}
                   height={500}
-                  className="sm:h-[220px] w-full rounded-2xl object-fill"
+                  className={`sm:h-[220px] w-full rounded-2xl object-fill ${isPastEvent && "imgPastRoute"}`}
                 />
               )
             ) : (
@@ -229,7 +229,7 @@ const CardCalledRouteNew = ({
                     alt={event.nameRoute.name}
                     width={500}
                     height={500}
-                    className="sm:h-[220px] w-full rounded-2xl object-fill"
+                    className={`sm:h-[220px] w-full rounded-2xl object-fill ${isPastEvent && "imgPastRoute"}`}
                   />
                 </div>
               </Link>
