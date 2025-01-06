@@ -5,12 +5,18 @@ import CardCalledRoute from "./CardCalledRoute";
 import { collection, onSnapshot } from "firebase/firestore";
 import { Paginator } from "primereact/paginator";
 import CardCalledRouteNew from "./CardCalledRouteNew";
+import Image from "next/image";
 
 const ContainCardsRoutesCalled = () => {
   const [nextEvents, setNextEvents] = useState([]);
   const [pastEvents, setPastEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [first, setFirst] = useState(0);
+  const [expandedCard, setExpandedCard] = useState(false);
+
+  const toggleExpandedCard = (id) => {
+    setExpandedCard((prev) => (prev === id ? null : id));
+  };
 
   const onPageChange = (event) => {
     setFirst(event.first);
@@ -63,11 +69,25 @@ const ContainCardsRoutesCalled = () => {
         {nextEvents.length > 0 ? (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4 mb-10">
             {nextEvents.map((event, index) => {
-              return <CardCalledRouteNew key={index} event={event} isPastEvent={false} />;
+              return (
+                <CardCalledRouteNew
+                  key={index}
+                  event={event}
+                  isPastEvent={false}
+                  isExpanded={expandedCard === event.id}
+                  toggleExpandedCard={toggleExpandedCard}
+                />
+              );
             })}
           </div>
         ) : (
-          <div className="text-white mb-10">No hay rutas disponibles</div>
+          <Image  
+          src={"https://res.cloudinary.com/dj4j3uoia/image/upload/v1736122928/noRutas_gra2xl.png"}
+          alt={"No hay rutas disponibles"}
+          width={500}
+          height={500}
+          className="m-auto rounded-xl"
+          />
         )}
         <div>
           <h1 className="text-2xl mb-5 sm:text-3xl font-bold bg-gradient-to-r from-cyan-600 to-cyan-200 bg-clip-text text-transparent">
@@ -77,7 +97,12 @@ const ContainCardsRoutesCalled = () => {
           {paginatedPastEvents.length > 0 ? (
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 mb-5">
               {paginatedPastEvents.map((event, index) => {
-                return <CardCalledRoute key={index} event={event} />;
+                return (
+                  <CardCalledRoute
+                    key={index}
+                    event={event}
+                  />
+                );
               })}
             </div>
           ) : (
