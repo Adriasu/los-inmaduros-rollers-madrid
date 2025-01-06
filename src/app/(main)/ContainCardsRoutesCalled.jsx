@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { db } from "../../../lib/fireBase.mjs";
-import CardCalledRoute from "./CardCalledRoute";
 import { collection, onSnapshot } from "firebase/firestore";
 import { Paginator } from "primereact/paginator";
 import CardCalledRouteNew from "./CardCalledRouteNew";
