@@ -142,6 +142,18 @@ const CardCalledRouteNew = ({
     });
   };
 
+    const cancelEvent = async (eventId) => {
+      try {
+        const eventRef = doc(db, "routesCalled", eventId);
+        await updateDoc(eventRef, {
+          isCanceled: true,
+        });
+        console.log("Evento cancelado correctamente");
+      } catch (error) {
+        console.error("Error al cancelar el evento: ", error);
+      }
+    };
+
   const handleShareWhatsApp = () => {
     const paceLevels = event.paceRoute.map((pace) => pace.level).join(", ");
     const message = `
