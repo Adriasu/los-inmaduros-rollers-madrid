@@ -327,10 +327,11 @@ const CardCalledRouteNew = ({
                   {capitalizarPrimeraLetra(event.newNameRoute)}
                 </h1>
               ) : (
-                <Link href={`/routesRoller/${event.nameRoute.id}`}>
+                <Link className="flex gap-1 items-center" href={`/routesRoller/${event.nameRoute.id}`}>
                   <h1 className="font-bold text-xl hover:text-blue-600">
                     {event.nameRoute.name}
                   </h1>
+                  <p className="text-xs">ver ruta</p>
                 </Link>
               )}
 
@@ -455,7 +456,7 @@ const CardCalledRouteNew = ({
                 onClick={() => toggleExpandedCard(event.id)}
                 className="flex items-center gap-1 text-gray-700 text-sm mx-auto mt-2 p-1 cursor-pointer hover:text-black hover:scale-105 transition-all duration-200"
               >
-                {isExpanded ? "Ocultar detalles" : "Ver detalles"}
+                {isExpanded ? "Ocultar detalles" : "Mostrar detalles"}
                 <ChevronDown
                   className={`transition-transform duration-300 ${
                     isExpanded ? "rotate-180" : ""
