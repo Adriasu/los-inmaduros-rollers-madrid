@@ -50,9 +50,9 @@ const Attendees = ({ eventId, open, setOpen }) => {
                 <Image
                   src={user.photoUrl}
                   alt={user.name}
-                  width={30}
-                  height={30}
-                  className="rounded-full"
+                  width={32}
+                  height={32}
+                  className="rounded-full h-8 w-8"
                 />
                 <p>{user.name}</p>
               </div>
