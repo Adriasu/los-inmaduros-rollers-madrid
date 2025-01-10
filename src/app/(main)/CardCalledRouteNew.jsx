@@ -22,6 +22,7 @@ import {
 import { Toast } from "primereact/toast";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import Attendees from "@/components/Attendees";
+import { useRouter } from "next/navigation";
 
 function capitalizarPrimeraLetra(str) {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
@@ -68,6 +69,7 @@ const CardCalledRouteNew = ({
   const toast = useRef(null);
   const [visible, setVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
   const showHideListAttendance = () => {
     isOpen === false ? setIsOpen(true) : setIsOpen(false);
