@@ -441,7 +441,15 @@ const FormRouteCallMobile = ({ location, closeMenuBar }) => {
                           if (!startTime) {
                             return "Primero selecciona la hora de inicio";
                           }
-                          if (value && value.getTime() <= startTime.getTime()) {
+                          const startHours = new Date(startTime).getHours();
+                          const startMinutes = new Date(startTime).getMinutes();
+                          const selectedHours = new Date(value).getHours();
+                          const selectedMinutes = new Date(value).getMinutes();
+                          if (
+                            selectedHours < startHours ||
+                            (selectedHours === startHours &&
+                              selectedMinutes <= startMinutes)
+                          ) {
                             return "La hora debe ser posterior a la hora de inicio";
                           }
                           return true;
