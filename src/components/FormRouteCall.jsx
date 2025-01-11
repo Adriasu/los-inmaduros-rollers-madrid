@@ -54,17 +54,17 @@ const FormRouteCall = ({ location, closeMenuBar }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      nameRoute: null,
+      nameRoute: "",
       newNameRoute: "",
-      dateRoute: null,
+      dateRoute: "",
       paceRoute: [],
-      meetingPoint: null,
+      meetingPoint: "",
       meetingPointOther: "",
-      timeMeetingPoint: null,
+      timeMeetingPoint: "",
       otherPoint: { name: "No" },
-      meetingOtherPoint: null,
+      meetingOtherPoint: "",
       meetingOtherPointOther: "",
-      timeMeetingOtherPoint: null,
+      timeMeetingOtherPoint: "",
       comments: "",
     },
   });

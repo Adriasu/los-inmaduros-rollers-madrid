@@ -23,6 +23,7 @@ import { Toast } from "primereact/toast";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import Attendees from "@/components/Attendees";
 import { useRouter } from "next/navigation";
+import EditFormRouteCall from "@/components/EditFormRouteCall";
 
 function capitalizarPrimeraLetra(str) {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
@@ -144,17 +145,17 @@ const CardCalledRouteNew = ({
     });
   };
 
-    const cancelEvent = async (eventId) => {
-      try {
-        const eventRef = doc(db, "routesCalled", eventId);
-        await updateDoc(eventRef, {
-          isCanceled: true,
-        });
-        console.log("Evento cancelado correctamente");
-      } catch (error) {
-        console.error("Error al cancelar el evento: ", error);
-      }
-    };
+  const cancelEvent = async (eventId) => {
+    try {
+      const eventRef = doc(db, "routesCalled", eventId);
+      await updateDoc(eventRef, {
+        isCanceled: true,
+      });
+      console.log("Evento cancelado correctamente");
+    } catch (error) {
+      console.error("Error al cancelar el evento: ", error);
+    }
+  };
 
   const handleShareWhatsApp = () => {
     const paceLevels = event.paceRoute.map((pace) => pace.level).join(", ");
@@ -222,7 +223,9 @@ const CardCalledRouteNew = ({
                   alt={event.nameRoute.name}
                   width={500}
                   height={500}
-                  className={`sm:h-[220px] w-full rounded-2xl object-fill ${isPastEvent && "imgPastRoute"}`}
+                  className={`sm:h-[220px] w-full rounded-2xl object-fill ${
+                    isPastEvent && "imgPastRoute"
+                  }`}
                 />
               ) : (
                 <Image
@@ -232,7 +235,9 @@ const CardCalledRouteNew = ({
                   alt={event.nameRoute.name}
                   width={500}
                   height={500}
-                  className={`sm:h-[220px] w-full rounded-2xl object-fill ${isPastEvent && "imgPastRoute"}`}
+                  className={`sm:h-[220px] w-full rounded-2xl object-fill ${
+                    isPastEvent && "imgPastRoute"
+                  }`}
                 />
               )
             ) : (
@@ -243,7 +248,9 @@ const CardCalledRouteNew = ({
                     alt={event.nameRoute.name}
                     width={500}
                     height={500}
-                    className={`sm:h-[220px] w-full rounded-2xl object-fill ${isPastEvent && "imgPastRoute"}`}
+                    className={`sm:h-[220px] w-full rounded-2xl object-fill ${
+                      isPastEvent && "imgPastRoute"
+                    }`}
                   />
                 </div>
               </Link>
@@ -313,6 +320,9 @@ const CardCalledRouteNew = ({
                 ></i>
               </button>
             </div>
+              {!isPastEvent && isSignedIn && user.id === event.idUser && (
+                <EditFormRouteCall id={event.id} />
+              )}
           </div>
 
           <div className="relative flex flex-col gap-y-2 p-2">
@@ -341,7 +351,10 @@ const CardCalledRouteNew = ({
                   {capitalizarPrimeraLetra(event.newNameRoute)}
                 </h1>
               ) : (
-                <Link className="flex gap-1 items-center" href={`/routesRoller/${event.nameRoute.id}`}>
+                <Link
+                  className="flex gap-1 items-center"
+                  href={`/routesRoller/${event.nameRoute.id}`}
+                >
                   <h1 className="font-bold text-xl hover:text-blue-600">
                     {event.nameRoute.name}
                   </h1>
@@ -437,7 +450,7 @@ const CardCalledRouteNew = ({
                     <div className="flex flex-col gap-2">
                       <h1 className="font-bold">Segundo punto de encuentro:</h1>
                       <div className="flex gap-2">
-                        <MapPin size={20}/>
+                        <MapPin size={20} />
                         {event.meetingOtherPoint.name === "Otro" ? (
                           <p>{event.meetingOtherPointOther}</p>
                         ) : (
@@ -445,7 +458,7 @@ const CardCalledRouteNew = ({
                         )}
                         {event.meetingOtherPoint.name !== "Otro" &&
                           (isPastEvent || event.isCanceled ? (
-                            <Map size={20}/>
+                            <Map size={20} />
                           ) : (
                             <Link
                               target="_blank"
