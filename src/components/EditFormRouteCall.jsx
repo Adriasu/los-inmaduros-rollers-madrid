@@ -11,17 +11,27 @@ import { Calendar } from "primereact/calendar";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
-import { useUser } from "@clerk/nextjs";
-import { getDocument, setDocument } from "../../lib/fireBase.mjs";
+import { getDocument, updateDocument } from "../../lib/fireBase.mjs";
 import { Toast } from "primereact/toast";
 import { useRouter } from "next/navigation";
 import PaceDialogInfo from "./PaceDialogInfo";
+
+const optionTemplate = (option) => {
+  return (
+    <div className="flex items-center">
+      <Image src={option.img} alt={option.level} width={30} height={30} />
+      <span className="ml-[10px]">{option.level}</span>
+    </div>
+  );
+};
 
 const EditFormRouteCall = ({ id }) => {
   const [formData, setFormData] = useState(null);
   const toast = useRef(null);
   const [open, setOpen] = useState(false);
   const { dataRoutes } = useContext(RoutesContext);
+  const { meetingPoints, paceRoute } = useContext(FormCallRouteContext);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,19 +72,23 @@ const EditFormRouteCall = ({ id }) => {
   // Actualizar los valores del formulario cuando `formData` esté disponible
   useEffect(() => {
     if (open && formData) {
+      const convertTimestampToDate = (timestamp) => {
+        if (!timestamp || !timestamp.seconds) return null;
+        return new Date(timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000);
+      };
       reset({
         id: formData.id,
-        nameRoute: formData.nameRoute.name,
+        nameRoute: formData.nameRoute,
         newNameRoute: formData.newNameRoute ?? "",
-        dateRoute: formData.dateRoute,
+        dateRoute: convertTimestampToDate(formData.dateRoute),
         paceRoute: formData.paceRoute,
-        meetingPoint: formData.meetingPoint.name,
+        meetingPoint: formData.meetingPoint,
         meetingPointOther: formData.meetingPointOther ?? "",
-        timeMeetingPoint: formData.timeMeetingPoint,
-        otherPoint: formData.otherPoint.name,
-        meetingOtherPoint: formData.meetingOtherPoint.name ?? "",
+        timeMeetingPoint: convertTimestampToDate(formData.timeMeetingPoint),
+        otherPoint: formData.otherPoint,
+        meetingOtherPoint: formData.meetingOtherPoint ?? "",
         meetingOtherPointOther: formData.meetingOtherPointOther ?? "",
-        timeMeetingOtherPoint: formData.timeMeetingOtherPoint,
+        timeMeetingOtherPoint: convertTimestampToDate(formData.timeMeetingOtherPoint),
         comments: formData.comments,
       });
     }
@@ -89,15 +103,16 @@ const EditFormRouteCall = ({ id }) => {
     console.log("data", data);
 
     try {
-      //   await updateDocument(...data, data.id);
+      await updateDocument("routesCalled", data, data.id);
 
       toast.current.show({
         severity: "success",
-        summary: "Ruta creada",
+        summary: "Ruta editada",
         detail: `La ruta ha sido editada correctamente.`,
         life: 3000,
       });
 
+      setOpen(false);
       router.push(`/`);
     } catch (error) {
       console.log(error);
@@ -105,11 +120,11 @@ const EditFormRouteCall = ({ id }) => {
   };
 
   if (!formData) {
-    return <div>Cargando...</div>; // Mostrar un mensaje de carga hasta que los datos estén disponibles
+    return <div>Cargando...</div>;
   }
 
   return (
-    <div className="absolute bottom-2 right-2 flex gap-2">
+    <div className="hidden sm:flex absolute bottom-2 right-2 gap-2">
       <Toast ref={toast} />
       <button
         disabled={!formData}
@@ -154,7 +169,6 @@ const EditFormRouteCall = ({ id }) => {
                           className={`w-full md:w-14rem ${
                             fieldState.error ? "p-invalid" : ""
                           }`}
-                          value={field.value || ""}
                         />
                         {fieldState.error && (
                           <small className="p-error">
@@ -164,35 +178,36 @@ const EditFormRouteCall = ({ id }) => {
                       </>
                     )}
                   />
-                  {watchShowWriteNewRoute.name === "Nueva" && (
-                    <Controller
-                      name="newNameRoute"
-                      rules={{
-                        required: "El nombre de la ruta es obligatorio",
-                        minLength: {
-                          value: 3,
-                          message: "Debe tener al menos 3 caracteres",
-                        },
-                      }}
-                      control={control}
-                      render={({ field, fieldState }) => (
-                        <>
-                          <InputText
-                            {...field}
-                            placeholder="Nombre de ruta"
-                            className={fieldState.error ? "p-invalid" : ""}
-                            value={field.value}
-                          />
-                          {fieldState.error && (
-                            <small className="p-error">
-                              {fieldState.error.message}
-                            </small>
-                          )}
-                        </>
-                      )}
-                    />
-                  )}
+                  {watchShowWriteNewRoute &&
+                    watchShowWriteNewRoute.name === "Nueva" && (
+                      <Controller
+                        name="newNameRoute"
+                        rules={{
+                          required: "El nombre de la ruta es obligatorio",
+                          minLength: {
+                            value: 3,
+                            message: "Debe tener al menos 3 caracteres",
+                          },
+                        }}
+                        control={control}
+                        render={({ field, fieldState }) => (
+                          <>
+                            <InputText
+                              {...field}
+                              placeholder="Nombre de ruta"
+                              className={fieldState.error ? "p-invalid" : ""}
+                            />
+                            {fieldState.error && (
+                              <small className="p-error">
+                                {fieldState.error.message}
+                              </small>
+                            )}
+                          </>
+                        )}
+                      />
+                    )}
                 </div>
+
                 <div className="flex flex-col gap-2">
                   <label htmlFor="dateRoute">Fecha y hora de inicio</label>
                   <Controller
@@ -213,7 +228,6 @@ const EditFormRouteCall = ({ id }) => {
                           hourFormat="24"
                           className={fieldState.error ? "p-invalid" : ""}
                           minDate={new Date()} // Evita seleccionar fechas pasadas
-                          //value={field.value}
                         />
                         {fieldState.error && (
                           <small className="p-error">
@@ -225,6 +239,249 @@ const EditFormRouteCall = ({ id }) => {
                   />
                 </div>
               </div>
+
+              <div className="flex flex-col sm:items-center gap-2 sm:flex-row">
+                <div className="flex items-center gap-2">
+                  <label htmlFor="pace">Ritmo</label>
+                  <PaceDialogInfo />
+                </div>
+
+                <Controller
+                  name="paceRoute"
+                  control={control}
+                  rules={{
+                    validate: (value) => {
+                      if (value.length < 1) {
+                        return "Debes seleccionar al menos 1 ritmo";
+                      }
+                      if (value.length > 3) {
+                        return "Solo puedes seleccionar hasta 3 ritmos";
+                      }
+                      return true;
+                    },
+                  }}
+                  render={({ field, fieldState }) => (
+                    <div className="flex flex-col">
+                      <MultiSelect
+                        {...field}
+                        options={paceRoute}
+                        optionLabel="level"
+                        itemTemplate={optionTemplate}
+                        placeholder="Selecciona el ritmo (Max 3)"
+                        display="chip"
+                        className={`w-full md:w-14rem ${
+                          fieldState.error ? "p-invalid" : ""
+                        }`}
+                        onChange={(e) => {
+                          if (e.value.length <= 3) {
+                            field.onChange(e.value);
+                          }
+                        }}
+                      />
+                      {fieldState.error && (
+                        <small className="p-error">
+                          {fieldState.error.message}
+                        </small> // Mostrar error
+                      )}
+                    </div>
+                  )}
+                />
+              </div>
+
+              <div className="flex flex-col sm:grid sm:grid-cols-2 gap-5 w-full">
+                <div>
+                  <label htmlFor="meetingPoint">Punto de encuentro</label>
+                  <Controller
+                    name="meetingPoint"
+                    control={control}
+                    rules={{ required: "Selecciona una punto de encuentro" }}
+                    render={({ field, fieldState }) => (
+                      <>
+                        <Dropdown
+                          {...field}
+                          options={[...meetingPoints, { name: "Otro" }]}
+                          optionLabel="name"
+                          placeholder="Selecciona punto"
+                          className={`w-full md:w-14rem ${
+                            fieldState.error ? "p-invalid" : ""
+                          }`}
+                        />
+                        {fieldState.error && (
+                          <small className="p-error">
+                            {fieldState.error.message}
+                          </small> // Mostrar error
+                        )}
+                      </>
+                    )}
+                  />
+                </div>
+                {watchShowMeetingPoint &&
+                  watchShowMeetingPoint.name === "Otro" && (
+                    <div>
+                      <label htmlFor="">Nuevo punto</label>
+                      <Controller
+                        name="meetingPointOther"
+                        control={control}
+                        rules={{
+                          required:
+                            "El nuevo punto de encuentro es obligatorio",
+                          minLength: {
+                            value: 3,
+                            message: "Debe tener al menos 3 caracteres",
+                          },
+                        }}
+                        render={({ field, fieldState }) => (
+                          <>
+                            <InputText
+                              {...field}
+                              placeholder="Inicio de ruta"
+                              className={`w-full ${
+                                fieldState.error ? "p-invalid" : ""
+                              }`}
+                            />
+                            {fieldState.error && (
+                              <small className="p-error">
+                                {fieldState.error.message}
+                              </small>
+                            )}
+                          </>
+                        )}
+                      />
+                    </div>
+                  )}
+              </div>
+
+              <div className="flex items-center gap-2">
+                <label htmlFor="otherPoint">
+                  ¿Existe punto de encuentro secundario?
+                </label>
+                <Controller
+                  name="otherPoint"
+                  control={control}
+                  render={({ field }) => (
+                    <Dropdown
+                      {...field}
+                      options={[{ name: "Si" }, { name: "No" }]}
+                      optionLabel="name"
+                      className="md:w-14rem"
+                    />
+                  )}
+                />
+              </div>
+
+              {watchShowOtherPoint && watchShowOtherPoint.name === "Si" && (
+                <div className="flex flex-col sm:grid sm:grid-cols-2 gap-5">
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="meetingOtherPoint">
+                      Punto de encuentro
+                    </label>
+                    <Controller
+                      name="meetingOtherPoint"
+                      control={control}
+                      rules={{
+                        required: "Selecciona una punto de encuentro",
+                      }}
+                      render={({ field, fieldState }) => (
+                        <>
+                          <Dropdown
+                            {...field}
+                            options={[...meetingPoints, { name: "Otro" }]}
+                            optionLabel="name"
+                            placeholder="Selecciona punto"
+                            className={`w-full md:w-14rem ${
+                              fieldState.error ? "p-invalid" : ""
+                            }`}
+                          />
+                          {fieldState.error && (
+                            <small className="p-error">
+                              {fieldState.error.message}
+                            </small>
+                          )}
+                        </>
+                      )}
+                    />
+                    {watchShowMeetingOtherPoint &&
+                      watchShowMeetingOtherPoint.name === "Otro" && (
+                        <Controller
+                          name="meetingOtherPointOther"
+                          control={control}
+                          rules={{
+                            required:
+                              "El nuevo punto de encuentro es obligatorio",
+                            minLength: {
+                              value: 3,
+                              message: "Debe tener al menos 3 caracteres",
+                            },
+                          }}
+                          render={({ field, fieldState }) => (
+                            <>
+                              <InputText
+                                {...field}
+                                placeholder="Inicio de ruta"
+                                className={`w-full md:w-14rem ${
+                                  fieldState.error ? "p-invalid" : ""
+                                }`}
+                              />
+                              {fieldState.error && (
+                                <small className="p-error">
+                                  {fieldState.error.message}
+                                </small>
+                              )}
+                            </>
+                          )}
+                        />
+                      )}
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="timeMeetingOtherPoint">Hora</label>
+                    <Controller
+                      name="timeMeetingOtherPoint"
+                      control={control}
+                      rules={{
+                        required: "La hora es obligatoria",
+                        validate: (value) => {
+                          const startTime = watch("dateRoute"); // Obtén la hora de inicio del evento
+                          if (!startTime) {
+                            return "Primero selecciona la hora de inicio";
+                          }
+
+                          // Extraer solo la hora de la fecha completa (tanto para la hora inicial como para el segundo punto)
+                          const startHours = new Date(startTime).getHours();
+                          const startMinutes = new Date(startTime).getMinutes();
+                          const selectedHours = new Date(value).getHours();
+                          const selectedMinutes = new Date(value).getMinutes();
+
+                          // Comparar solo horas y minutos
+                          if (
+                            selectedHours < startHours ||
+                            (selectedHours === startHours &&
+                              selectedMinutes <= startMinutes)
+                          ) {
+                            return "La hora debe ser posterior a la hora de inicio";
+                          }
+
+                          return true;
+                        },
+                      }}
+                      render={({ field, fieldState }) => (
+                        <>
+                          <Calendar
+                            {...field}
+                            timeOnly
+                            onChange={(e) => field.onChange(e.value)}
+                            value={field.value}
+                          />
+                          {fieldState.error && (
+                            <small className="p-error">
+                              {fieldState.error.message}
+                            </small>
+                          )}
+                        </>
+                      )}
+                    />
+                  </div>
+                </div>
+              )}
 
               <div className="flex flex-col gap-2">
                 <label htmlFor="comments">Comentarios / Descripción</label>
@@ -252,6 +509,7 @@ const EditFormRouteCall = ({ id }) => {
                   )}
                 />
               </div>
+              <Button type="submit" label="Editar" />
             </form>
           </div>
         </div>
