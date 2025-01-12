@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState, useEffect, useRef } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { RoutesContext } from "@/context/RoutesContext";
 import { FormCallRouteContext } from "@/context/FormCallRouteContext";
@@ -9,65 +9,89 @@ import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import { Calendar } from "primereact/calendar";
 import { InputTextarea } from "primereact/inputtextarea";
-import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
-import { useUser } from "@clerk/nextjs";
-import { setDocument } from "../../lib/fireBase.mjs";
-import { Toast } from "primereact/toast";
+import { getDocument, updateDocument } from "../../lib/fireBase.mjs";
 import { useRouter } from "next/navigation";
 import PaceDialogInfo from "./PaceDialogInfo";
+import { Sidebar } from "primereact/sidebar";
 
-const FormRouteCall = ({ location, closeMenuBar }) => {
+const optionTemplate = (option) => {
+  return (
+    <div className="flex items-center">
+      <Image src={option.img} alt={option.level} width={30} height={30} />
+      <span className="ml-[10px]">{option.level}</span>
+    </div>
+  );
+};
+const EditFormRouteCallMobile = ({ id, toast }) => {
+  const [formData, setFormData] = useState(null);
   const [open, setOpen] = useState(false);
   const { dataRoutes } = useContext(RoutesContext);
   const { meetingPoints, paceRoute } = useContext(FormCallRouteContext);
-  const { isSignedIn, user, isLoaded } = useUser();
-  const [userData, setUserData] = useState(null);
-  const toast = useRef(null);
   const router = useRouter();
 
   useEffect(() => {
-    if (isLoaded && isSignedIn && user) {
-      const data = {
-        id: user.id,
-        firstName: user.firstName,
-        email: user.primaryEmailAddress?.emailAddress || "Sin correo",
-        imageUser: user.imageUrl,
-      };
-      setUserData(data);
-    }
-  }, [isLoaded, isSignedIn, user]);
-
-  const handleOpenModal = () => {
-    if (isSignedIn) {
-      setOpen(true);
-    } else {
-      router.push(`/sign-in`);
-    }
-  };
+    const fetchData = async () => {
+      const eventData = await getDocument("routesCalled", id);
+      if (eventData) {
+        setFormData(eventData);
+      }
+    };
+    fetchData();
+  }, [id, open]);
 
   const {
     control,
     handleSubmit,
-    watch,
     reset,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
+      id: "",
       nameRoute: "",
       newNameRoute: "",
       dateRoute: "",
-      paceRoute: [],
+      paceRoute: "",
       meetingPoint: "",
       meetingPointOther: "",
-      timeMeetingPoint: "",
-      otherPoint: { name: "No" },
+      timeMeetingPoint: null,
+      otherPoint: "",
       meetingOtherPoint: "",
       meetingOtherPointOther: "",
-      timeMeetingOtherPoint: "",
+      timeMeetingOtherPoint: null,
       comments: "",
     },
   });
+
+  // Actualizar los valores del formulario cuando `formData` esté disponible
+  useEffect(() => {
+    if (open && formData) {
+      const convertTimestampToDate = (timestamp) => {
+        if (!timestamp || !timestamp.seconds) return null;
+        return new Date(
+          timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
+        );
+      };
+      reset({
+        id: formData.id,
+        nameRoute: formData.nameRoute,
+        newNameRoute: formData.newNameRoute ?? "",
+        dateRoute: convertTimestampToDate(formData.dateRoute),
+        paceRoute: formData.paceRoute,
+        meetingPoint: formData.meetingPoint,
+        meetingPointOther: formData.meetingPointOther ?? "",
+        timeMeetingPoint: convertTimestampToDate(formData.timeMeetingPoint),
+        otherPoint: formData.otherPoint,
+        meetingOtherPoint: formData.meetingOtherPoint ?? "",
+        meetingOtherPointOther: formData.meetingOtherPointOther ?? "",
+        timeMeetingOtherPoint: convertTimestampToDate(
+          formData.timeMeetingOtherPoint
+        ),
+        comments: formData.comments,
+      });
+    }
+  }, [formData, reset, open]);
 
   const watchShowWriteNewRoute = watch("nameRoute");
   const watchShowMeetingPoint = watch("meetingPoint");
@@ -76,84 +100,43 @@ const FormRouteCall = ({ location, closeMenuBar }) => {
 
   const onSubmit = async (data) => {
     try {
-      const postDataEvent = {
-        nameRoute: data.nameRoute,
-        newNameRoute: data.newNameRoute,
-        dateRoute: data.dateRoute,
-        paceRoute: data.paceRoute,
-        meetingPoint: data.meetingPoint,
-        meetingPointOther: data.meetingPointOther,
-        timeMeetingPoint: data.timeMeetingPoint,
-        otherPoint: data.otherPoint,
-        meetingOtherPoint: data.meetingOtherPoint,
-        meetingOtherPointOther: data.meetingOtherPointOther,
-        timeMeetingOtherPoint: data.timeMeetingOtherPoint,
-        comments: data.comments,
-        firstName: userData.firstName,
-        idUser: userData.id,
-        imageUser: userData.imageUser,
-        attendees: [
-          {
-            id: userData.id,
-            name: userData.firstName,
-            email: userData.email,
-            photoUrl: userData.imageUser,
-          },
-        ],
-      };
-
-      const postId = Date.now().toString();
-
-      await setDocument("routesCalled", postDataEvent, postId);
+      await updateDocument("routesCalled", data, data.id);
 
       toast.current.show({
         severity: "success",
-        summary: "Ruta creada",
-        detail: `La ruta ha sido creada correctamente.`,
+        summary: "Ruta editada",
+        detail: `La ruta ha sido editada correctamente.`,
         life: 3000,
       });
 
       reset();
       setOpen(false);
-      location === "menuBar" ? closeMenuBar(false) : "";
       router.push(`/`);
     } catch (error) {
-      console.error("Error al crear el evento:", error);
+      console.log(error);
     }
   };
 
-  const optionTemplate = (option) => {
-    return (
-      <div className="flex items-center">
-        <Image src={option.img} alt={option.level} width={30} height={30} />
-        <span className="ml-[10px]">{option.level}</span>
-      </div>
-    );
-  };
-
+  if (!formData) {
+    return <div>Cargando...</div>;
+  }
   return (
-    <div className="hidden sm:flex card justify-content-center">
-      <Toast ref={toast} />
-      {location === "home" ? (
-        <Button
-          label="Convoca tu ruta"
-          icon="pi pi-external-link"
-          onClick={handleOpenModal}
-        />
-      ) : (
-        <div onClick={handleOpenModal}>Convocar ruta</div>
-      )}
-
-      <Dialog
-        header="Convocar ruta"
-        visible={open}
-        style={{ width: "85%", maxWidth: "750px" }}
-        onHide={() => {
-          if (!open) return;
-          setOpen(false);
+    <div className="flex absolute bottom-2 right-2 gap-2 sm:hidden">
+      <button
+        disabled={!formData}
+        onClick={() => {
+          setOpen(true);
         }}
       >
-        <div className="bg-white flex justify-center p-3 sm:p-7">
+        <i className="pi pi-pencil bg-blue-700 text-white p-2 rounded-full cursor-pointer custom-target-icon hover:border border-white"></i>
+      </button>
+      <Sidebar
+        visible={open}
+        onHide={() => setOpen(false)}
+        fullScreen
+        header={() => <h1 className=" text-xl font-semibold">Editar ruta</h1>}
+      >
+        <div className="bg-white flex justify-center p-2">
           <div className="w-full lg:w-[60vw] xl:w-[40vw] border border-black p-5 rounded-2xl">
             <form
               className="flex flex-col gap-5"
@@ -237,7 +220,7 @@ const FormRouteCall = ({ location, closeMenuBar }) => {
                           showTime
                           hourFormat="24"
                           className={fieldState.error ? "p-invalid" : ""}
-                          minDate={new Date()} // Evita seleccionar fechas pasadas
+                          minDate={new Date()}
                         />
                         {fieldState.error && (
                           <small className="p-error">
@@ -255,7 +238,6 @@ const FormRouteCall = ({ location, closeMenuBar }) => {
                   <label htmlFor="pace">Ritmo</label>
                   <PaceDialogInfo />
                 </div>
-
                 <Controller
                   name="paceRoute"
                   control={control}
@@ -291,7 +273,7 @@ const FormRouteCall = ({ location, closeMenuBar }) => {
                       {fieldState.error && (
                         <small className="p-error">
                           {fieldState.error.message}
-                        </small> // Mostrar error
+                        </small>
                       )}
                     </div>
                   )}
@@ -319,7 +301,7 @@ const FormRouteCall = ({ location, closeMenuBar }) => {
                         {fieldState.error && (
                           <small className="p-error">
                             {fieldState.error.message}
-                          </small> // Mostrar error
+                          </small>
                         )}
                       </>
                     )}
@@ -454,14 +436,10 @@ const FormRouteCall = ({ location, closeMenuBar }) => {
                           if (!startTime) {
                             return "Primero selecciona la hora de inicio";
                           }
-
-                          // Extraer solo la hora de la fecha completa (tanto para la hora inicial como para el segundo punto)
                           const startHours = new Date(startTime).getHours();
                           const startMinutes = new Date(startTime).getMinutes();
                           const selectedHours = new Date(value).getHours();
                           const selectedMinutes = new Date(value).getMinutes();
-
-                          // Comparar solo horas y minutos
                           if (
                             selectedHours < startHours ||
                             (selectedHours === startHours &&
@@ -469,7 +447,6 @@ const FormRouteCall = ({ location, closeMenuBar }) => {
                           ) {
                             return "La hora debe ser posterior a la hora de inicio";
                           }
-
                           return true;
                         },
                       }}
@@ -520,13 +497,13 @@ const FormRouteCall = ({ location, closeMenuBar }) => {
                 />
               </div>
 
-              <Button type="submit" label="Convocar" />
+              <Button type="submit" label="Editar" />
             </form>
           </div>
         </div>
-      </Dialog>
+      </Sidebar>
     </div>
   );
 };
 
-export default FormRouteCall;
+export default EditFormRouteCallMobile;

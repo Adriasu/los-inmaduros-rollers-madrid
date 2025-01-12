@@ -11,63 +11,88 @@ import { Calendar } from "primereact/calendar";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
-import { useUser } from "@clerk/nextjs";
-import { setDocument } from "../../lib/fireBase.mjs";
-import { Toast } from "primereact/toast";
+import { getDocument, updateDocument } from "../../lib/fireBase.mjs";
 import { useRouter } from "next/navigation";
 import PaceDialogInfo from "./PaceDialogInfo";
 
-const FormRouteCall = ({ location, closeMenuBar }) => {
+const optionTemplate = (option) => {
+  return (
+    <div className="flex items-center">
+      <Image src={option.img} alt={option.level} width={30} height={30} />
+      <span className="ml-[10px]">{option.level}</span>
+    </div>
+  );
+};
+
+const EditFormRouteCall = ({ id, toast }) => {
+  const [formData, setFormData] = useState(null);
   const [open, setOpen] = useState(false);
   const { dataRoutes } = useContext(RoutesContext);
   const { meetingPoints, paceRoute } = useContext(FormCallRouteContext);
-  const { isSignedIn, user, isLoaded } = useUser();
-  const [userData, setUserData] = useState(null);
-  const toast = useRef(null);
   const router = useRouter();
 
   useEffect(() => {
-    if (isLoaded && isSignedIn && user) {
-      const data = {
-        id: user.id,
-        firstName: user.firstName,
-        email: user.primaryEmailAddress?.emailAddress || "Sin correo",
-        imageUser: user.imageUrl,
-      };
-      setUserData(data);
-    }
-  }, [isLoaded, isSignedIn, user]);
-
-  const handleOpenModal = () => {
-    if (isSignedIn) {
-      setOpen(true);
-    } else {
-      router.push(`/sign-in`);
-    }
-  };
+    const fetchData = async () => {
+      const eventData = await getDocument("routesCalled", id);
+      if (eventData) {
+        setFormData(eventData);
+      }
+    };
+    fetchData();
+  }, [id, open]);
 
   const {
     control,
     handleSubmit,
-    watch,
     reset,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
+      id: "",
       nameRoute: "",
       newNameRoute: "",
       dateRoute: "",
-      paceRoute: [],
+      paceRoute: "",
       meetingPoint: "",
       meetingPointOther: "",
-      timeMeetingPoint: "",
-      otherPoint: { name: "No" },
+      timeMeetingPoint: null,
+      otherPoint: "",
       meetingOtherPoint: "",
       meetingOtherPointOther: "",
-      timeMeetingOtherPoint: "",
+      timeMeetingOtherPoint: null,
       comments: "",
     },
   });
+
+  // Actualizar los valores del formulario cuando `formData` esté disponible
+  useEffect(() => {
+    if (open && formData) {
+      const convertTimestampToDate = (timestamp) => {
+        if (!timestamp || !timestamp.seconds) return null;
+        return new Date(
+          timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
+        );
+      };
+      reset({
+        id: formData.id,
+        nameRoute: formData.nameRoute,
+        newNameRoute: formData.newNameRoute ?? "",
+        dateRoute: convertTimestampToDate(formData.dateRoute),
+        paceRoute: formData.paceRoute,
+        meetingPoint: formData.meetingPoint,
+        meetingPointOther: formData.meetingPointOther ?? "",
+        timeMeetingPoint: convertTimestampToDate(formData.timeMeetingPoint),
+        otherPoint: formData.otherPoint,
+        meetingOtherPoint: formData.meetingOtherPoint ?? "",
+        meetingOtherPointOther: formData.meetingOtherPointOther ?? "",
+        timeMeetingOtherPoint: convertTimestampToDate(
+          formData.timeMeetingOtherPoint
+        ),
+        comments: formData.comments,
+      });
+    }
+  }, [formData, reset, open]);
 
   const watchShowWriteNewRoute = watch("nameRoute");
   const watchShowMeetingPoint = watch("meetingPoint");
@@ -76,76 +101,39 @@ const FormRouteCall = ({ location, closeMenuBar }) => {
 
   const onSubmit = async (data) => {
     try {
-      const postDataEvent = {
-        nameRoute: data.nameRoute,
-        newNameRoute: data.newNameRoute,
-        dateRoute: data.dateRoute,
-        paceRoute: data.paceRoute,
-        meetingPoint: data.meetingPoint,
-        meetingPointOther: data.meetingPointOther,
-        timeMeetingPoint: data.timeMeetingPoint,
-        otherPoint: data.otherPoint,
-        meetingOtherPoint: data.meetingOtherPoint,
-        meetingOtherPointOther: data.meetingOtherPointOther,
-        timeMeetingOtherPoint: data.timeMeetingOtherPoint,
-        comments: data.comments,
-        firstName: userData.firstName,
-        idUser: userData.id,
-        imageUser: userData.imageUser,
-        attendees: [
-          {
-            id: userData.id,
-            name: userData.firstName,
-            email: userData.email,
-            photoUrl: userData.imageUser,
-          },
-        ],
-      };
-
-      const postId = Date.now().toString();
-
-      await setDocument("routesCalled", postDataEvent, postId);
+      await updateDocument("routesCalled", data, data.id);
 
       toast.current.show({
         severity: "success",
-        summary: "Ruta creada",
-        detail: `La ruta ha sido creada correctamente.`,
+        summary: "Ruta editada",
+        detail: `La ruta ha sido editada correctamente.`,
         life: 3000,
       });
 
       reset();
       setOpen(false);
-      location === "menuBar" ? closeMenuBar(false) : "";
       router.push(`/`);
     } catch (error) {
-      console.error("Error al crear el evento:", error);
+      console.log(error);
     }
   };
 
-  const optionTemplate = (option) => {
-    return (
-      <div className="flex items-center">
-        <Image src={option.img} alt={option.level} width={30} height={30} />
-        <span className="ml-[10px]">{option.level}</span>
-      </div>
-    );
-  };
+  if (!formData) {
+    return <div>Cargando...</div>;
+  }
 
   return (
-    <div className="hidden sm:flex card justify-content-center">
-      <Toast ref={toast} />
-      {location === "home" ? (
-        <Button
-          label="Convoca tu ruta"
-          icon="pi pi-external-link"
-          onClick={handleOpenModal}
-        />
-      ) : (
-        <div onClick={handleOpenModal}>Convocar ruta</div>
-      )}
-
+    <div className="hidden sm:flex absolute bottom-2 right-2 gap-2">
+      <button
+        disabled={!formData}
+        onClick={() => {
+          setOpen(true);
+        }}
+      >
+        <i className="pi pi-pencil bg-blue-700 text-white p-2 rounded-full cursor-pointer custom-target-icon hover:border border-white"></i>
+      </button>
       <Dialog
-        header="Convocar ruta"
+        header="Editar ruta"
         visible={open}
         style={{ width: "85%", maxWidth: "750px" }}
         onHide={() => {
@@ -156,8 +144,8 @@ const FormRouteCall = ({ location, closeMenuBar }) => {
         <div className="bg-white flex justify-center p-3 sm:p-7">
           <div className="w-full lg:w-[60vw] xl:w-[40vw] border border-black p-5 rounded-2xl">
             <form
-              className="flex flex-col gap-5"
               onSubmit={handleSubmit(onSubmit)}
+              className="flex flex-col gap-5"
             >
               <div className="flex flex-col sm:grid sm:grid-cols-2 gap-5">
                 <div className="flex flex-col gap-2">
@@ -519,8 +507,7 @@ const FormRouteCall = ({ location, closeMenuBar }) => {
                   )}
                 />
               </div>
-
-              <Button type="submit" label="Convocar" />
+              <Button type="submit" label="Editar" />
             </form>
           </div>
         </div>
@@ -529,4 +516,4 @@ const FormRouteCall = ({ location, closeMenuBar }) => {
   );
 };
 
-export default FormRouteCall;
+export default EditFormRouteCall;
