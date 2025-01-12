@@ -24,6 +24,7 @@ import { ConfirmDialog } from "primereact/confirmdialog";
 import Attendees from "@/components/Attendees";
 import { useRouter } from "next/navigation";
 import EditFormRouteCall from "@/components/EditFormRouteCall";
+import EditFormRouteCallMobile from "@/components/EditFormRouteCallMobile";
 
 function capitalizarPrimeraLetra(str) {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
@@ -320,9 +321,12 @@ const CardCalledRouteNew = ({
                 ></i>
               </button>
             </div>
-              {!isPastEvent && isSignedIn && user.id === event.idUser && (
+            {!isPastEvent && isSignedIn && user.id === event.idUser && (
+              <>
                 <EditFormRouteCall id={event.id} toast={toast} />
-              )}
+                <EditFormRouteCallMobile id={event.id} toast={toast} />
+              </>
+            )}
           </div>
 
           <div className="relative flex flex-col gap-y-2 p-2">
