@@ -321,7 +321,7 @@ const CardCalledRouteNew = ({
               </button>
             </div>
               {!isPastEvent && isSignedIn && user.id === event.idUser && (
-                <EditFormRouteCall id={event.id} />
+                <EditFormRouteCall id={event.id} toast={toast} />
               )}
           </div>
 

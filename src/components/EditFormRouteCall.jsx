@@ -12,7 +12,6 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { getDocument, updateDocument } from "../../lib/fireBase.mjs";
-import { Toast } from "primereact/toast";
 import { useRouter } from "next/navigation";
 import PaceDialogInfo from "./PaceDialogInfo";
 
@@ -25,9 +24,8 @@ const optionTemplate = (option) => {
   );
 };
 
-const EditFormRouteCall = ({ id }) => {
+const EditFormRouteCall = ({ id, toast }) => {
   const [formData, setFormData] = useState(null);
-  const toast = useRef(null);
   const [open, setOpen] = useState(false);
   const { dataRoutes } = useContext(RoutesContext);
   const { meetingPoints, paceRoute } = useContext(FormCallRouteContext);
@@ -41,9 +39,7 @@ const EditFormRouteCall = ({ id }) => {
       }
     };
     fetchData();
-  }, [id]);
-
-  //console.log("formData", formData);
+  }, [id, open]);
 
   const {
     control,
@@ -74,7 +70,9 @@ const EditFormRouteCall = ({ id }) => {
     if (open && formData) {
       const convertTimestampToDate = (timestamp) => {
         if (!timestamp || !timestamp.seconds) return null;
-        return new Date(timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000);
+        return new Date(
+          timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
+        );
       };
       reset({
         id: formData.id,
@@ -88,7 +86,9 @@ const EditFormRouteCall = ({ id }) => {
         otherPoint: formData.otherPoint,
         meetingOtherPoint: formData.meetingOtherPoint ?? "",
         meetingOtherPointOther: formData.meetingOtherPointOther ?? "",
-        timeMeetingOtherPoint: convertTimestampToDate(formData.timeMeetingOtherPoint),
+        timeMeetingOtherPoint: convertTimestampToDate(
+          formData.timeMeetingOtherPoint
+        ),
         comments: formData.comments,
       });
     }
@@ -100,8 +100,6 @@ const EditFormRouteCall = ({ id }) => {
   const watchShowOtherPoint = watch("otherPoint");
 
   const onSubmit = async (data) => {
-    console.log("data", data);
-
     try {
       await updateDocument("routesCalled", data, data.id);
 
@@ -112,6 +110,7 @@ const EditFormRouteCall = ({ id }) => {
         life: 3000,
       });
 
+      reset();
       setOpen(false);
       router.push(`/`);
     } catch (error) {
@@ -125,7 +124,6 @@ const EditFormRouteCall = ({ id }) => {
 
   return (
     <div className="hidden sm:flex absolute bottom-2 right-2 gap-2">
-      <Toast ref={toast} />
       <button
         disabled={!formData}
         onClick={() => {
