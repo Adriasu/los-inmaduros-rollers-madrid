@@ -121,7 +121,7 @@ const EditFormRouteCallMobile = ({ id, toast }) => {
     return <div>Cargando...</div>;
   }
   return (
-    <div className="flex absolute bottom-2 right-2 gap-2 sm:hidden">
+    <div className="flex sm:hidden">
       <button
         disabled={!formData}
         onClick={() => {

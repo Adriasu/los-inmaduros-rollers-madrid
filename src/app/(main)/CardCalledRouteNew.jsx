@@ -321,17 +321,15 @@ const CardCalledRouteNew = ({
                 ></i>
               </button>
             </div>
-            {!isPastEvent && isSignedIn && user.id === event.idUser && (
-              <>
-                <EditFormRouteCall id={event.id} toast={toast} />
-                <EditFormRouteCallMobile id={event.id} toast={toast} />
-              </>
-            )}
           </div>
 
           <div className="relative flex flex-col gap-y-2 p-2">
-            {isSignedIn && user.id === event.idUser && (
-              <div className="absolute bottom-2 right-2 flex gap-2">
+            {!isPastEvent && isSignedIn && user.id === event.idUser && (
+              <div className="absolute bottom-2 right-2 flex gap-[2px]">
+                <>
+                  <EditFormRouteCall id={event.id} toast={toast} />
+                  <EditFormRouteCallMobile id={event.id} toast={toast} />
+                </>
                 <button
                   disabled={isPastEvent || event.isCanceled}
                   onClick={() => setVisible(true)}
