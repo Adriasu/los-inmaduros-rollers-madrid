@@ -123,14 +123,14 @@ const EditFormRouteCall = ({ id, toast }) => {
   }
 
   return (
-    <div className="hidden sm:flex absolute bottom-2 right-2 gap-2">
+    <div className="hidden sm:flex">
       <button
         disabled={!formData}
         onClick={() => {
           setOpen(true);
         }}
       >
-        <i className="pi pi-pencil bg-blue-700 text-white p-2 rounded-full cursor-pointer custom-target-icon hover:border border-white"></i>
+        <i className="pi pi-pencil bg-blue-700 text-white p-2 rounded-full cursor-pointer custom-target-icon"></i>
       </button>
       <Dialog
         header="Editar ruta"
