@@ -12,7 +12,7 @@ const page = async () => {
   return (
     <div>
       <HomeBanner />
-      
+      <h1>Routes Called</h1>
       <RoutesCalled />
     </div>
   );
